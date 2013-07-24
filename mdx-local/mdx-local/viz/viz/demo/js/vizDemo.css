@@ -1,0 +1,85 @@
+/*
+ * Copyright 1999 - 2011 Crazy Development Ltd.
+ *
+ * The code and all underlying concepts and data models are owned fully
+ * and exclusively by Crazy Development Ltd. and are protected by
+ * copyright law and international treaties.
+ *
+ * Warning: Unauthorized reproduction, use or distribution of this
+ * program, concepts, documentation and data models, or any portion of
+ * it, may result in severe civil and criminal penalties, and will be
+ * prosecuted to the maximum extent possible under the law.
+ */
+
+.slider-wrapper {
+    margin: auto;
+    position: relative;
+    width: 600px;
+}
+
+#slider ul, #slider li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#slider, #slider li {
+    width: 600px;
+    overflow: hidden;
+}
+
+#slider img {
+    border: none;
+}
+
+#controls {
+    margin: 15px auto 30px !important;
+    width: 80px;
+}
+
+ol#controls {
+    margin: 1em 0;
+    padding: 0;
+    height: 12px;
+}
+
+ol#controls li {
+    margin: 0 5px 0 0;
+    padding: 0;
+    float: left;
+    list-style: none;
+    height: 12px;
+    line-height: 12px;
+}
+
+ol#controls li a {
+    float: left;
+    height: 12px;
+    line-height: 12px;
+    background: url(mark-hidden.png) no-repeat center;
+    color: #555;
+    text-decoration: none;
+    width: 15px;
+}
+
+ol#controls li a:hover {
+    float: left;
+    height: 12px;
+    line-height: 12px;
+    background: url(mark-selected.png) no-repeat center;
+    color: #555;
+    text-decoration: none;
+    width: 15px;
+}
+
+ol#controls li.current a {
+    background: #5DC9E1;
+    color: #fff;
+    background: url(mark-selected.png) no-repeat center;
+}
+
+ol#controls li a:focus,
+#prevBtn a:focus,
+#nextBtn a:focus {
+    outline: none;
+}

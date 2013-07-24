@@ -1,0 +1,200 @@
+/*
+ * Copyright 1999 - 2012 Crazy Development Ltd.
+ *
+ * The code and all underlying concepts and data models are owned fully
+ * and exclusively by Crazy Development Ltd. and are protected by
+ * copyright law and international treaties.
+ *
+ * Warning: Unauthorized reproduction, use or distribution of this
+ * program, concepts, documentation and data models, or any portion of
+ * it, may result in severe civil and criminal penalties, and will be
+ * prosecuted to the maximum extent possible under the law.
+ */
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+body {
+    background-color: #FFFFFF;
+    color: #464646;
+    font: 12px Verdana;
+    text-align: left;
+}
+
+#body-wrapper {
+    position: relative;
+    min-height: 100%;
+}
+
+#main {
+    padding-bottom: 86px;
+}
+
+#header-wrapper {
+    background: url("../img/mdx_doc_header_bg.png") repeat-x scroll 0 0 transparent;
+    height: 111px;
+    position: relative;
+    width: 100%;
+    z-index: 21;
+}
+
+#header {
+    height: 111px;
+}
+
+#header, #content, #bottom {
+    margin: 0 auto;
+    position: relative;
+    text-align: left;
+}
+
+#logo {
+    left: 0;
+    position: absolute;
+    top: 19px;
+}
+
+#logo a {
+    background: url("../img/mdx_doc_logo.png") no-repeat scroll 0 0 transparent;
+    display: block;
+    height: 82px;
+    width: 203px;
+}
+
+a, a:visited {
+    color: #7A7A7A;
+}
+
+#content {
+    display: block;
+    margin-bottom: 18px;
+    margin-top: 5px;
+}
+
+#bottom {
+    background: url("../img/mdx_doc_bottom_bg.png") repeat-x scroll 0 0 transparent;
+    height: 60px;
+    padding-top: 26px;
+    width: 100%;
+    position: relative;
+}
+
+#footer {
+    background: url("../img/mdx_doc_footer_bg.png") no-repeat scroll 0 0 transparent;
+    color: #FFFFFF;
+    height: 26px;
+    margin: 0 auto;
+    width: 960px;
+}
+
+#top-link {
+    background: url("../img/mdx_doc_top.png") no-repeat scroll right center transparent;
+    color: #FFFFFF;
+    float: right;
+    font-family: arial;
+    font-size: 11px;
+    margin: 6px 10px;
+    padding-right: 17px;
+    text-decoration: none;
+}
+
+#footer_left {
+    float: left;
+    width: 59.2%;
+}
+
+#toolbar ul.menu, #footer ul.menu {
+    display: inline-block;
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+}
+
+div#footer_left a {
+    color: #fff;
+    text-decoration: none;
+}
+
+#footer_left .menu li a {
+    color: #FFFFFF;
+    float: left;
+    font-family: arial;
+    font-size: 11px;
+}
+
+#footer_left .menu li.active a {
+    text-decoration: underline;
+}
+
+#footer_left .menu li a:hover {
+    text-decoration: underline;
+}
+
+#footer ul.menu {
+    display: block;
+    line-height: 14px;
+    margin: 6px 0 0;
+}
+
+#toolbar .menu li, #footer .menu li {
+    margin: 0;
+    padding: 0;
+    display: inline;
+}
+
+#footer ul.menu {
+    line-height: 14px;
+}
+
+#toolbar .menu li a, #footer .menu li a {
+    display: inline-block;
+    overflow: hidden;
+    padding: 0 10px 0 15px;
+}
+
+#toolbar .menu a.first, #footer .menu a.first {
+    background: none repeat scroll 0 0 transparent;
+}
+
+#footer .menu li a {
+    background: url("../img/mdx_doc_menu_separator.png") no-repeat scroll 0 50% transparent;
+}
+
+#copyright {
+    text-align: center;
+    color: #AA4598;
+    font-family: trebuchet ms, geneva;
+    font-size: 10px;
+}
+
+#copyright p {
+    margin: 5px 0;
+}
+
+#copyright a {
+    color: #7A7A7A;
+}
+
+#readmore a {
+    color: #aa4598;
+    text-decoration: none;
+}
+
+img {
+    border: none;
+}
+
+.cd-mdxdoc-tree-container {
+    width: 340px !important;
+}
+
+.cd-mdxdoc-content {
+    margin-left: 380px !important;
+}
+
+.cd-mdxdoc-wrapper {
+    background: url("../img/mdx_doc_wrapper_divider.png") repeat-y scroll 360px 0 transparent !important;
+}

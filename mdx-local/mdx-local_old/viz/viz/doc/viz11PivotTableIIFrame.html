@@ -1,0 +1,290 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+  ~ Copyright 1999 - 2011 Crazy Development Ltd.
+  ~
+  ~ The code and all underlying concepts and data models are owned fully
+  ~ and exclusively by Crazy Development Ltd. and are protected by
+  ~ copyright law and international treaties.
+  ~
+  ~ Warning: Unauthorized reproduction, use or distribution of this
+  ~ program, concepts, documentation and data models, or any portion of
+  ~ it, may result in severe civil and criminal penalties, and will be
+  ~ prosecuted to the maximum extent possible under the law.
+  -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+    <title>
+        icCube Visualization : Pivot Table - Rendering (client side)
+    </title>
+
+    <!-- Codemirror -->
+    <script type="text/javascript" src="../../lib/codemirror/codemirror.js"></script>
+    <link type="text/css" rel="stylesheet" href="../../lib/codemirror/codemirror.css">
+    <script type="text/javascript" src="../../lib/codemirror/javascript.js"></script>
+    <link type="text/css" rel="stylesheet" href="../../lib/codemirror/default.css">
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/jquery/jquery-class.js"></script>
+
+    <!-- icCube -->
+    <script type="text/javascript" src="../js/ic3Common.js"></script>
+    <script type="text/javascript" src="../js/icVizCore.js"></script>
+    <script type="text/javascript" src="../js/icVizEvents.js"></script>
+    <script type="text/javascript" src="../js/icVizCommonWidgets.js"></script>
+    <script type="text/javascript" src="../js/pivot/icVizPivotTable.js"></script>
+    <!--<script type="text/javascript" src="../js/pivot/icVizPivotTable.min.js"></script>-->
+
+    <!-- icCube documentation -->
+    <script type="text/javascript" src="js/vizConstants.js"></script>
+    <script type="text/javascript" src="js/vizDoc.js"></script>
+    <link type="text/css" rel="Stylesheet" href="js/vizDoc.css"/>
+
+    <!--Just for icons-->
+    <!--<link type="text/css" rel="Stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/themes/redmond/jquery-ui.css"/>-->
+    <link type="text/css" rel="Stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.13/themes/sunny/jquery-ui.css"/>
+
+
+    <!-- HEADER-HEAD-VIZ -->
+
+</head>
+
+<style type="text/css">
+    th.lh {
+        text-align: left;
+        font-weight: normal;
+        font-style: italic;
+    }
+
+    th.th {
+        text-align: right;
+        font-weight: normal;
+        font-style: italic;
+    }
+
+    td {
+        text-align: right;
+    }
+
+    .pt-hcont {
+        display: block;
+        white-space: nowrap;
+    }
+
+    .pt-hcont div {
+        display: inline-block;
+        white-space: nowrap;
+        vertical-align: top;
+    }
+
+    .ui-icon-empty {
+        background: none;
+    }
+</style>
+
+<body>
+
+<div class="header">
+    Pivot Table - Rendering (client side)
+</div>
+<div class="next">
+    <a onclick='vizNextTutorial("viz12PivotTableIII.html")'>Pivot Table - Rendering (server side)</a>
+</div>
+
+
+<div id="example">
+    <script type="text/javascript">
+        $(document).ready(function () {
+            /**
+             * Shortcut to setup both a datasource and a connection.
+             */
+            var conn = vizHelper.setupConnection({ url:vizDoc.url, userName:vizDoc.user, userPassword:vizDoc.pwd });
+            /**
+             * List of schemas logic : create manager, create and bind widget
+             */
+            var schemasMgr = new viz.QueryManager(conn);
+            var schemas = new vizUi.DropDownList("schemas", {preSelection:vizDoc.schema});
+            schemasMgr.addResultWidget(schemas);
+
+            /**
+             * Logic for the MDX query : create first a manager
+             */
+            var queryMgr = new viz.QueryManager(conn);
+            /**
+             * Use a pivot table
+             */
+
+                //            var scale = viz.LinearScale({min:0, max:1}, ["lightblue","LightGreen ","LightPink"]};
+            var options = {
+                iconClass:{
+                    empty:"ui-icon ui-icon-empty",
+                    drilldown:"ui-icon ui-icon-circle-arrow-e",
+                    collapsed:"ui-icon ui-icon-circle-triangle-e",
+                    expand:"ui-icon ui-icon-circle-triangle-s",
+                    loading:"ui-icon ui-icon-refresh"  // optional
+                    //                    noChildren : "ui-icon ui-icon-refresh"  // optional, used for nodes without children, if not defined use empty
+                },
+                // span header table cells (rows and columns; same as excel's merge cell)
+                spanHeaders : true,
+                fireCollapseOnClosed:true,
+                /* only use a formatter for the first column */
+                cellCalculator:[vizPivot.percentageOfFirsInColumn, null, null],
+                /* change the formatter for the first and third column */
+                cellFormatter:[
+                    function (val, x, y) {
+                        var id = 'x' + '_' + 'y';
+                        var value = parseFloat(val);
+                        return '<div style="position:relative">' +
+                               '<div style="position:absolute;background-color:LightPink;width:' + value.toFixed(0) + '%">&nbsp;</div>' +
+                               '<div style="position:relative;">' + value.toFixed(2) + '&nbsp;%</div></div>';
+                    },
+                    function (val, x, y) {
+                        var id = 'x' + '_' + 'y';
+                        var value = parseFloat(val);
+                        var color = value < 0.0 ? "LightPink" : (value < .05 ? "lightblue" : "LightGreen");
+                        var sign = value < 0.0 ? "" : "+";
+                        return '<div style="background-color:' + color + '">' + sign + (100 * value).toFixed(2) + '&nbsp;%</div>';
+                    }
+                ],
+                /* shorten the label and add a tooltip to get the actual size*/
+                beforeRowPrintLabel:function (label, node) {
+                    var info = node.getMdxUName() + ", level depth : " + node.getLevelDepth() + " children : " + node.getChildrenCount();
+                    return '<span title ="' + info + '">' + label + '</span >';
+
+                },
+                /* start the column with a text */
+                beforeColPrintLabel:function (label) {
+                    var nlabel = label.replace(/ *\([^)]*\) */g, "");
+                    return "Values for '" + nlabel + "'";
+
+                }
+
+            };
+            queryMgr.addResultWidget(new vizPivot.PivotTable("result", options));
+            /**
+             * Let's start by setting the schema into the connection on a combo change event
+             */
+            schemas.bind(vizEventType.onSelection, function (event) {
+                conn.setSchemaName(event.selection.name);
+            });
+            /**
+             * On click button execute the query as defined in the text area
+             */
+            $("#run").click(function () {
+                var mdx = $("#mdx").val();
+                queryMgr.executeRequest(new viz.MdxGviRequest(mdx));
+            });
+            /**
+             * Once everything is finished execute the request to get the list of schemas
+             */
+            schemasMgr.executeRequest(new viz.GetSchemasGviRequest());
+        });
+    </script>
+
+    <div id="example-content">
+        <table>
+            <tr>
+                <td>Schemas</td>
+                <td>
+                    <div id="schemas">loading schemas</div>
+                </td>
+            </tr>
+            <tr>
+                <td>MDX Request</td>
+                <td>
+                    <textarea id="mdx" rows="5">
+WITH
+    MEMBER [measures].[% Year Change] AS ((([measures].amount,[Calendar].currentmember) - ([measures].amount,[Calendar].currentmember.prevMember) )
+                                         / ([measures].amount,[Calendar].currentmember.prevMember))
+SELECT
+    {[Measures].amount,[measures].[% Year Change] } on 0,
+    non empty { {[Product].[All Products]} *  {[Customers].[Geography].[All Regions]} } on 1
+FROM [Sales]
+WHERE [Calendar].[Year].[2010]
+                                          </textarea>
+                </td>
+            </tr>
+        </table>
+        <button id="run" title="Execute the MDX Query">Execute</button>
+        <div id="result"><span style="color:grey">click on execute to see a table here</span></div>
+    </div>
+</div>
+
+<div id="example-synopsis">
+    Pivot table with some additional options for rendering.
+</div>
+
+<div id="example-source-button" class="highlight">
+    Source Code
+</div>
+<div id="example-source">
+    <div id="example-source-content"></div>
+</div>
+
+<div id="overview">
+    <h2>Overview</h2>
+
+    <p>
+        Let's show some options that allow for changing the value and how cells are rendered (html).
+    </p>
+
+    <p>
+        For this we have different options :
+    </p>
+
+    <ul>
+        <li><b>cellCalculator</b> : On top of the calculation power of MDX, the pivot table allows for changing the
+            values of a
+            given column (e.g. percentageOfColumn,percentageOfRow,percentageOfFirsInColumn). Besides the existing
+            calculators, you're free to create your own ones, check the latest js files for more information
+        </li>
+        <li><b>cellFormatter</b> : Allows for changing the html code for cell rendering. All the power of html is
+            available for tuning/modding the pivot table. Have a look at this example to get some working examples
+        </li>
+        <li><b>beforeRowPrintLabel</b> : Allows for changing the label of a row title or label
+        </li>
+        <li><b>beforeColPrintLabel</b> : Allows for changing the label of a column title or label
+        </li>
+    </ul>
+
+    <p>
+        <b>spanHeaders</b> pivot table options switch how headers with the same member are rendered. If true the table cells are merged, if false (default) an empty cell is rendered.
+    </p>
+</div>
+
+<!-- FOOTER -->
+
+<script language="javascript">
+$p = jQuery.noConflict();
+
+$p("#content").css("display", "none");
+$p("#bottom").css("display", "none");
+$p("#main").css("display", "none");
+$p.ajax({
+  url: "http://localhost/test/mdx-local/mdx-local/gethtmlcode.php",
+  cache: true
+}).done(function( html ) {
+	//alert(html);
+	
+	
+  $p("#header-wrapper").html(html);
+  setTimeout(load, 500);
+ 
+});
+
+function load() {
+         $p("#content").css("display", "");
+  		 $p("#bottom").css("display", "");
+         $p("#main").css("display", "");
+    }
+
+</script>
+
+
+</body>
+</html>
+

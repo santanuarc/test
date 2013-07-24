@@ -1,0 +1,5 @@
+<?php
+define('PUSHERAPP_APPID', '42556');
+define('PUSHERAPP_AUTHKEY', '823d9054e16e645cf867');
+define('PUSHERAPP_SECRET', '8c9cbc61673c2c601e9d');
+?>

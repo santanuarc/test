@@ -1,0 +1,655 @@
+------------------------------------------------------------------------------------------------------------------------
+icCube 3.x Release Notes
+
+0. JAVA Runtime
+
+        - Switch to v1.7 (from 1.6) as the minimum required version.
+
+1. OLAP
+
+        - Full schema localization (dimension, hierarchy, ... member captions).
+        - Add renaming to perspectives
+        - Drillthrough fix for parent/child hierarchies and many-2-many.
+        - New calculation Engine + Partitioning (FFBE & FFPBE)
+        - Fix minor bug when connecting through OLEDB.MD driver
+        - New testing framework
+        - Fix ADO.MD minot issue
+        - Better support for large amount of schemas.
+
+2. Builder
+
+        - Improved dimension browsing (was validating whole datasource).
+
+3. Scheduler
+
+        - Allows for generating snapshots when loading schema.
+
+4. GWT
+        - Multiple minor UI improvements
+
+5. Libraries
+
+        - Upgrade POI 3.9, JDBC MySQL 5.1.24, JDBC Postgres 9.2-1002
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 3.1.0 Release Notes ( intermediate internal release )
+
+1. OLAP
+
+        - Add unary operator aggregation type (+-*/~)
+        - Perspective : introduced rename statements (dimension, hierarchy, etc...).
+        - Asynchronous and parallel schema load.
+
+2. Web Reporting
+
+        - Support for opening reports by name as well (was report unique ID only).
+        - Export to Excel fix (single row, simple table: multiple members on left columns, NaN/Infinity support).
+
+3. XMLA
+
+        - Improve ADOMD support.
+
+4. GWT
+
+         - Fix crash in Chrome when zooming.
+
+5. Libraries
+
+        - Latest Waffle (Windows SSO) version (1.5).
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 3.0.3 Release Notes ( 3.0.2 fork )
+
+1. Server
+
+        - Aggregate block optim. fix.
+
+2. Web Reporting
+
+        - Force export to Excel charset encoding (UTF8).
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 3.0.2 Release Notes ( intermediate internal release )
+
+1. OLAP Builder
+
+        - Fix statistical dimension setup (possibly missing hierarchy).
+        - Fix incr. load with same table processed multiple times (initial full load).
+
+2. Server
+
+        - MDX unique name : include hierarchy name for single hierarchy dimension.
+
+3. Web Reporting
+
+        - Introduce spanHeaders widget option to span same header rows and columns cell tables.
+        - Pivot table : rename oddRow & evenCol CSS classes to ic3-pt-oddCol & ic3-pt-evenCol
+        - Pivot table : fix Export to Excel (with expand/collapse)
+
+4. Libraries
+
+        - Latest GUAVA version (14 rc1).
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 3.0.1 Release Notes
+
+1. Server
+
+        - MDX Descendants() : added support for non-specified 2 parameter (Excel 2007 usage).
+
+2. Web Reporting
+
+        - Fix nested-report widget with multi-value parameters.
+        - Pivot table extra-properties support.
+        - Reference latest DataTables plugin version (v1.9.4).
+
+3. Excel
+
+        - Fix cube name in set declaration (was missing sets in Excel).
+        - Fix sets usage in Excel 2007 (was Excel crash).
+
+4. Libraries
+
+        - JAVA GVI API source code and JAR packaged.
+        - Migrate to GWT 2.5 (fix issue with widget components on latest Chrome version).
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 3.0 Release Notes
+
+1. OLAP builder
+
+        - Incremental (real-time) load.
+
+2. Server
+
+        - Introduced a notification service (e.g., eMail on schema loaded).
+        - MDX result (Web Reporting) cache (promoted from beta status in 2.6).
+        - SESSION scoped named set support.
+
+3. Web Reporting
+
+        - Added perspectives support.
+        - Added report widget to embed reports within a report.
+        - Added MDX tree filter.
+        - Improved permaLink graphical setup (i.e., URL, report parameters, etc...).
+        - Improved MDX Query Builder (i.e., support for event, member search by level).
+
+4. IDE
+
+        - Roles/users import/export definitions.
+
+5. XMLA
+
+        - Added MDSCHEMA_MEASUREGROUP_DIMENSIONS / MDSCHEMA_SETS support.
+        - Schema life-cycle command status updated to reflect incremental load support (contact us for more details).
+
+6. Excel
+
+        - Fix refresh Pivot Table in .xlsx files.
+        - Support for Pivot Table slicer (aka. graphical filters) - see excelFixXsdLong configuration property.
+        - Support for Pivot Table Manage Sets.
+
+7. Libraries
+
+        - Latest JDBC driver for MySQL (5.1.22) & Postgres (9.2.1000) - icCube server.
+        - Latest TinyMCE (3.5.8) & jQuery UI (1.9.2) - Web Reporting.
+
+Contributions
+
+        - A special thanks to José Jonathan Puertos Tavares for his work on Excel / XMLA integration
+          (http://ca.linkedin.com/pub/jos%C3%A9-jonathan-puertos-tavares/15/2b0/b49).
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 2.6 Release Notes
+
+1. Server
+
+        - HTTPS support
+        - MDX result cache (beta)
+
+2. Web Reporting
+
+        - Report parameters
+        - Autocomplete filter fully revamped
+        - Ability to fire MDX on demand
+        - Ajax Collector, avoid sending several times the same request
+
+3. OLAP builder
+
+        - Parent/child hierarchy, improved all member setup
+
+4. Libraries
+
+        - Migrate to latest HTTP Core / Client (4.2.1)
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 2.5.6 Release Notes
+
+1. Web Reporting
+
+       - MDX code completion
+       - Query Builder widget
+       - Explicit GVI login cleanup
+
+2. OLAP builder
+
+       - Parent-child hierarchy ordering
+       - Refresh data-source/table improved
+       - Duplicate dimension
+       - Support for hierarchy with no aggregation
+
+3. Offline cube
+
+       - Support for unzipped version on the server (faster schema loading)
+
+4. Facts files
+
+       - Support for storing facts in files instead of RAM (lower icCube server physical memory requirement)
+
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 2.5.5 Release Notes
+
+1. MDX FORMAT_STRING : Add support for MS/Excel syntax ("#0.0") and improve GVI export to Excel to include formatting.
+   JAVA syntax still available + more named formats.
+
+2. Web Reporting : introduced ic3Reporting class (improved application life cycle + hooks/events support).
+
+3. Web Reporting : new JQuery UI datepicker widget, Google Table widget remembers sorting column,
+   increase MDX filter consistency.
+
+4. XMLA : fix discover level's members and cube's dimensions.
+
+5. Fix MDX Editor completion bug.
+
+6. ic3-pub : no authentication required anymore
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 2.5.4 Release Notes
+
+1. Web Reporting : single JS link (ic3bootstrap.js introduced).
+
+2. Latest JDBC drivers : MySQL 5.1.20 (was meta-data memory error) / PostgreSQL 9.1-902.jdbc4.
+
+3. Latest Apache POI version (stable 3.8).
+
+4. MDX Object Oriented extensions introduced : Vector / Matrix.
+
+5. MDX / JAVA integration introduced.
+
+6. MDX / R integration introduced.
+
+7. Fix CONST function (slicer/sub-select visibility + calc-member/set usage).
+
+8. Evaluation tuple cache : introduced ON_DEMAND mode (REQUEST_CACHED cell property).
+   Cell evaluation iterator improved.
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 2.5.3 Release Notes
+
+1. Pivot Table improvements (export to Excel, open all...).
+
+2. Google chart improvements (first column processing).
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 2.5.2 Release Notes
+
+1. OLAP Engine property icCube.mdxEvalUnknownMemberError defaulted to true (was false).
+
+2. Fix member lookup (Week 1 vs Week 11 + tricky Unicode alphabet).
+
+3. JAVA 7 validation.
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 2.5.1 Release Notes
+
+1. MDX : massive speed improvement with large sets in slicer, new functions (compactSet), sub-select fix
+   for slicer usage.
+
+2. Engine property : introduced compactSetInSubSelect (defaulted to true)
+
+3. Add RGB, HSV and HSL color MDX functions
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 2.5 Release Notes
+
+1. Fix HTTP session timeout setup.
+
+2. DISTINCT COUNT massive speed improvement.
+
+3. New access rights for Web Reporting
+
+4. Web Reporting (alpha)
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 2.0.6 Release Notes
+
+1. icCube more robust while reloading schema under heavy load (thousand MDX requests / sec.).
+
+2. iPad support improvements.
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 2.0.5 Release Notes
+
+1. MDX Script introduced, full refactoring of the creation of calculated members, sets and functions. It's now possible to dynamically create and drop them.
+
+2. STATIC sets have been introduced, caching the result at schema level (a single evaluation per schema load).
+
+3. Improve schema loading (speed and memory, around 30% improvement). Yes more facts and dimension for the community and Enterprise I editions !
+
+4. iPad & Android tablet support for icCube UI.
+
+5. Server log files accessible from the monitoring UI.
+
+6. Fix : enforce cube read/write access rights in WRITEBACK
+
+7. Windows installer : introduced a single installer handling both 32 and 64 bits
+
+8. Several minor bug fixes (see bugzilla).
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 2.0.4 Release Notes
+
+ 1. GVI : pivot table export to Excel support + GVI error improvements (error code introduced)
+
+ 2. Packaging: plugins dependent 3rd party JARs (POI) moved to main /lib directory
+    + fix missing opencsv in Windows MSI / Mac OS
+
+ 3. Schema Load : fix memory leak when deleting previously loaded schema
+
+ 4. Windows Installer : improved multi-version support (XP, 2003, ...)
+
+ 5. New MDX function : SchemaRefreshTime
+
+ 6. GWT 2.4 migration + upgrade several 3rd party libs
+
+ 7. Windows SSO support (XMLA).
+
+ 8. XMLA/TCP support removal (server-side).
+
+ 9. Drillthrough : speed improvements + sub-select fix
+
+10. On-the-fly role definition support.
+
+11. Embedded scheduler for loading schemas (e.g, once, fixed rates, daily, etc...) 
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 2.0.3 Release Notes
+
+1. Fix JDK compatibility issue.
+
+2. Fix sub-select filtering out empty tuples.
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 2.0.2 Release Notes
+
+1. Packaging : fix duplicated plugins jars + GWT client-side jars in /lib + minimal JCR jars + help not duplicated
+   + latest versions of JODA / JDBC (SQL server, MySQL, Postgres, Oracle 10g)
+
+2. Time wizard level ordering + ASC/DESC support
+
+3. MDX cell evaluation : round-robin MT executor
+
+4. New functions : isNaN, isInfinite, currentCellValue (allows for improved FORMAT_STRING), stringToDate
+
+5. flot (Javascript plotting library) Viz. integration
+
+6. JDBC : fix possible issue on date/time conversion when servers on different timezones
+
+7. MySQL datasource : fix quoted column usage
+
+8. UI : import file (schema, offline, roles) improvements
+
+9. Configuration (multi-homed machine) + Licensing (IP bound)
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 2.0.1 Release Notes
+
+1. Fix Viz. library packaging (missing library).
+
+2. Fix Windows installer (allows multiple installed versions).
+
+3. MDX Editor full screen mode focus fix.
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 2.0 Release Notes
+
+ 1. Enterprise vs. Community Edition.
+
+ 2. Report Web Server introduced (Web documents publishing & sharing).
+
+ 3. New JS Pivot Table (integrated into MDX IDE and Viz. library).
+
+ 4. GVI + Visualization library improvements (new widgets, pivot table, etc...)
+
+ 5. MDX : DRILLTHROUGH + Perspectives + new functions.
+
+ 6. MDX IDE : better completion, better pivot-table, full screen edition mode, etc...
+
+ 7. Builder improvements : parent/child hierarchy properties, better DB case handling, level order, etc...
+
+ 8. Offline cubes support.
+
+ 9. Multi-lingual support (French localization added).
+
+10. Several minor bug fixes (see bugzilla).
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 1.3.4 Release Notes
+
+1. Fix regression in Excel 2007 (DISCOVER_MEMBERS)
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 1.3.3 Release Notes
+
+1. Fix two issues with Reporting Services / Report Builder protocol (see bugzilla)
+
+2. Change code completion and help in MDX IDE to better support Mac users (Shift+space for code completion, mouse click for help)
+
+3. Several minor bug fixes (see bugzilla).
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 1.3.2 Release Notes
+
+1. MS Reporting Service / Report Builder support.
+
+2. Support for MDX parameters in XMLA requests.
+
+3. Support for duration/period format in FORMAT_STRING.
+
+4. Several bug fixes (see bugzilla).
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 1.3.1 Release Notes
+
+1. Several bug fixes (see bugzilla) : note Excel XMLA connection fix.
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 1.3 Release Notes
+
+1. Apache authentication support.
+
+2. icCube Visualization Library introduced.
+
+3. Several bugs fixes (see bugzilla).
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 1.2 Release Notes
+
+1. MDX Request cache introduced.
+
+2. GZIP support for XMLA responses.
+
+3. GWT 2.2 migration.
+
+4. More minor performance and memory footprint improvements.
+
+5. Several bugs fixes (see bugzilla).
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 1.1.3 Release Notes
+
+1. Support for "unknown" dimension members fix.
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 1.1.2 Release Notes (temporary release: lost during WEB site relocation)
+
+1. Support for "unknown" dimension members when building facts.
+
+2. Support MDX EXISTING operator.
+
+3. MS-Access supported via the SUN JDK JDBC/ODBC bridge.
+
+4. Reduced memory footprint and performance improvements.
+
+5. Several fixes (e.g., HTTP XMLA response charset encoding).
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 1.1.1 Release Notes
+
+1. Reduced memory footprint.
+
+2. Several performance improvements.
+
+3. Several fixes.
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 1.1.0 Release Notes
+
+1. Several UI enhancements.
+
+2. Offline GVI chart export.
+
+3. As usual, fixes and performance improvements.
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 1.1.0 RC3 Release Notes
+
+1. Introduced Web Reporting (integration with Google Visualization).
+
+2. Implement Authentication / Authorization (security on members/facts).
+
+3. Implement many-to-many on facts.
+
+4. UI refactoring.
+
+5. Introduced XMLA schema management commands.
+
+6. As usual, fixes and performance improvements.
+
+NOTE: Definition of dimensions at cube level are not supported anymore. Migration of XML schema definition file may be
+done copy/pasting the dimensions from the cube section into the schema section.
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 1.0.2 Pegasus Release Notes
+
+1. Fix sub-select performance issue (regression) - this will improve response time in Excel pivot-tables when filters
+   are used.
+
+2. Fix plugins setup when installing icCube over a previous version.
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 1.0.1 Pegasus Release Notes
+
+1. Not released - built as part of the client library patch.
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 1.0.0 Pegasus Release Notes
+
+1. New Pegasus engine is here, a new step on performance.
+
+2. Measure groups.
+
+3. Write back / what if simulation.
+
+4. Several UI improvements.
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 0.9.10 Preview Release Notes (internal release)
+
+1. Fix exists MDX function.
+
+2. Make exists, nonempty, isEmpty functions faster.
+
+3. UI monitoring improved.
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 0.9.9 Preview Release Notes (internal release)
+
+1. Performance improvements.
+
+2. UI new monitoring introduced.
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 0.9.8 Preview Release Notes
+
+1. Fix suggestion column list for parent/child and path dimension in Fact use case.
+
+2. Add column type validation for fact links (it's not possible to link a STRING with an INTEGER column).
+
+3. Add more cases to schema validation.
+
+4. Add undo (and history revisions) for schema definitions.
+
+5. Server request management introduced (e.g., monitoring, CANCEL, ...).
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 0.9.7 Preview Release Notes
+
+1. Builder : fix SQL statement XML serialization (from attribute to element).
+
+2. Examples : Sales cubes [Geography].[Geo].[All Regions] introduced.
+
+3. Improved memory usage.
+
+4. Faster aggregation engine.
+
+5. Several fixes and enhancements.
+
+Note the icCube application directory is named after the release version.
+
+For example: C:\Documents and Settings\user\.icCube-ci.0.9.7 - if you need to get some saved data from
+previous installed version please update manually this directory content.
+
+For any support, please use our forum.
+
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 0.9.6 Preview Release Notes
+
+1. MDX Editor: code completion (functions, dimensions, members, etc... ) has been introduced.
+
+2. MDX Editor: load/save queries.
+
+3. Schema/Cube Builder : table and dimension browsing.
+
+4. WITH [CONST] FUNCTION() AS : added optional CONST keyword to signature for declaring constant values.
+
+5. Several fixes and enhancements.
+
+Note the icCube application directory is named after the release version.
+
+For example: C:\Documents and Settings\user\.icCube-ci.0.9.6 - if you need to get some saved data from
+previous installed version please update manually this directory content.
+
+For any support, please use our forum.
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 0.9.5 Preview Release Notes
+
+1. Remove time expiry limitation.
+
+2. Several UI fixes.
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 0.9.4 Preview Release Notes
+
+1. UI : The cube builder beta version is there, enjoy.
+
+2. UI : improved MDX editor (better user experience, syntax highlighting, help link (click+CTRL over an MDX function).
+
+3. MDX: WITH function() has been introduced.
+
+4. Schema definition format change + naming form Factory.xml to .icc-schema convention. No backwards compatibility.
+
+5. New cubes examples.
+
+6. Several bug fixes and improvements.
+
+7. No obfuscation (full plugins support)
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 0.9.3 Preview Release Notes
+
+1. Several minor bug fixes.
+
+2. The MDX query editor highly improved with code mirror library (e.g., syntax highlighting).
+
+------------------------------------------------------------------------------------------------------------------------
+icCube 0.9.2 Preview Release Notes
+
+This Preview Release version corresponds to the version of icCube as delivered
+with the Desktop Solution with several differences:
+
+1. The localhost limitation is not applicable.
+
+2. The JAVA byte code is obfuscated.
+
+3. OLAP Function plugins are not supported.
+
+Due to obfuscation, OLAP Function plugins are not supported; both JAVA Functions
+and OLAP Statistical Functions are supported.
+
+Pivot Table (Query Result)
+
+1. The drilldown is not activated yet.
+
+------------------------------------------------------------------------------------------------------------------------
+Mac OS Installation Notes
+
+Having downloaded the zip file containing icCube, it will automatically be unzipped by Safari and appear in your
+Downloads folder. From here you can go into the icCube directory, and further down in the bin directory. To start
+icCube from this location, simply double click on the icCube program. If you prefer to install the program in more
+Mac-like fashion, simply drag the icCube program icon to the default /Applications folder in the Finder.
+
+__

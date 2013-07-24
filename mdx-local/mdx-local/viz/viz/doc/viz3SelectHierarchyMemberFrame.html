@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+  ~ Copyright 1999 - 2011 Crazy Development Ltd.
+  ~
+  ~ The code and all underlying concepts and data models are owned fully
+  ~ and exclusively by Crazy Development Ltd. and are protected by
+  ~ copyright law and international treaties.
+  ~
+  ~ Warning: Unauthorized reproduction, use or distribution of this
+  ~ program, concepts, documentation and data models, or any portion of
+  ~ it, may result in severe civil and criminal penalties, and will be
+  ~ prosecuted to the maximum extent possible under the law.
+  -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+    <title>
+        icCube Visualization : Hierarchy/Member Selection
+    </title>
+
+    <!-- Codemirror -->
+    <script type="text/javascript" src="../../lib/codemirror/codemirror.js"></script>
+    <link type="text/css" rel="stylesheet" href="../../lib/codemirror/codemirror.css">
+    <script type="text/javascript" src="../../lib/codemirror/javascript.js"></script>
+    <link type="text/css" rel="stylesheet" href="../../lib/codemirror/default.css">
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/jquery/jquery-class.js"></script>
+
+    <!-- icCube -->
+    <script type="text/javascript" src="../js/ic3Common.js"></script>
+    <script type="text/javascript" src="../js/icVizCore.js"></script>
+    <script type="text/javascript" src="../js/icVizEvents.js"></script>
+    <script type="text/javascript" src="../js/icVizCommonWidgets.js"></script>
+
+    <!-- icCube documentation -->
+    <script type="text/javascript" src="js/vizConstants.js"></script>
+    <script type="text/javascript" src="js/vizDoc.js"></script>
+    <link type="text/css" rel="Stylesheet" href="js/vizDoc.css"/>
+
+    <!-- HEADER-HEAD-VIZ -->
+
+</head>
+
+<!-- HEADER -->
+
+<body>
+
+<div class="header">
+    Selecting hierarchies and members
+</div>
+<div class="next">
+    <a onclick='vizNextTutorial("viz4SelectHierarchyMemberJQui.html")'>Select Members (JQuery UI)</a>
+</div>
+
+<div id="example">
+    <script type="text/javascript">
+        $(document).ready(function() {
+            /**
+             * Shortcut to setup both a datasource and a connection bound to a schema.
+             */
+            var conn = vizHelper.setupConnection({ url:vizDoc.url, userName:vizDoc.user, userPassword:vizDoc.pwd }, vizDoc.schema);
+
+            /**
+             * List of hierarchies logic : request processing, widget notifications.
+             */
+            var hierarchiesMgr = new viz.QueryManager(conn);
+
+            /**
+             * Will display the list of hierarchies as returned by the get hierarchies requests.
+             */
+            var hierarchies = new vizUi.DropDownList("hierarchies");
+
+            /**
+             * Add the hierarchies drop down as a listener of the response of the query being processed by the query manager.
+             * For that purpose the vizUi.DropDownList is listening the onVizRequestExecuted event.
+             */
+            hierarchiesMgr.addResultWidget(hierarchies);
+            hierarchiesMgr.executeRequest(new viz.GetHierarchiesGviRequest(vizDoc.cube, true));
+
+            /**
+             * List of members logic : request processing, widget notifications.
+             */
+            var membersMgr = new viz.QueryManager(conn);
+
+            /**
+             * Will display the list of hierarchies as returned by the get hierarchies requests.
+             */
+            var members = new vizUi.DropDownList("members");
+
+            /**
+             * Add the members drop down as a listener of the response of the query being processed by the query manager.
+             * For that purpose the vizUi.DropDownList is listening the onVizRequestExecuted event.
+             */
+            membersMgr.addResultWidget(members);
+
+            /**
+             * React to hierarchies.change event to request the first 10 list of members for the selected hierarchy.
+             */
+            hierarchies.bind(vizEventType.onSelection, function(event) {
+                var hierarchy = event.selection;
+                var mdx = "head( " + hierarchy.uniqueName + ".members, 10)";
+                membersMgr.executeRequest(new viz.GetMembersGviRequest(null /* no-cube*/, mdx));
+            });
+
+        });
+    </script>
+
+    <div id="example-content">
+        <table>
+            <tr>
+                <td>
+                    Hierarchies
+                </td>
+                <td>
+                    <div id="hierarchies">loading hierarchies</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Members (10 firsts)
+                </td>
+                <td>
+                    <div id="members">loading members</div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div id="example-synopsis">
+    Request both the list of hierarchies and the first 10 members of the selected hierarchy.
+</div>
+
+<div id="example-source-button" class="highlight">
+    Source Code
+</div>
+<div id="example-source">
+    <div id="example-source-content"></div>
+</div>
+
+<div id="overview">
+    <h2>Overview</h2>
+
+    <p>
+        This example is demonstrating how to retrieve the list of hierarchies available for a given schema
+        and then how to get a list of members for the selected hierarchy. Note that any MDX expression returning
+        a set of members can be used. E.g., the expression
+        <span class="code">head( [hierarchy-name].members, 10 )</span> is used to retrieve the first 10 members.
+    </p>
+
+</div>
+
+<!-- FOOTER -->
+
+</body>
+</html>

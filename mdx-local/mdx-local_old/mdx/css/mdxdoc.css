@@ -1,0 +1,309 @@
+/*
+ * Copyright 1999 - 2012 Crazy Development Ltd.
+ *
+ * The code and all underlying concepts and data models are owned fully
+ * and exclusively by Crazy Development Ltd. and are protected by
+ * copyright law and international treaties.
+ *
+ * Warning: Unauthorized reproduction, use or distribution of this
+ * program, concepts, documentation and data models, or any portion of
+ * it, may result in severe civil and criminal penalties, and will be
+ * prosecuted to the maximum extent possible under the law.
+ */
+body {
+    text-align: left;
+}
+
+.cd-mdxdoc-parameters {
+    background-color: #F8F8F8;
+    padding: 9px;
+    color: #464646;
+    font: 12px Verdana;
+    align: left;
+}
+
+.cd-mdxdoc-parameters td {
+    border: 1px solid #DDDDDD;
+    font-size: 12px;
+    padding: 5px;
+}
+
+.cd-mdxdoc-parameters-header td {
+    background-color: #C3DAF9;
+    color: #083772;
+    font-weight: bold;
+    padding: 5px 12px;
+    vertical-align: top;
+    border: 1px solid #C3DAF9;
+}
+
+.cd-mdxdoc-top-caption {
+    color: #5FA825;
+    font-family: Trebuchet MS;
+    font-size: 20px;
+    margin: 0px;
+    margin-bottom: 10px;
+}
+
+.cd-mdxdoc-caption {
+    color: #4F81BD;
+    font-family: Trebuchet MS;
+    font-size: 18px;
+    font-weight: normal;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.cd-mdxdoc-text {
+    margin: 0px;
+    color: #464646;
+    font: 12px Verdana;
+    width: 95%
+}
+
+.cd-mdxdoc-bold-text {
+    margin: 0px;
+    color: #464646;
+    font: 12px Verdana;
+    font-weight: bold;
+    margin: 10px 0 5px;
+}
+
+.cd-mdxdoc-query-block {
+    background-color: #FCFEC5;
+    margin-bottom: 5px;
+    font-family: monospace;
+    overflow-x: auto;
+    overflow-y: hidden;
+    *padding-bottom: 18px;
+    width: 95%;
+}
+
+.help .cd-mdxdoc-query-block pre {
+    overflow-x: visible;
+}
+
+.cd-mdxdoc-results-container {
+    background-color: #FCFEC5;
+    margin-bottom: 5px;
+    font-family: monospace;
+    overflow-x: auto;
+    overflow-y: hidden;
+    *padding-bottom: 18px;
+    width: 95%;
+}
+
+.cd-mdxdoc-results-pivot-container {
+    margin-bottom: 5px;
+    font-family: monospace;
+    overflow-x: auto;
+    overflow-y: hidden;
+    *padding-bottom: 18px;
+    width: 95%;
+}
+
+.cd-mdxdoc-result-block {
+    background-color: #F8F8F8;
+    padding: 0 10px;
+    margin-bottom: 5px;
+    font-family: monospace;
+}
+
+.cd-mdxdoc-examples-section {
+    padding-left: 10px;
+}
+
+.cd-mdxdoc-example-header {
+    margin-top: 10px;
+}
+
+.cd-mdxdoc-example-header a {
+    background: url("../img/mdx_doc_open.png") no-repeat scroll 0 7px transparent;
+    text-decoration: none;
+    padding-left: 20px;
+    padding-top: 5px;
+    font-size: 16px;
+}
+
+.cd-mdxdoc-example-header-collapsed a {
+    background: url("../img/mdx_doc_close_light.png") no-repeat scroll 0 7px transparent !important;
+}
+
+.cd-mdxdoc-example-header span {
+    border-bottom: 1px dashed #4F81BD;
+    color: #4F81BD;
+    font-family: Trebuchet MS;
+    font-size: 16px;
+    font-weight: normal;
+}
+
+.cd-mdxdoc-example-header a:hover span {
+    border-bottom: none;
+}
+
+.cd-mdxdoc-example-body {
+    padding-left: 20px;
+    padding-top: 10px;
+}
+
+.cd-mdxdoc-testresults {
+    background-color: #F8F8F8;
+    padding: 9px;
+    color: #464646;
+    font: 12px Verdana;
+    align: left;
+}
+
+.cd-mdxdoc-testresults td {
+    border: 1px solid #DDDDDD;
+    font-size: 12px;
+    padding: 5px;
+}
+
+.cd-mdxdoc-testresults-caption-cell {
+    background-color: #C3DAF9;
+    color: #083772;
+    font-weight: bold;
+    padding: 5px 12px;
+    vertical-align: top;
+    border: 1px solid #C3DAF9;
+}
+
+.cd-mdxdoc-testresults-empty-cell {
+    border: 1px solid #F8F8F8 !important;
+}
+
+.cd-mdxdoc-content {
+    margin-left: 240px;
+}
+
+.cd-mdxdoc-tree-container {
+    margin: 0 10px 10px;
+    width: 200px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-bottom: 25px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+}
+
+.cd-mdxdoc-tree-branch {
+    padding-left: 10px;
+    padding-top: 5px;
+    white-space: nowrap;
+}
+
+.cd-mdxdoc-tree-branch-btn {
+    background: url("../img/mdx_doc_tree_btn_collapsed.png") no-repeat scroll 0 0 transparent;
+    display: block;
+    float: left;
+    height: 10px;
+    margin-top: 3px;
+    width: 10px;
+}
+
+.cd-mdxdoc-tree-branch-btn-expanded {
+    background: url("../img/mdx_doc_tree_btn_expanded.png") no-repeat scroll 0 0 transparent;
+}
+
+.cd-mdxdoc-tree-leaf {
+    padding-left: 20px;
+    padding-top: 5px;
+}
+
+.clearer {
+    clear: both;
+}
+
+.cd-mdxdoc-tree-container a {
+    text-decoration: none;
+}
+
+.cd-mdxdoc-tree-container a:hover {
+    text-decoration: underline;
+}
+
+a.cd-mdxdoc-tree-selected-element {
+    color: #5FA825;
+}
+
+.cd-mdxdoc-wrapper {
+    background: url("../img/mdx_doc_wrapper_divider.png") repeat-y scroll 220px 0 transparent;
+    position: relative;
+}
+
+.cd-mdxdoc-bottom-divider {
+    border-bottom: 1px solid #ebebeb;
+    padding-top: 50px;
+}
+
+.cd-mdxdoc-bottom-block {
+    float: right;
+    font-size: 10px;
+    color: #555;
+    margin-bottom: 50px;
+}
+
+.cd-mdxdoc-forum-link-wrapper {
+    position: absolute;
+    right: 0;
+    top: -34px;
+    margin-right: 30px;
+    height: 22px;
+}
+
+.cd-mdxdoc-forum-link-bg {
+    background-image: url(../img/_msg-bg.png);
+    height: 22px;
+    width: 217px;
+    cursor: pointer;
+}
+
+.cd-mdxdoc-forum-link-text {
+    padding-top: 4px;
+    text-align: center;
+}
+
+.cd-mdxdoc-forum-link-text a {
+    text-decoration: none;
+}
+
+.cd-mdxdoc-forum-link-text a:hover {
+    text-decoration: underline;
+}
+
+.cd-mdxdoc-header {
+    padding-bottom: 10px;
+    margin-left: -3px;
+}
+
+.cd-mdxdoc-header-functionName {
+    color: #5FA825;
+    font-family: Trebuchet MS;
+    font-size: 20px;
+    vertical-align: middle;
+}
+
+.cd-mdxdoc-header-functionExtra {
+    color: #5FA825;
+    font-family: Trebuchet MS;
+    font-size: 16px;
+    vertical-align: middle;
+}
+
+a.cd-mdxdoc-standard-function {
+
+}
+
+a.cd-mdxdoc-icCube-function {
+    background: transparent url(../img/iccube.png) scroll no-repeat right center;
+    padding-bottom: 3px;
+    padding-right: 18px;
+}
+
+.vizDocFrame {
+    height: 1250px;
+}
+

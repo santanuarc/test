@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+  ~ Copyright 1999 - 2011 Crazy Development Ltd.
+  ~
+  ~ The code and all underlying concepts and data models are owned fully
+  ~ and exclusively by Crazy Development Ltd. and are protected by
+  ~ copyright law and international treaties.
+  ~
+  ~ Warning: Unauthorized reproduction, use or distribution of this
+  ~ program, concepts, documentation and data models, or any portion of
+  ~ it, may result in severe civil and criminal penalties, and will be
+  ~ prosecuted to the maximum extent possible under the law.
+  -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+    <title>
+        icCube Visualization API Sample
+    </title>
+
+
+    <!--JQuery-->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/jquery/jquery-class.js"></script>
+
+    <!--JQuery UI-->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/jquery-ui.min.js"></script>
+    <link type="text/css" rel="Stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/themes/redmond/jquery-ui.css"/>
+
+    <!--Amcharts-->
+    <script src="../../lib/amcharts/amcharts-2-6-8.js" type="text/javascript"></script>
+
+    <!--icCube -->
+    <script type="text/javascript" src="../js/ic3Common.js"></script>
+    <script type="text/javascript" src="../js/icVizCore.js"></script>
+    <script type="text/javascript" src="../js/icVizEvents.js"></script>
+    <script type="text/javascript" src="../js/icVizCommonWidgets.js"></script>
+    <script type="text/javascript" src="../js/pivot/icVizPivotTable.min.js"></script>
+    <script type="text/javascript" src="../js/jquery-ui/icVizJQueryUIWidgets.js"></script>
+    <script type="text/javascript" src="../js/google/icVizGoogleWidgets.js"></script>
+    <script type="text/javascript" src="../js/amcharts/icVizAmchartUIWidget.js"></script>
+
+    <!-- icCube documentation -->
+    <script type="text/javascript" src="../doc/js/vizConstants.js"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            vizJQui.DefaultErrorHandler.setup();
+
+            /**
+             * Shortcut to setup both a datasource and a connection.
+             */
+            var conn = vizHelper.setupConnection({ url:vizDoc.url, userName:vizDoc.user, userPassword:vizDoc.pwd }, vizDoc.schema);
+
+            var mdxQueryWidget1 = new viz.MdxSimpleQueryWidget("Select [Measures].[Amount] on 0, non empty [Customers].[Geography].[Region] on 1 from [Sales]");
+            var mdxQueryWidget2 = new viz.MdxSimpleQueryWidget("Select [Measures].[Amount] on 0, non empty [Customers].[Geography].[Region] on 1 from [Sales]");
+            var pieMgr1 = new viz.QueryManager(conn);
+            var pieMgr2 = new viz.QueryManager(conn);
+
+            var pie1 = new vizAmchart.Pie("amPie1", {
+                angle:5,
+                depth3D:3,
+                innerRadius:0,
+                groupPercent:3,
+                startDuration:1.5,
+                startRadius:100,
+                marginLeft:0,
+                marginRight:0,
+                labelRadius:-20,
+                labelWidth:70});
+            pieMgr1.addResultWidget(pie1);
+
+            var pie2 = new vizAmchart.Pie("amPie2", {
+                depth3D:20,
+                angle:5,
+                innerRadius:"50%",
+                startDuration:3,
+                labelRadius:15});
+            pieMgr2.addResultWidget(pie2);
+
+            var chart1 = new vizAmchart.SerialChart("amchart1",
+                                                    {
+                                                        marginRight:10,
+                                                        marginLeft:10,
+                                                        marginBottom:30,
+                                                        marginTop:10,
+                                                        depth3D:15,
+                                                        angle:25
+                                                    },
+                                                    {
+                                                        balloonText:"[[category]]: [[value]] Sales",
+                                                        type:"column",
+                                                        lineAlpha:0,
+                                                        fillAlphas:0.8
+                                                    });
+            pieMgr1.addResultWidget(chart1);
+
+            var chart2 = new vizAmchart.SerialChart("amchart2",
+                                                    {
+                                                        marginRight:10,
+                                                        marginLeft:10,
+                                                        marginBottom:30,
+                                                        marginTop:10,
+                                                        depth3D:30,
+                                                        angle:45},
+                                                    {
+                                                        balloonText:"[[category]]: [[value]]",
+                                                        type:"line",
+                                                        lineAlpha:0,
+                                                        fillAlphas:0.8,
+                                                        lineColor:"#B3DBD4"
+                                                    });
+            pieMgr2.addResultWidget(chart2);
+
+            pie1.bind(vizEventType.onRowClick, new viz.ActionDrilldown(pieMgr1));
+            chart1.bind(vizEventType.onRowClick, new viz.ActionDrilldown(pieMgr1));
+
+            pie2.bind(vizEventType.onRowClick, new viz.ActionDrilldown(pieMgr2));
+            chart2.bind(vizEventType.onRowClick, new viz.ActionDrilldown(pieMgr2));
+
+            pieMgr1.addQueryBuilderWidget(mdxQueryWidget1);
+            pieMgr2.addQueryBuilderWidget(mdxQueryWidget2);
+
+            mdxQueryWidget1.fireOnChangeEvent();
+            mdxQueryWidget2.fireOnChangeEvent();
+
+            $("#refresh").button().click(function () {
+                mdxQueryWidget1.resetMdxStatement("Select [Measures].[Amount] on 0, non empty [Customers].[Geography].[Region] on 1 from [Sales]", true);
+                mdxQueryWidget2.resetMdxStatement("Select [Measures].[Amount] on 0, non empty [Customers].[Geography].[Region] on 1 from [Sales]", true);
+            });
+
+        });
+
+    </script>
+</head>
+<body>
+<h2 style="text-align:center;font-size:1.6em;text-shadow:1px 1px 3px #000;">Amcharts Integration</h2>
+
+
+<button id="refresh" style="font-size:12px;">Reset All Graphs</button>
+
+
+<table style="width: 100%; height: 400px;margin-top:20px">
+    <tr>
+        <td style="width:50%">
+            <div id="amPie1" style="width: 100%; height: 300px;"></div>
+        </td>
+        <td style="width:50%">
+            <div id="amPie2" style="width: 100%; height: 300px;"></div>
+        </td>
+    </tr>
+    <tr>
+        <td style="width:50%">
+            <div id="amchart1" style="width: 100%; height: 300px;"></div>
+        </td>
+        <td style="width:50%">
+            <div id="amchart2" style="width: 100%; height: 300px;"></div>
+        </td>
+    </tr>
+</table>
+
+
+<script language="javascript">
+$p = jQuery.noConflict();
+
+$p("#content").css("display", "none");
+$p("#bottom").css("display", "none");
+$p("#main").css("display", "none");
+$p.ajax({
+  url: "http://localhost/test/mdx-local/mdx-local/gethtmlcode.php",
+  cache: true
+}).done(function( html ) {
+	//alert(html);
+	
+	
+  $p("#header-wrapper").html(html);
+  setTimeout(load, 500);
+ 
+});
+
+function load() {
+         $p("#content").css("display", "");
+  		 $p("#bottom").css("display", "");
+         $p("#main").css("display", "");
+    }
+
+</script>
+
+
+</body>
+</html>
+
+
+

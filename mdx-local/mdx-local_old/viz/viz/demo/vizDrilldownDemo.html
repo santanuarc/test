@@ -1,0 +1,390 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+  ~ Copyright 1999 - 2011 Crazy Development Ltd.
+  ~
+  ~ The code and all underlying concepts and data models are owned fully
+  ~ and exclusively by Crazy Development Ltd. and are protected by
+  ~ copyright law and international treaties.
+  ~
+  ~ Warning: Unauthorized reproduction, use or distribution of this
+  ~ program, concepts, documentation and data models, or any portion of
+  ~ it, may result in severe civil and criminal penalties, and will be
+  ~ prosecuted to the maximum extent possible under the law.
+  -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+<title>
+    icCube Visualization API Sample
+</title>
+
+<!--JQuery-->
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="../../lib/jquery/jquery-class.js"></script>
+
+<!--JQuery UI-->
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/jquery-ui.min.js"></script>
+<link type="text/css" rel="Stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/themes/redmond/jquery-ui.css"/>
+
+<!--JJMenu UI-->
+<link rel="stylesheet" type="text/css" href="../../lib/jjmenu/css/styl.css"/>
+<script type="text/javascript" src="../../lib/jjmenu/jjmenu.js"></script>
+
+<!--icCube -->
+<script type="text/javascript" src="../js/ic3Common.js"></script>
+<script type="text/javascript" src="../js/icVizCore.js"></script>
+<script type="text/javascript" src="../js/icVizEvents.js"></script>
+<script type="text/javascript" src="../js/icVizCommonWidgets.js"></script>
+<script type="text/javascript" src="../js/jquery-ui/icVizJQueryUIWidgets.js"></script>
+<script type="text/javascript" src="../js/google/icVizGoogleWidgets.js"></script>
+<script type="text/javascript" src="../js/vizui/icVizJJmenuWidgets.js"></script>
+
+<!-- icCube documentation -->
+<script type="text/javascript" src="../doc/js/vizConstants.js"></script>
+
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">
+    google.load('visualization', '1.1', {packages:['table']});
+    google.load("visualization", "1.1", {packages:["corechart"]});
+</script>
+
+<style TYPE="text/css">
+
+    .google-visualization-table-table {
+        font-size: 8pt;
+        font-family: arial;
+    }
+
+    .default-error-dialog {
+        font-size: 8pt;
+        font-family: arial;
+    }
+
+    .portlet {
+        margin-top: 10px;
+    }
+
+    .portlet-header {
+        height: 25px;
+    }
+
+    .toolbar {
+        padding: 3px 3px;
+    }
+
+</style>
+
+<script type="text/javascript">
+
+    google.setOnLoadCallback(function () {
+        vizJQui.DefaultErrorHandler.setup();
+
+        viz.registerMousePositionListenerForDocument(document);
+
+        // ---------------------------------------------------------------------------------------------------------
+        var schemaConn = vizHelper.setupConnection({ url:vizDoc.url, userName:vizDoc.user, userPassword:vizDoc.pwd });
+        var schemaMgr = new viz.QueryManager(schemaConn);
+        var schemaCombo = new vizUi.DropDownList("schemaSelectorId", {
+            style:'style="font-size:8pt; font-family:arial"',
+            preSelection:"Sales"
+        });
+
+        schemaMgr.addResultWidget(schemaCombo);
+
+        // ---------------------------------------------------------------------------------------------------------
+
+        function createChart(index, mdx) {
+            var vizChartChooser = new vizGoogle.ChartChooser("chartChooserId-" + index, 0, [
+                vizGoogle.ChartChooser.TABLE,
+                vizGoogle.ChartChooser.PIE,
+                vizGoogle.ChartChooser.LINE,
+                vizGoogle.ChartChooser.BAR,
+                vizGoogle.ChartChooser.COLUMN,
+                vizGoogle.ChartChooser.AREA
+            ]);
+
+            var conn = new viz.Connection(schemaConn.dataSource, "undefined-schema");
+            var mgr = new viz.QueryManager(conn);
+
+            // The slicer as setup by the drilldown action.
+            var vizSlicerWidget = new vizUi.Slicer("slicerId-" + index);
+
+            // Keep a history of the drilldown requests.
+            var vizBackButton = new vizUi.HistoryButton("backButtonId-" + index, mgr, function () {
+                vizSlicerWidget.pop();
+            });
+
+            // The initial MDX request.
+            var vizMdxQueryWidget = new vizUi.TextAdapter("textarea#mdxQueryId-" + index, vizBackButton);
+
+            vizMdxQueryWidget.setMdxExpression(mdx);
+
+            mgr.addQueryBuilderWidget(vizMdxQueryWidget);
+
+            vizMdxQueryWidget.bind(viz.EventType.onVizChange, function () {
+                vizSlicerWidget.clear();
+            });
+
+            // Allows for selecting the level to drill into.
+            var vizLevelChooser = new vizUi.MdxEntityPopupChooser();
+
+            var googleChartClass = vizGoogle.ChartChooser.TABLE.classname;
+
+            // Actual drilldown logic.
+            var vizCascadeAction;
+
+            switch (index) {
+                case 0:
+                    vizCascadeAction = new viz.ActionDrilldown(mgr);
+                    break;
+
+                case 1:
+                    vizCascadeAction = new viz.ActionLevelDrilldown(mgr, vizLevelChooser, vizSlicerWidget);
+                    break;
+
+                case 2:
+                    var elem = $("#topCountQueryId-2");
+
+                    elem.button();
+
+                    vizCascadeAction = new viz.ActionLevelTopCountDrilldown(mgr, vizLevelChooser, vizSlicerWidget, {
+
+                        getN:function () {
+                            var val = elem.val();
+                            return val || 3;
+                        }
+
+                    });
+                    break;
+            }
+
+            var vizChart = new vizGoogle.MutableChart("chartId-" + index, googleChartClass);
+            vizChart.bind(vizEventType.onRowClick,vizCascadeAction);
+
+            vizChartChooser.change(function (classname, name) {
+                vizChart.mutate(classname);
+            });
+
+            mgr.addResultWidget(vizChart);
+
+            // ---------------------------------------------------------------------------------------------------------
+
+            $("#execQueryId-" + index).button({text:false, icons:{ primary:"ui-icon-play" }}).click(function () {
+                vizMdxQueryWidget.fireOnChangeEvent();
+            });
+
+            return {
+                conn:conn,
+                vizMdxQueryWidget:vizMdxQueryWidget
+            }
+        }
+
+        // ---------------------------------------------------------------------------------------------------------
+
+        $("#accordion").accordion({
+                                      fillSpace:true,
+                                      collapsible:true
+                                  });
+
+        var mdx = "select \n [Measures].amount on 0, non empty [Customers].[Geography].[Region] on 1 \n from sales";
+
+        var charts = [
+            createChart(0, mdx),
+            createChart(1, mdx),
+            createChart(2, mdx)
+        ];
+
+        // Setup the schema selector content ...
+        schemaMgr.executeRequest(new viz.GetSchemasGviRequest(), {timeout:5000});
+
+        var isInitPhase = true;
+
+        schemaCombo.bind(vizEventType.onSelection, function (event) {
+            var schemaName = event.selection.uniqueName;
+
+            for (var idx = 0; idx < charts.length; idx++) {
+                var chart = charts[idx];
+
+                chart.conn.schemaName = schemaName;
+                if (isInitPhase) {
+                    chart.vizMdxQueryWidget.fireOnChangeEvent();
+                }
+            }
+
+            if (isInitPhase) {
+                isInitPhase = false;
+            }
+        });
+
+    });
+
+</script>
+</head>
+<body>
+
+<div id="globalBodyDiv" style="font-size:8pt; font-family:arial">
+
+    <table>
+        <tr>
+            <td>
+                icCube Schema
+            </td>
+            <td>
+                <div id="schemaSelectorId">
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <div id="accordion">
+
+        <h3><a href="vizDrilldownDemo.html#">1. Children Drilldown</a></h3>
+
+        <div id="portletContentId-0">
+            <table>
+                <tr valign="top">
+                    <td style="width:250px;color:#a9a9a9;">
+                        This dashboard demonstrates how to setup an action:
+                        click on a member to drilldown into its children.
+                    </td>
+                    <td>
+                        <textarea id="mdxQueryId-0" cols="100" rows="4">
+                            no request
+                        </textarea>
+                    </td>
+                </tr>
+            </table>
+
+            <div style="margin-top:10px; font-size:10px">
+
+                <div class="toolbar ui-widget-header ui-corner-all">
+
+                    <button id="execQueryId-0" title="(Re)Execute the MDX Query">Exec</button>
+                    <button id="backButtonId-0" title="Drillup (back) MDX Query">back</button>
+
+                    <span id="chartChooserId-0"></span>
+
+                </div>
+
+                <div id="chartId-0" style="margin-top:10px;width:100%;height:300px;">
+                    loading...
+                </div>
+
+                <div id="slicerId-0" style="margin-top:8px;width:100%;font-size:8pt;font-family:arial"></div>
+            </div>
+        </div>
+
+        <h3><a href="vizDrilldownDemo.html#">2. Hierarchy Drilldown</a></h3>
+
+        <div id="portletContentId-1">
+
+            <table>
+                <tr valign="top">
+                    <td style="width:250px;color:#a9a9a9;">
+                        This dashboard demonstrates how to setup an action:
+                        click on a member to select the next hierarchy to drill into
+                        (this member is added to the slicer/filter of the request).
+                    </td>
+                    <td>
+                        <textarea id="mdxQueryId-1" cols="100" rows="4">
+                            no request
+                        </textarea>
+                    </td>
+                </tr>
+            </table>
+
+            <div style="margin-top:10px; font-size:10px">
+
+                <div class="toolbar ui-widget-header ui-corner-all">
+
+                    <button id="execQueryId-1" title="(Re)Execute the MDX Query">Exec</button>
+                    <button id="backButtonId-1" title="Drillup (back) MDX Query">back</button>
+
+                    <span id="chartChooserId-1"></span>
+
+                </div>
+
+                <div id="chartId-1" style="margin-top:10px;width:100%;height:300px;">
+                    loading...
+                </div>
+
+                <div id="slicerId-1" style="margin-top:8px;width:100%;font-size:8pt;font-family:arial"></div>
+            </div>
+        </div>
+
+        <h3><a href="vizDrilldownDemo.html#" title="">3. Hierarchy & Top Count Drilldown</a></h3>
+
+        <div id="portletContentId-2">
+
+            <table>
+                <tr valign="top">
+                    <td style="width:250px;color:#a9a9a9;">
+                        This dashboard demonstrates how to setup an action:
+                        click on a member to select the next hierarchy to drill
+                        into (this member is added to the slicer/filter of the request).
+                    </td>
+                    <td>
+                        <textarea id="mdxQueryId-2" cols="100" rows="4">
+                            no request
+                        </textarea>
+                    </td>
+                </tr>
+            </table>
+
+            <div style="margin-top:10px; font-size:10px">
+
+                <div class="toolbar ui-widget-header ui-corner-all">
+
+                    <button id="execQueryId-2" title="(Re)Execute the MDX Query">Exec</button>
+                    <button id="backButtonId-2" title="Drillup (back) MDX Query">back</button>
+
+                    <label>
+                        <input id="topCountQueryId-2" style="width:20px" type="text" value="3"
+                               title="Number of top members to select"/>
+                    </label>
+
+                    <span id="chartChooserId-2"></span>
+
+                </div>
+
+                <div id="chartId-2" style="margin-top:10px;width:100%;height:300px;">
+                    loading...
+                </div>
+
+                <div id="slicerId-2" style="margin-top:8px;width:100%;font-size:8pt;font-family:arial"></div>
+            </div>
+        </div>
+
+    </div>
+
+<script language="javascript">
+$p = jQuery.noConflict();
+
+$p("#content").css("display", "none");
+$p("#bottom").css("display", "none");
+$p("#main").css("display", "none");
+$p.ajax({
+  url: "http://localhost/test/mdx-local/mdx-local/gethtmlcode.php",
+  cache: true
+}).done(function( html ) {
+	//alert(html);
+	
+	
+  $p("#header-wrapper").html(html);
+  setTimeout(load, 500);
+ 
+});
+
+function load() {
+         $p("#content").css("display", "");
+  		 $p("#bottom").css("display", "");
+         $p("#main").css("display", "");
+    }
+
+</script>
+
+
+</body>
+</html>

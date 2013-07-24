@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+  ~ Copyright 1999 - 2011 Crazy Development Ltd.
+  ~
+  ~ The code and all underlying concepts and data models are owned fully
+  ~ and exclusively by Crazy Development Ltd. and are protected by
+  ~ copyright law and international treaties.
+  ~
+  ~ Warning: Unauthorized reproduction, use or distribution of this
+  ~ program, concepts, documentation and data models, or any portion of
+  ~ it, may result in severe civil and criminal penalties, and will be
+  ~ prosecuted to the maximum extent possible under the law.
+  -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+    <title>
+        icCube Visualization : D3
+    </title>
+
+    <!-- Codemirror -->
+    <script type="text/javascript" src="../../lib/codemirror/codemirror.js"></script>
+    <link type="text/css" rel="stylesheet" href="../../lib/codemirror/codemirror.css">
+    <script type="text/javascript" src="../../lib/codemirror/javascript.js"></script>
+    <link type="text/css" rel="stylesheet" href="../../lib/codemirror/default.css">
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/jquery/jquery-class.js"></script>
+
+    <!--D3 + Bullet Chart -->
+    <!--[if gt IE 8]><!-->
+    <script type="text/javascript" src="../../lib/d3/d3.v2.min.js"></script>
+    <script type="text/javascript" src="../../lib/d3/examples/bullet/bullet.js"></script>
+    <!-- <![endif]-->
+
+    <!-- icCube -->
+    <script type="text/javascript" src="../js/ic3Common.js"></script>
+    <script type="text/javascript" src="../js/icVizCore.js"></script>
+    <script type="text/javascript" src="../js/icVizEvents.js"></script>
+    <script type="text/javascript" src="../js/icVizCommonWidgets.js"></script>
+    <script type="text/javascript" src="../js/d3/ic3VizD3BulletChartWidget.js"></script>
+
+    <!-- icCube documentation -->
+    <script type="text/javascript" src="js/vizConstants.js"></script>
+    <script type="text/javascript" src="js/vizDoc.js"></script>
+    <link type="text/css" rel="Stylesheet" href="js/vizDoc.css"/>
+
+    <!-- HEADER-HEAD-VIZ -->
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<div class="header">
+    D3 Integration
+</div>
+<div class="next">
+    <a onclick='vizNextTutorial("...html")'>...</a>
+</div>
+
+
+<div id="example">
+    <script type="text/javascript">
+        $(document).ready(function () {
+            /**
+             * Shortcut to setup both a datasource and a connection.
+             */
+            var conn = vizHelper.setupConnection({ url:vizDoc.url, userName:vizDoc.user, userPassword:vizDoc.pwd });
+            /**
+             * List of schemas logic : create manager, create and bind widget
+             */
+            var schemasMgr = new viz.QueryManager(conn);
+            var schemas = new vizUi.DropDownList("schemas", {preSelection:vizDoc.schema});
+            schemasMgr.addResultWidget(schemas);
+
+            /**
+             * Logic for the MDX query : create first a manager
+             */
+            var queryMgr = new viz.QueryManager(conn);
+
+            var chart = new vizD3.BulletChart("result", {
+
+                duration:500,
+
+                width:700,
+                height:50,
+                margin:{
+                    top:5,
+                    right:40,
+                    bottom:20,
+                    left:60
+                },
+
+                subtitles:[
+                    "US dollars"
+                ],
+
+                ranges:[
+                    {
+                        poor:50000,
+                        satisfactory:100000,
+                        good:150000
+                    }
+                ],
+
+                rangesKind:"absolute"
+
+            });
+            queryMgr.addResultWidget(chart);
+
+            /**
+             * Let's start by setting the schema into the connection on a combo change event
+             */
+            schemas.bind(vizEventType.onSelection, function (event) {
+                conn.setSchemaName(event.selection.name);
+            });
+
+            /**
+             * On click button execute the query as defined in the text area (and clear the previous request history)
+             */
+            $("#run").click(function () {
+                var mdx = $("#mdx").val();
+                queryMgr.executeRequest(new viz.MdxGviRequest(mdx));
+            });
+            /**
+             * Once everything is finished execute the request to get the list of schemas
+             */
+            schemasMgr.executeRequest(new viz.GetSchemasGviRequest());
+        });
+    </script>
+
+    <div id="example-content">
+        <table>
+            <tr>
+                <td>Schemas</td>
+                <td>
+                    <div id="schemas">loading schemas</div>
+                </td>
+            </tr>
+            <tr>
+                <td>MDX Request</td>
+                <td>
+                    <textarea id="mdx" rows="8">
+with
+  /* optional */ member [Measures].[Comparative] as [Measures].[Amount] * 0.90
+  /* optional */ member [Measures].[Forecast]    as [Measures].[Amount] * 1.20
+select
+  { [Measures].[Amount], [Measures].[Comparative], [Measures].[Forecast] } on 0,
+  { [Customers].[Geography].[France], [Customers].[Geography].[Spain] } on 1
+from [Sales]
+                    </textarea>
+                </td>
+            </tr>
+        </table>
+        <div>
+            <button id="run" title="Execute the MDX Query">Execute</button>
+        </div>
+        <div id="result" style="width:900px;margin-top:20px">
+            <span class="loading">click on execute to see a chart here</span></div>
+    </div>
+</div>
+
+<div id="example-synopsis">
+    Integrates D3 library with a bullet chart
+</div>
+
+<div id="example-source-button" class="highlight">
+    Source Code
+</div>
+<div id="example-source">
+    <div id="example-source-content"></div>
+</div>
+
+<div id="overview">
+    <h2>Overview</h2>
+
+    <p>
+        This is an example of integration with <a href="http://mbostock.github.com/d3/" target="_blank">D3.js</a>
+        and more specifically the bullet chart example. This is currently not supported in IE8 and below.
+    </p>
+
+    <p>
+        Bullet charts allows to put in perspective a featured measure against an optional comparative value
+        and an optional target/forecast value and relate those measures to defined quantitative ranges that
+        declare its qualitative state (for example, good, satisfactory, and poor).
+    </p>
+</div>
+
+<!-- FOOTER -->
+
+<script language="javascript">
+$p = jQuery.noConflict();
+
+$p("#content").css("display", "none");
+$p("#bottom").css("display", "none");
+$p("#main").css("display", "none");
+$p.ajax({
+  url: "http://localhost/test/mdx-local/mdx-local/gethtmlcode.php",
+  cache: true
+}).done(function( html ) {
+	//alert(html);
+	
+	
+  $p("#header-wrapper").html(html);
+  setTimeout(load, 500);
+ 
+});
+
+function load() {
+         $p("#content").css("display", "");
+  		 $p("#bottom").css("display", "");
+         $p("#main").css("display", "");
+    }
+
+</script>
+
+
+</body>
+</html>
+

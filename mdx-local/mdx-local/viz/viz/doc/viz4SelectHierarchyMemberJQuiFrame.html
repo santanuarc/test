@@ -1,0 +1,291 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+  ~ Copyright 1999 - 2011 Crazy Development Ltd.
+  ~
+  ~ The code and all underlying concepts and data models are owned fully
+  ~ and exclusively by Crazy Development Ltd. and are protected by
+  ~ copyright law and international treaties.
+  ~
+  ~ Warning: Unauthorized reproduction, use or distribution of this
+  ~ program, concepts, documentation and data models, or any portion of
+  ~ it, may result in severe civil and criminal penalties, and will be
+  ~ prosecuted to the maximum extent possible under the law.
+  -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <!--<meta http-equiv="X-UA-Compatible" content="IE=edge"/>-->
+    <meta http-equiv="X-UA-Compatible" content="IE=8">
+
+    <title>
+        icCube Visualization : Hierarchy/Member Selection (JQuery UI)
+    </title>
+
+    <!-- Codemirror -->
+    <script type="text/javascript" src="../../lib/codemirror/codemirror.js"></script>
+    <link type="text/css" rel="stylesheet" href="../../lib/codemirror/codemirror.css">
+    <script type="text/javascript" src="../../lib/codemirror/javascript.js"></script>
+    <link type="text/css" rel="stylesheet" href="../../lib/codemirror/default.css">
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/jquery/jquery-class.js"></script>
+    <!-- internalization support-->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/i18n/jquery-ui-i18n.min.js"></script>
+
+    <!--JQuery UI-->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js"></script>
+    <link type="text/css" rel="Stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/themes/redmond/jquery-ui.css"/>
+
+    <!-- icCube -->
+    <script type="text/javascript" src="../js/ic3Common.js"></script>
+    <script type="text/javascript" src="../js/icVizCore.js"></script>
+    <script type="text/javascript" src="../js/icVizEvents.js"></script>
+    <script type="text/javascript" src="../js/icVizCommonWidgets.js"></script>
+    <script type="text/javascript" src="../js/jquery-ui/icVizJQueryUIWidgets.js"></script>
+
+    <!-- icCube documentation -->
+    <script type="text/javascript" src="js/vizConstants.js"></script>
+    <script type="text/javascript" src="js/vizDoc.js"></script>
+    <link type="text/css" rel="Stylesheet" href="js/vizDoc.css"/>
+
+    <!-- HEADER-HEAD-VIZ -->
+
+</head>
+
+<!-- HEADER -->
+
+<body>
+
+<div class="header">
+    Selecting hierarchies and members (JQuery UI)
+</div>
+<div class="next">
+    <a onclick='vizNextTutorial("viz4Z1SelectHierarchyMemberExtJs.html")'>Selecting hierarchies and members (ExtJS) </a>
+</div>
+
+
+<div id="example">
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            vizJQui.DefaultErrorHandler.setup();
+
+            /**
+             * Shortcut to setup both a datasource and a connection bound to a schema.
+             */
+            var conn = vizHelper.setupConnection({ url:vizDoc.url, userName:vizDoc.user, userPassword:vizDoc.pwd });
+
+            /**
+             * List of schemas logic : request processing, widget notifications.
+             */
+            var schemasMgr = new viz.QueryManager(conn);
+
+            /**
+             * Will display the list of schemas as returned by the get schemas requests.
+             */
+            var schemas = new vizJQui.AutoComplete("schemas");
+
+            /**
+             * Add the schemas drop down as a listener of the response of the query being processed by the query manager.
+             * For that purpose the VizJqueryAutoComplete is listening the onVizRequestExecuted event.
+             */
+            schemasMgr.addResultWidget(schemas);
+            schemasMgr.executeRequest(new viz.GetSchemasGviRequest());
+
+            /**
+             * List of hierarchies logic : request processing, widget notifications.
+             */
+            var hierarchiesMgr = new viz.QueryManager(conn);
+
+            /**
+             * Will display the list of hierarchies as returned by the get hierarchies requests.
+             */
+            var hierarchies = new vizJQui.ButtonList("hierarchies");
+
+            /**
+             * Add the hierarchies drop down as a listener of the response of the query being processed by the query manager.
+             * For that purpose the VizJqueryButtonList is listening the onVizRequestExecuted event.
+             */
+            hierarchiesMgr.addResultWidget(hierarchies);
+
+            /**
+             * List of members logic : request processing, widget notifications.
+             */
+            var membersMgr = new viz.QueryManager(conn);
+
+            /**
+             * Will display the list of hierarchies as returned by the get hierarchies requests.
+             */
+            var members = new vizJQui.Slider("members", "members-label");
+
+            /**
+             * Add the members drop down as a listener of the response of the query being processed by the query manager.
+             * For that purpose the VizJquerySlider is listening the onVizRequestExecuted event.
+             */
+            membersMgr.addResultWidget(members);
+
+            /**
+             * Will display the list of hierarchies as returned by the get hierarchies requests.
+             */
+            var hierarchiesMultiSelect = new vizUi.ButtonList("hierarchiesMultiSelect", {multiSelection:true});
+
+            /**
+             * Add the hierarchies drop down as a listener of the response of the query being processed by the query manager.
+             * For that purpose the VizJqueryButtonList is listening the onVizRequestExecuted event.
+             */
+            hierarchiesMgr.addResultWidget(hierarchiesMultiSelect);
+
+            /**
+             * React to schemas.change event to request the list of hierarchies.
+             */
+            schemas.bind(vizEventType.onSelection, function (event) {
+                if (event.selection) {
+                    var schema = event.selection.uniqueName;
+                    conn.setSchemaName(schema);
+                    hierarchiesMgr.executeRequest(new viz.GetHierarchiesGviRequest(null /*no-cube */, true));
+
+                }
+            });
+
+            /**
+             * React to hierarchies.change event to request the first 10 list of members for the selected hierarchy.
+             */
+            hierarchies.bind(vizEventType.onSelection, function (event) {
+                if (event.selection) {
+                    var hierarchy = event.selection;
+                    var mdx = "head( " + hierarchy.uniqueName + ".members, 10)";
+                    membersMgr.executeRequest(new viz.GetMembersGviRequest(null /* no-cube*/, mdx));
+                }
+            });
+
+            hierarchiesMultiSelect.bind(vizEventType.onSelection, function (event) {
+                if (event.selection) {
+                    var hierarchies = event.selection;
+                    var text = "";
+                    for (var i = 0; i < hierarchies.length; i++) {
+                        text += i === 0 ? "" : " - ";
+                        text += hierarchies[i].uniqueName;
+                    }
+                    $("#resultAsText").html(text);
+                }
+            });
+
+            /**
+             * datepicker, uses Sales schema and a new connection (might be another schema)
+             *
+             * It's a bit special as it's returning a 'time' member as a string using
+             * an expression memberFormat
+             */
+            var connDP = vizHelper.setupConnection({ url:vizDoc.url, userName:vizDoc.user, userPassword:vizDoc.pwd }, "Sales");
+            var schemasMgrDP = new viz.QueryManager(connDP);
+
+            var datepicker = new vizJQui.Datepicker("datepicker",{
+                memberFormat:'[Somehierarchy].["m-dd-yy"] or "yy, MM"',
+                vDateFormat:'d MM, yy',
+                preSelection: new Date(),  // now, could be also
+                locale : 'fr'    // check vizJQui.Datepicker.locale for supported locales + jquery-ui-i18n.min.js
+
+            });
+            schemasMgrDP.addResultWidget(datepicker);
+            schemasMgrDP.executeRequest(new viz.MdxGviRequest("select from [sales]"));
+            datepicker.bind(vizEventType.onSelection, function (event) {
+                if (event) {
+                    $("#datepicker-date").html(event.asMdx());
+                }
+            });
+
+        });
+    </script>
+
+    <div id="example-content">
+        <table>
+            <tr>
+                <td>
+                    <label for="schemas">Autocomplete widget - Schema</label></td>
+                <td style="width:100%">
+                    <input id="schemas"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Button widget - Hierarchy
+                </td>
+                <td>
+                    <div id="hierarchies"><span class="loading">select a schema to see hierarchies here</span></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Slider widget - Members
+                </td>
+                <td>
+                    <div id="members"></div>
+                    <div id="members-label">
+                        <span class="loading">select a hierarchy to see (the 10 first) members here</span></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    MultiSelect Button widget
+                </td>
+                <td>
+                    <div id="hierarchiesMultiSelect">
+                        <span class="loading">select a schema to see hierarchies here</span></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Text - Selected mdx entities
+                </td>
+                <td>
+                    <div id="resultAsText"><span class="loading">select hierarchies...</span></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Datepicker
+                </td>
+                <td>
+                    <div id="datepicker"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Datepicker date (member)
+                </td>
+                <td>
+                    <div id="datepicker-date"><span class="loading">select a date...</span></div>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+
+<div id="example-synopsis">
+    An example with a list of JQuery UI widgets to select mdx entities (members and hierarchies)
+</div>
+
+<div id="example-source-button" class="highlight">
+    Source Code
+</div>
+<div id="example-source">
+    <div id="example-source-content"></div>
+</div>
+
+<div id="overview">
+    <h2>Overview</h2>
+
+    <p>
+        This example is demonstrating how to use several JQuery UI widgets to display
+        and select MDX entities (e.g., schemas, hierarchies, members).
+    </p>
+
+</div>
+
+<!-- FOOTER -->
+
+</body>
+</html>

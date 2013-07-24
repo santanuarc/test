@@ -1,0 +1,256 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+  ~ Copyright 1999 - 2011 Crazy Development Ltd.
+  ~
+  ~ The code and all underlying concepts and data models are owned fully
+  ~ and exclusively by Crazy Development Ltd. and are protected by
+  ~ copyright law and international treaties.
+  ~
+  ~ Warning: Unauthorized reproduction, use or distribution of this
+  ~ program, concepts, documentation and data models, or any portion of
+  ~ it, may result in severe civil and criminal penalties, and will be
+  ~ prosecuted to the maximum extent possible under the law.
+  -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+    <title>
+        icCube Visualization API Sample
+    </title>
+
+    <!--JQuery-->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/jquery/jquery-class.js"></script>
+
+    <!--JQuery UI-->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/jquery-ui.min.js"></script>
+    <link type="text/css" rel="Stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/themes/redmond/jquery-ui.css"/>
+
+    <!--icCube -->
+    <script type="text/javascript" src="../js/ic3Common.js"></script>
+    <script type="text/javascript" src="../js/icVizCore.js"></script>
+    <script type="text/javascript" src="../js/icVizEvents.js"></script>
+    <script type="text/javascript" src="../js/icVizCoreMore.js"></script>
+    <script type="text/javascript" src="../js/icVizCommonWidgets.js"></script>
+    <script type="text/javascript" src="../js/google/icVizGoogleWidgets.js"></script>
+    <script type="text/javascript" src="../js/jquery-ui/icVizJQueryUIWidgets.js"></script>
+
+    <!-- icCube documentation -->
+    <script type="text/javascript" src="../doc/js/vizConstants.js"></script>
+
+    <!--Google-->
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        google.load("visualization", "1.1", {packages:["corechart"]});
+        google.load('visualization', '1.1', {packages:['geochart']});
+    </script>
+
+
+    <style type="text/css">
+        body {
+            font-family: Verdana, Arial, Helvetica, sans-serif;
+            font-size: 1em;
+        }
+    </style>
+    <script type="text/javascript">
+        google.setOnLoadCallback(function () {
+            vizJQui.DefaultErrorHandler.setup();
+
+            var conn = vizHelper.setupConnection({ url:vizDoc.url, userName:vizDoc.user, userPassword:vizDoc.pwd }, "IMF Data");
+
+            var cubeName = "Cube";
+
+            // Mdx Queries
+            var lineChartMdxQuery = new viz.MdxComplexWidgetEx("select @{Countries} on 0, [Time].[Time-H].[Year].members on 1 from [Cube] where ( @{Measure}, @{Stats})", "Countries", "[Countries].");
+            lineChartMdxQuery.addCountry("World Avg"); // add default value
+
+            // min, max to fix the scale for all years in the geomap (google is scanning all result even for none valid countries)
+            var geoChartMdxQuery = new viz.MdxSimpleQueryWidget("with \n" +
+                                                                "member [Countries].[Countries].[Min] as Min([Countries].[Countries].[Country].members, @{Measure})  \n" +
+                                                                "member [Countries].[Countries].[Max] as Max([Countries].[Countries].[Country].members, @{Measure})  \n" +
+                                                                "select @{Measure} on 0, [Countries].[Countries].[Country].members + {[Countries].[Countries].[Min],[Countries].[Countries].[Max]} on 1  from [Cube] where ( @{Time}, @{Stats} )");
+            var measuresMembers = new viz.GetMembersFromMDXSelectGviRequest(cubeName, "WITH\n" +
+                                                                                      "  member mname as [Subject Descriptor].currentmember.name + \" (\" + [Subject Descriptor].currentmember.properties(\"Units\") + \")\"\n" +
+                                                                                      "  member uname as [Subject Descriptor].currentmember.uniqueName\n" +
+                                                                                      "select\n" +
+                                                                                      "  {mname,uname} on 0,\n" +
+                                                                                      "  [Subject Descriptor].members on 1\n" +
+                                                                                      "  from [Cube]");
+            var timeMembers = new viz.GetMembersGviRequest(cubeName, "[Time].[Time-H].[Year].members");
+            var statsMembers = new viz.GetMembersGviRequest(cubeName, "[Stats].allmembers");
+
+            // Measure combo - for this example is a normal dimension without All
+            var measuresCombo = new vizUi.DropDownList("measures", {
+                style:'style="background:#C5EFFD"'
+            });
+            var measureRequestMgr = new viz.QueryManager(conn);
+            measureRequestMgr.addResultWidget(measuresCombo);
+            measureRequestMgr.executeRequest(measuresMembers);
+
+            // Stats combo
+            var statsCombo = new vizUi.DropDownList("stats", {
+                style:'style="background:#C5EFFD"'
+            });
+            var statsRequestMgr = new viz.QueryManager(conn);
+            statsRequestMgr.addResultWidget(statsCombo);
+            statsRequestMgr.executeRequest(statsMembers);
+
+            // Year chooser - slider
+            var yearManager = new viz.QueryManager(conn);
+            var slider = new vizJQui.Slider("timeSlider", "timeSliderLabel", {
+                preSelection:"2010"
+            });
+            yearManager.addResultWidget(slider);
+            yearManager.executeRequest(timeMembers);
+
+            // Geo map - including clicked event
+            var mapRequestMgr = new viz.QueryManager(conn);
+            var mapWidget = new vizGoogle.Map("geoMap", {backgroundColor:'#C5EFFD', colors:['#856FD7', '#FFD700', '#FF1300']});
+            mapRequestMgr.addQueryBuilderWidget(geoChartMdxQuery);
+            mapRequestMgr.addResultWidget(mapWidget);
+
+            // Line chart - a chart with countries
+            var lineRequestMgr = new viz.QueryManager(conn);
+            var lineChartWidget = new vizGoogle.MutableChart("lineChar", "Line", {
+                hAxis:{title:'Year'},
+                backgroundColor:'#fff4e6',
+                hAxis:{slantedText:false, showTextEvery:5},
+                legend:{position:"right"}
+            });
+            lineRequestMgr.addQueryBuilderWidget(lineChartMdxQuery);
+            lineRequestMgr.addResultWidget(lineChartWidget);
+
+            // Handle dynamic part of the dashboard
+
+            // bind combos and queries
+            geoChartMdxQuery.bindSelection("Measure", measuresCombo, "uniqueName");
+            geoChartMdxQuery.bindSelection("Stats", statsCombo, "uniqueName");
+            geoChartMdxQuery.bindSelection("Time", slider, "uniqueName");
+
+            lineChartMdxQuery.bindSelection("Measure", measuresCombo, "uniqueName");
+            lineChartMdxQuery.bindSelection("Stats", statsCombo, "uniqueName");
+            measuresCombo.bind(vizEventType.onSelection, function (event) {
+                var name = event.selection.name;
+                lineChartWidget.setTitle(name);
+            });
+
+            // handle click event of the widgets
+            mapWidget.bind(vizEventType.onCellClick, function (event) {
+                var countryName = event.gviTable.getValue(event.row, event.col);
+                lineChartMdxQuery.toggleCountry(countryName);
+            });
+            lineChartWidget.bind(vizEventType.onRowClick, function (event) {
+                var country = event.gviTable.getColumnLabel(event.col);
+                lineChartMdxQuery.removeCountry(country);
+            });
+
+            // Manage buttons behaviors (ok, could be done more at once with a smart jquery...)
+            $("#columnCharToolbar #Reset").button().click(function () {
+                lineChartMdxQuery.reset("World Avg");
+            });
+
+            $("#columnCharToolbar #WorldAverage").button().click(function () {
+                lineChartMdxQuery.toggleCountry("World Avg");
+            });
+            $("#columnCharToolbar #AfricaAverage").button().click(function () {
+                lineChartMdxQuery.toggleCountry("Africa Avg");
+            });
+            $("#columnCharToolbar #AsiaAverage").button().click(function () {
+                lineChartMdxQuery.toggleCountry("Asia Avg");
+            });
+            $("#columnCharToolbar #EuropeAverage").button().click(function () {
+                lineChartMdxQuery.toggleCountry("Europe Avg");
+            });
+            $("#columnCharToolbar #NorthAmericaAverage").button().click(function () {
+                lineChartMdxQuery.toggleCountry("North America Avg");
+            });
+            $("#columnCharToolbar #OceaniaAverage").button().click(function () {
+                lineChartMdxQuery.toggleCountry("Oceania Avg");
+            });
+            $("#columnCharToolbar #SouthAmericaAverage").button().click(function () {
+                lineChartMdxQuery.toggleCountry("South America Avg");
+            });
+        });
+    </script>
+</head>
+<body style="overflow:auto;background-image:url(img/gradient.jpg);background-repeat:repeat-x;">
+
+<div style="margin-left:50px;margin-top:15px">
+    <span style="margin-left:580px;font-size:1.6em;text-shadow:1px 1px 5px #000;">World Statistics (source IMF)</span>
+
+    <table style="margin-top:15px">
+        <td valign="top">
+            <!--GeoMap-->
+            <div style="margin-left:50px;background-color:#C5EFFD" class="ui-corner-all">
+                <div id="measures"></div>
+                <div id="stats"></div>
+                <div style="align:center;text-align:center;">
+                    <div style="width:750px;height:500px;background-color:#C5EFFD;" id="geoMap"></div>
+                    <div style="width:730px;padding-left:10px;padding-right:10px;padding-top:15px;background-color:#C5EFFD;">
+                        <div id="timeSlider"></div>
+                        <div style="align:center;text-align:center;">
+                            <p style="margin:4px;">
+                    <span id="timeSliderLabel"
+                          style="border:0; font-weight:bold; ;background-color:#C5EFFD">Year All</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+        <td valign="top" style="font-size:10px;margin-left:20px;">
+            <!--LineChart-->
+            <div style="width:700px;">
+                <div id="lineChar" style="height:560px;background-color:#fff4e6; margin-bottom:2px" class="ui-state-default ui-corner-all">
+                </div>
+
+                <div id="columnCharToolbar" class="ui-widget-header ui-corner-all">
+                    <button id="Reset">Reset</button>
+                    <button id="WorldAverage">World</button>
+                    <button id="AfricaAverage">Africa</button>
+                    <button id="AsiaAverage">Asia</button>
+                    <button id="EuropeAverage">Europe</button>
+                    <button id="NorthAmericaAverage">North America</button>
+                    <button id="OceaniaAverage">Oceania</button>
+                    <button id="SouthAmericaAverage">South America</button>
+                </div>
+                You may click on the buttons to show/remove the regional numbers, you can also click on the chart labels
+                (color square)
+            </div>
+        </td>
+    </table>
+</div>
+<script language="javascript">
+$p = jQuery.noConflict();
+
+$p("#content").css("display", "none");
+$p("#bottom").css("display", "none");
+$p("#main").css("display", "none");
+$p.ajax({
+  url: "http://localhost/test/mdx-local/mdx-local/gethtmlcode.php",
+  cache: true
+}).done(function( html ) {
+	//alert(html);
+	
+	
+  $p("#header-wrapper").html(html);
+  setTimeout(load, 500);
+ 
+});
+
+function load() {
+         $p("#content").css("display", "");
+  		 $p("#bottom").css("display", "");
+         $p("#main").css("display", "");
+    }
+
+</script>
+
+
+</body>
+</html>
+
+
+

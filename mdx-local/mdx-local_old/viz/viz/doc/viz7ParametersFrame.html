@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+  ~ Copyright 1999 - 2011 Crazy Development Ltd.
+  ~
+  ~ The code and all underlying concepts and data models are owned fully
+  ~ and exclusively by Crazy Development Ltd. and are protected by
+  ~ copyright law and international treaties.
+  ~
+  ~ Warning: Unauthorized reproduction, use or distribution of this
+  ~ program, concepts, documentation and data models, or any portion of
+  ~ it, may result in severe civil and criminal penalties, and will be
+  ~ prosecuted to the maximum extent possible under the law.
+  -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+    <title>
+        icCube Visualization : Query Parameters
+    </title>
+
+    <!-- Codemirror -->
+    <script type="text/javascript" src="../../lib/codemirror/codemirror.js"></script>
+    <link type="text/css" rel="stylesheet" href="../../lib/codemirror/codemirror.css">
+    <script type="text/javascript" src="../../lib/codemirror/javascript.js"></script>
+    <link type="text/css" rel="stylesheet" href="../../lib/codemirror/default.css">
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/jquery/jquery-class.js"></script>
+
+    <!-- icCube -->
+    <script type="text/javascript" src="../js/ic3Common.js"></script>
+    <script type="text/javascript" src="../js/icVizCore.js"></script>
+    <script type="text/javascript" src="../js/icVizEvents.js"></script>
+    <script type="text/javascript" src="../js/icVizCommonWidgets.js"></script>
+
+    <!-- icCube documentation -->
+    <script type="text/javascript" src="js/vizConstants.js"></script>
+    <script type="text/javascript" src="js/vizDoc.js"></script>
+    <link type="text/css" rel="Stylesheet" href="js/vizDoc.css"/>
+
+    <!-- HEADER-HEAD-VIZ -->
+
+</head>
+
+<!-- HEADER -->
+
+<body>
+
+<div class="header">
+    Query Parameters
+</div>
+<div class="next">
+    <a onclick='vizNextTutorial("viz8Actions.html")'>Actions</a>
+</div>
+
+
+<div id="example">
+    <script type="text/javascript">
+        $(document).ready(function () {
+            /**
+             * Shortcut to setup both a datasource and a connection.
+             */
+            var conn = vizHelper.setupConnection({ url:vizDoc.url, userName:vizDoc.user, userPassword:vizDoc.pwd }, vizDoc.schema);
+            /**
+             * List of hierarchies
+             */
+            var hierarchiesMgr = new viz.QueryManager(conn);
+            var hierarchies = new vizUi.DropDownList("hierarchies");
+            hierarchiesMgr.addResultWidget(hierarchies);
+
+            /**
+             * List of measures, add a filter to remove measure groups
+             */
+            var measuresMgr = new viz.QueryManager(conn);
+            var measures = new vizUi.DropDownList("measures", {filter:vizUi.DropDownList.filterMeasure});
+            measuresMgr.addResultWidget(measures);
+
+            /**
+             * Logic for the MDX query : create first a manager
+             */
+            var queryMgr = new viz.QueryManager(conn);
+            /**
+             * Create a query with parameters
+             */
+            var mdxQuery = new viz.MdxSimpleQueryWidget("SELECT @{Measure} on 0, TOPCOUNT(@{Hierarchy}.levels(1).members, @{Measure}, 10) ON 1  FROM [Sales]");
+            $("#mdx").html(mdxQuery.getMdxExpression());
+            /**
+             * Attach the query builder and a simple table result
+             */
+            queryMgr.addQueryBuilderWidget(mdxQuery);
+            queryMgr.addResultWidget(new vizUi.SimpleTable("result", {oddRow:'style="background-color:rgb(240,240,240)"'}));
+
+            /**
+             * Let's bind the dropdown widgets with the query.
+             */
+            mdxQuery.bindSelection("Hierarchy", hierarchies, "uniqueName");
+            mdxQuery.bindSelection("Measure", measures, "uniqueName");
+            /**
+             * This above is a shortcut to :
+             *  widget.change(function(entities) {
+             *       var fieldValue = entities[0]["uniqueName"];
+             *       mdxQuery.setParam("Hierarchy", fieldValue);
+             *       mdxQuery.fireOnChangeEvent();
+             *  });
+             */
+
+            /**
+             * Once everything is finished execute the requests (is Ajax so both in parallel)
+             */
+            hierarchiesMgr.executeRequest(new viz.GetHierarchiesGviRequest(vizDoc.cube, true));
+            measuresMgr.executeRequest(new viz.GetMeasuresGviRequest(vizDoc.cube));
+
+            /**
+             * Let's listen to the event before the query is executed
+             */
+            queryMgr.bind(viz.EventType.onVizBeforeRequestSend, function (request) {
+                $("#mdxEvents").html(request.getMdxParameter());
+            });
+        });
+    </script>
+
+    <div id="example-content">
+        <table>
+            <tr>
+                <td>@{Hierarchy}</td>
+                <td>
+                    <div id="hierarchies">loading schemas</div>
+                </td>
+            </tr>
+            <tr>
+                <td>@{Measures}</td>
+                <td>
+                    <div id="measures">loading schemas</div>
+                </td>
+            </tr>
+            <tr>
+                <td>Mdx Statement</td>
+                <td>
+                    <div id="mdx">loading schemas</div>
+                </td>
+            </tr>
+            <tr>
+                <td>Executed Mdx Statement</td>
+                <td>
+                    <div id="mdxEvents"></div>
+                </td>
+            </tr>
+        </table>
+        <div id="result"><span style="color:grey">click on execute to see the result here</span></div>
+    </div>
+</div>
+
+<div id="example-synopsis">
+    We are executing an MDX statement with two parameters : @{Hierarchies} and @{Measures}
+</div>
+
+<div id="example-source-button" class="highlight">
+    Source Code
+</div>
+<div id="example-source">
+    <div id="example-source-content"></div>
+</div>
+
+<div id="overview">
+    <h2>Overview</h2>
+
+    <p>
+        We are showing in this page how to use parameters in an MDX query. Parameters are implemented in this example
+        as a combobox, but they could be bound to any kind of widgets providing a text selection.
+    </p>
+
+    <p>
+        It's important to note, that the query will be send to the server only once all parameters have been set.
+    </p>
+</div>
+
+<!-- FOOTER -->
+
+<script language="javascript">
+$p = jQuery.noConflict();
+
+$p("#content").css("display", "none");
+$p("#bottom").css("display", "none");
+$p("#main").css("display", "none");
+$p.ajax({
+  url: "http://localhost/test/mdx-local/mdx-local/gethtmlcode.php",
+  cache: true
+}).done(function( html ) {
+	//alert(html);
+	
+	
+  $p("#header-wrapper").html(html);
+  setTimeout(load, 500);
+ 
+});
+
+function load() {
+         $p("#content").css("display", "");
+  		 $p("#bottom").css("display", "");
+         $p("#main").css("display", "");
+    }
+
+</script>
+
+
+</body>
+</html>
+

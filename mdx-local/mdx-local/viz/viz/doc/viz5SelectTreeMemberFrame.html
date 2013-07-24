@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+  ~ Copyright 1999 - 2011 Crazy Development Ltd.
+  ~
+  ~ The code and all underlying concepts and data models are owned fully
+  ~ and exclusively by Crazy Development Ltd. and are protected by
+  ~ copyright law and international treaties.
+  ~
+  ~ Warning: Unauthorized reproduction, use or distribution of this
+  ~ program, concepts, documentation and data models, or any portion of
+  ~ it, may result in severe civil and criminal penalties, and will be
+  ~ prosecuted to the maximum extent possible under the law.
+  -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <!--<meta http-equiv="X-UA-Compatible" content="IE=edge"/>  jstree isue with ie9 mode ! -->
+    <meta http-equiv="X-UA-Compatible" content="IE=8">
+
+    <title>
+        icCube Visualization : Hierarchy/Member Selection (JQuery UI)
+    </title>
+
+    <!-- Codemirror -->
+    <script type="text/javascript" src="../../lib/codemirror/codemirror.js"></script>
+    <link type="text/css" rel="stylesheet" href="../../lib/codemirror/codemirror.css">
+    <script type="text/javascript" src="../../lib/codemirror/javascript.js"></script>
+    <link type="text/css" rel="stylesheet" href="../../lib/codemirror/default.css">
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/jquery/jquery-class.js"></script>
+
+    <!--JSTree-->
+    <script type="text/javascript" src="../../lib/jstree/jquery.jstree.js"></script>
+
+    <!-- icCube -->
+    <script type="text/javascript" src="../js/ic3Common.js"></script>
+    <script type="text/javascript" src="../js/icVizCore.js"></script>
+    <script type="text/javascript" src="../js/icVizEvents.js"></script>
+    <script type="text/javascript" src="../js/icVizCommonWidgets.js"></script>
+    <script type="text/javascript" src="../js/vizui/icVizJsTreeWidgets.js"></script>
+
+    <!-- icCube documentation -->
+    <script type="text/javascript" src="js/vizConstants.js"></script>
+    <script type="text/javascript" src="js/vizDoc.js"></script>
+    <link type="text/css" rel="Stylesheet" href="js/vizDoc.css"/>
+
+    <!-- HEADER-HEAD-VIZ -->
+
+</head>
+
+<!-- HEADER -->
+
+<body>
+
+<div class="header">
+    Selecting multiple members with a tree (Beta)
+</div>
+<div class="next">
+    <a onclick='vizNextTutorial("viz6FirstMdxRequest.html")'>First MDX Query</a>
+</div>
+
+
+<div id="example">
+
+    <style type="text/css">
+        .icc-collapsed #members {
+            display: none; /* this make the tree content switch on/off */
+        }
+
+        #members {
+            z-index: 1000;
+            position: absolute; /* makes the tree look like a popup */
+            max-height: 500px;
+            min-width: 150px;
+            overflow-y: auto;
+            background-color: rgb(252, 252, 252);
+            border: solid 1px rgb(145, 145, 145)
+        }
+    </style>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            var conn = vizHelper.setupConnection({ url:vizDoc.url, userName:vizDoc.user, userPassword:vizDoc.pwd }, vizDoc.schema);
+            /**
+             * Build the hierarchy combo
+             */
+            var hierarchiesMgr = new viz.QueryManager(conn);
+            var hierarchies = new vizUi.DropDownList("hierarchies");
+            hierarchiesMgr.addResultWidget(hierarchies);
+            /**
+             * Build members tree
+             */
+            var treeMgr = new viz.QueryManager(conn);
+            var treeMembers = new vizUi.JsTree("members", "membersTitle", "treeMembers", {fireChangeOnSelectNode:true, collapsedOnLoad:true});
+            treeMgr.addResultWidget(treeMembers);
+
+            hierarchies.bind(vizEventType.onSelection, function(event) {
+                var hierarchy = event.selection;
+                treeMembers.setTitle(hierarchy.name + " hierarchy");
+                treeMgr.executeRequest(new viz.GetMembersGviRequest(vizDoc.cubeName, hierarchy.uniqueName + ".allmembers"));
+            });
+
+            treeMembers.bind("ic3selection", function(event) {
+                $("#selMembers").html(event.asMdx());
+            });
+
+            hierarchiesMgr.executeRequest(new viz.GetHierarchiesGviRequest(vizDoc.cubeName, true));
+        });
+    </script>
+
+    <div id="example-content">
+        <table>
+            <tr>
+                <td style="width:250px">
+                    Hierarchy
+                </td>
+                <td>
+                    <div id="hierarchies"><span class="loading">loading</span></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Selected members
+                </td>
+                <td>
+                    <div id="selMembers"><span class="loading">Click on the hierarchy name to expand/collapse + on a node to update the query</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Member Selector
+                </td>
+                <td>
+                    <div id="treeMembers">
+                        <div id="membersTitle"></div>
+                        <div id="members"></div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+
+<div id="example-synopsis">
+    Let's use a tree for selecting multiple members of a hierarchy
+</div>
+
+<div id="example-source-button" class="highlight">
+    Source Code
+</div>
+<div id="example-source">
+    <div id="example-source-content"></div>
+</div>
+
+<div id="overview">
+    <h2>Overview</h2>
+
+    <p>
+        This example is demonstrating how to use a tree widgets to display and select MDX members.
+    </p>
+
+    <p>
+        Have a look at the available options (e.g. 'collapsedOnLoad', 'fireOnSelectNode') allowing to change
+        the behavior of the tree widget.
+    </p>
+
+</div>
+
+<!-- FOOTER -->
+
+</body>
+</html>

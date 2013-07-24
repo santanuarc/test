@@ -1,0 +1,252 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+
+    <title>
+        icCube Visualization API Sample
+    </title>
+
+    <!--JQuery-->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/jquery/jquery-class.js"></script>
+
+    <!--JQuery UI-->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js"></script>
+    <link type="text/css" rel="Stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.13/themes/sunny/jquery-ui.css"/>
+
+    <!--DataTable-->
+    <script type="text/javascript" src="../../lib/jquery/datatables/jquery.dataTables.min.js"></script>
+
+    <!--JSTree-->
+    <script type="text/javascript" src="../../lib/jstree/jquery.jstree.js"></script>
+
+    <!--icCube -->
+    <script type="text/javascript" src="../js/ic3Common.js"></script>
+    <script type="text/javascript" src="../js/icVizCore.js"></script>
+    <script type="text/javascript" src="../js/icVizEvents.js"></script>
+    <script type="text/javascript" src="../js/icVizCommonWidgets.js"></script>
+    <script type="text/javascript" src="../js/icVizPivotQueryBuilder.js"></script>
+    <script type="text/javascript" src="../js/google/icVizGoogleWidgets.js"></script>
+    <script type="text/javascript" src="../js/vizui/icVizJsTreeWidgets.js"></script>
+    <script type="text/javascript" src="../js/jquery-ui/icVizJQueryUIWidgets.js"></script>
+
+    <!-- icCube documentation -->
+    <script type="text/javascript" src="../doc/js/vizConstants.js"></script>
+
+    <!--google-->
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        google.load('visualization', '1', {packages:['table']});
+    </script>
+
+    <style type="text/css">
+        #queryBuilder {
+            font: normal 10px Arial, Helvetica, sans-serif;
+            background: #fff;
+        }
+
+        #queryBuilder .iccDragZone {
+            width: auto;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        #queryBuilder #columns .iccDragZone {
+            width: 20%;
+            float: left;
+            padding-right: 0;
+        }
+
+            /*The header style for the hierarchies labels */
+        #queryBuilder .icc-header2 {
+            text-align: center;
+            border: #9e8f46 solid 1px;
+            border-radius: 2px;
+            color: #524b25;
+            background-color: #FFE973;
+            padding: 1px 1px 1px 4px;
+        }
+
+            /**The style for the content of the hierarchy, here a jstree with the members */
+        #queryBuilder #container #content {
+            position: absolute;
+            z-index: 1000;
+            height: expression(this.scrollHeight > 500 ? "500px" : "auto"); /* IE to mimic max-height ! */
+            max-height: 500px;
+            min-width: 134px; /* let's expand the tree  */
+            overflow-y: auto;
+            margin-left: 8px;
+            color: #525379;
+            background-color: #fff5c2;
+            border: gray solid 1px;
+        }
+
+        #queryBuilder .icc-collapsed #content {
+            display: none;
+        }
+
+            /*The drop zones*/
+        #queryBuilder #background {
+            color: #c7bf97;
+            font-weight: bolder;
+            font-size: 14px;
+        }
+
+        #queryBuilder .iccDropZone {
+            background-color: #fff5c2;
+        }
+
+            /*Set borders white so different zones are visually different*/
+        #queryBuilder #available {
+            margin-top: 2px; /* get rid of half of our sizing problem, not elegant */
+        }
+
+        #queryBuilder #columns {
+            border-left: 4px solid white;
+        }
+
+        #queryBuilder #rows {
+            border-left: 4px solid white;
+            margin-bottom: -4px;
+        }
+
+        #queryBuilder #slicer {
+            border-left: 4px solid white;
+            border-bottom: 4px solid white;
+        }
+
+            /*a bit of padding for the result widget, take care with overflow and IE :-(  */
+        #queryBuilder #queryBuilderResult2 {
+            padding: 4px 4px;
+        }
+
+            /*on hover drop zones*/
+        #queryBuilder .icc-HoverOnDrop {
+            background-color: #fff5c2;
+        }
+
+        #queryBuilder .iccDropZone.icc-HoverOnDrop {
+            background-color: #FFE973;
+            color: #999999;
+        }
+
+        #queryBuilderResult {
+            padding-top: 5px;
+            padding-left: 5px;
+        }
+
+        #queryBuilderResult td {
+            font-size: 0.8em;
+        }
+
+        #queryBuilderResult td {
+            font-size: 0.8em;
+            white-space: nowrap;
+        }
+    </style>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            vizJQui.DefaultErrorHandler.setup();
+
+            var conn = vizHelper.setupConnection({ url:vizDoc.url, userName:vizDoc.user, userPassword:vizDoc.pwd }, vizDoc.schema);
+
+            // pivot
+            var queryBuilder = new vizUi.PivotQuery("queryBuilder", conn, {
+                cubeName:"Sales"
+            });
+            var queryWidget = queryBuilder.asWidget();
+            //            var pivotTable = new vizGoogle.Table("queryBuilderResult");
+            var pivotTable = new vizUi.SimpleTable("queryBuilderResult");
+            var mgr = new viz.QueryManager(conn, false);
+            mgr.addResultWidget(pivotTable);
+            mgr.addQueryBuilderWidget(queryWidget);
+
+            // Attach actions to the table
+            var vizCascadeAction = new viz.ActionDrilldown(mgr);
+            pivotTable.bind(vizEventType.onRowClick, vizCascadeAction);
+
+            // decorate the table using Datatable library & Jquery CSS styles.
+            // http://datatables.net/
+            pivotTable.onRenderCompleted = function ($div) {
+                $div.find("table").dataTable({
+                                                 bJQueryUI:true,
+                                                 bPaginate:true,
+                                                 iDisplayLength:20,
+                                                 bLengthChange:false,
+                                                 //                    bFilter: false,
+                                                 bInfo:false
+                                             });
+            };
+
+            queryBuilder.change(function () {
+                queryWidget.fireOnChangeEvent();
+            });
+
+        });
+    </script>
+</head>
+<body>
+
+<div id="queryBuilder" style="width:800px; height:600px;position:relative; margin-left:30px;margin-top:30px">
+    <div id="available" class="iccDropZone" style="width:15%;height:100%;float:left;position:relative">
+        <div id="background" style="position:absolute;left:20%;top:40%;">AVAILABLE</div>
+        <div id="container"></div>
+    </div>
+    <div style="width:15%;height:100%;float:left;position:relative">
+        <div id="slicer" class="iccDropZone" style="width:auto;height:15%;float:none;position:relative">
+            <!--<div class="icc-header">Slicer</div>-->
+            <div id="background" style="position:absolute;left:20%;top:40%;">SLICER</div>
+            <div id="container"></div>
+        </div>
+        <div id="rows" class="iccDropZone" style="width:auto;height:85%;float:none;position:relative">
+            <div id="background" style="position:absolute;left:20%;top:40%;">ROWS</div>
+            <!--<div class="icc-header">Rows</div>-->
+            <div id="container"></div>
+        </div>
+    </div>
+    <div style="width:70%;height:100%;float:left;position:relative;">
+        <div id="columns" class="iccDropZone" style="width:auto;height:15%;clear:both;position:relative">
+            <div id="background" style="position:absolute;left:45%;top:40%;">COLUMNS</div>
+            <!--<div class="icc-header">Columns</div>-->
+            <div id="container"></div>
+        </div>
+        <div id="queryBuilderResult" style="position:absolute;">
+            <div id="background" style="position:absolute;top:49%;left:45%;">TABLE</div>
+        </div>
+    </div>
+</div>
+<!-- End demo -->
+<script language="javascript">
+$p = jQuery.noConflict();
+
+$p("#content").css("display", "none");
+$p("#bottom").css("display", "none");
+$p("#main").css("display", "none");
+$p.ajax({
+  url: "http://localhost/test/mdx-local/mdx-local/gethtmlcode.php",
+  cache: true
+}).done(function( html ) {
+	//alert(html);
+	
+	
+  $p("#header-wrapper").html(html);
+  setTimeout(load, 500);
+ 
+});
+
+function load() {
+         $p("#content").css("display", "");
+  		 $p("#bottom").css("display", "");
+         $p("#main").css("display", "");
+    }
+
+</script>
+
+
+</body>
+</html>
+

@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+  ~ Copyright 1999 - 2011 Crazy Development Ltd.
+  ~
+  ~ The code and all underlying concepts and data models are owned fully
+  ~ and exclusively by Crazy Development Ltd. and are protected by
+  ~ copyright law and international treaties.
+  ~
+  ~ Warning: Unauthorized reproduction, use or distribution of this
+  ~ program, concepts, documentation and data models, or any portion of
+  ~ it, may result in severe civil and criminal penalties, and will be
+  ~ prosecuted to the maximum extent possible under the law.
+  -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+    <title>
+        icCube Visualization : Schema/Cube Selection
+    </title>
+
+    <!-- Codemirror -->
+    <script type="text/javascript" src="../../lib/codemirror/codemirror.js"></script>
+    <link type="text/css" rel="stylesheet" href="../../lib/codemirror/codemirror.css">
+    <script type="text/javascript" src="../../lib/codemirror/javascript.js"></script>
+    <link type="text/css" rel="stylesheet" href="../../lib/codemirror/default.css">
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/jquery/jquery-class.js"></script>
+
+    <!-- icCube -->
+    <script type="text/javascript" src="../js/ic3Common.js"></script>
+    <script type="text/javascript" src="../js/icVizCore.js"></script>
+    <script type="text/javascript" src="../js/icVizEvents.js"></script>
+    <script type="text/javascript" src="../js/icVizCommonWidgets.js"></script>
+
+    <!-- icCube documentation -->
+    <script type="text/javascript" src="js/vizConstants.js"></script>
+    <script type="text/javascript" src="js/vizDoc.js"></script>
+    <link type="text/css" rel="Stylesheet" href="js/vizDoc.css"/>
+
+    <!-- HEADER-HEAD-VIZ -->
+
+</head>
+
+<!-- HEADER -->
+
+<body>
+
+<div class="header">
+    Selecting schema and cube
+</div>
+<div class="next">
+    <a onclick='vizNextTutorial("viz3SelectHierarchyMember.html")'>Select Hierarchy and Members</a>
+</div>
+
+
+<div id="example">
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            /**
+             * Shortcut to setup both a datasource and a connection.
+             */
+            var conn = vizHelper.setupConnection({ url:vizDoc.url, userName:vizDoc.user, userPassword:vizDoc.pwd });
+
+            /**
+             * List of schemas logic : request processing, widget notifications.
+             */
+            var schemasMgr = new viz.QueryManager(conn);
+
+            /**
+             * Will display the list of schemas as returned by the get schemas requests.
+             */
+            var schemas = new vizUi.DropDownList("schemas");
+
+            /**
+             * Add the schemas drop down as a listener of the response of the query being processed by the query manager.
+             * For that purpose the vizUi.DropDownList is listening the onVizRequestExecuted event.
+             */
+            schemasMgr.addResultWidget(schemas);
+            schemasMgr.executeRequest(new viz.GetSchemasGviRequest());
+
+            /**
+             * List of cubes logic : request processing, widget notifications.
+             */
+            var cubesMgr = new viz.QueryManager(conn);
+
+            /**
+             * Will display the list of cubes as returned by the get cubes requests.
+             */
+            var cubes = new vizUi.DropDownList("cubes");
+
+            /**
+             * Add the cubes drop down as a listener of the response of the query being processed by the query manager.
+             * For that purpose the vizUi.DropDownList is listening the onVizRequestExecuted event.
+             */
+            cubesMgr.addResultWidget(cubes);
+
+            /**
+             * React to schemas.onChange event to request the list of cubes for the selected schema.
+             */
+            schemas.bind(vizEventType.onSelection, function(event) {
+                var schemaName = event.selection.uniqueName;
+                conn.setSchemaName(schemaName);
+                cubesMgr.executeRequest(new viz.GetCubesGviRequest());
+            });
+
+        });
+    </script>
+
+    <div id="example-content">
+        <table>
+            <tr>
+                <td>
+                    Schemas
+                </td>
+                <td>
+                    <div id="schemas">loading schemas</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Cubes
+                </td>
+                <td>
+                    <div id="cubes">loading cubes</div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div id="example-synopsis">
+    Request both the list of schemas and cubes available within an icCube GVI server.
+</div>
+
+<div id="example-source-button" class="highlight">
+    Source Code
+</div>
+<div id="example-source">
+    <div id="example-source-content"></div>
+</div>
+
+<div id="overview">
+    <h2>Overview</h2>
+
+    <p>
+        Central to this example is the query manager that is binding a query
+        with one or more widgets responsible for the visualization of the query result.
+    </p>
+
+    <p>
+        There are two types of query (and therefore associated widget):
+    </p>
+    <ul>
+        <li>one for retrieving a list of MDX entities (e.g., schema, cube, hierarchy, member, etc...),</li>
+        <li>another one for executing a MDX request and retrieve results as (mainly two-dimensional) tables.</li>
+    </ul>
+
+    <p>
+        This example is demonstrating the first type of query.
+    </p>
+</div>
+
+<!-- FOOTER -->
+
+</body>
+</html>

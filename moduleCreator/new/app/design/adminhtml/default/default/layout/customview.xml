@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <customview_adminhtml_customview_index>
+        <reference name="content">
+            <block type="customview/adminhtml_customview" name="customview" />
+        </reference>
+    </customview_adminhtml_customview_index>
+</layout>

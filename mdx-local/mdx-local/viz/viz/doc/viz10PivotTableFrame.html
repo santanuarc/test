@@ -1,0 +1,239 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+  ~ Copyright 1999 - 2011 Crazy Development Ltd.
+  ~
+  ~ The code and all underlying concepts and data models are owned fully
+  ~ and exclusively by Crazy Development Ltd. and are protected by
+  ~ copyright law and international treaties.
+  ~
+  ~ Warning: Unauthorized reproduction, use or distribution of this
+  ~ program, concepts, documentation and data models, or any portion of
+  ~ it, may result in severe civil and criminal penalties, and will be
+  ~ prosecuted to the maximum extent possible under the law.
+  -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+    <title>
+        icCube Visualization : Pivot Table
+    </title>
+
+    <!-- Codemirror -->
+    <script type="text/javascript" src="../../lib/codemirror/codemirror.js"></script>
+    <link type="text/css" rel="stylesheet" href="../../lib/codemirror/codemirror.css">
+    <script type="text/javascript" src="../../lib/codemirror/javascript.js"></script>
+    <link type="text/css" rel="stylesheet" href="../../lib/codemirror/default.css">
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/jquery/jquery-class.js"></script>
+
+    <!-- icCube -->
+    <script type="text/javascript" src="../js/ic3Common.js"></script>
+    <script type="text/javascript" src="../js/icVizCore.js"></script>
+    <script type="text/javascript" src="../js/icVizEvents.js"></script>
+    <script type="text/javascript" src="../js/icVizCommonWidgets.js"></script>
+    <script type="text/javascript" src="../js/pivot/icVizPivotTable.js"></script>
+    <!--<script type="text/javascript" src="../js/pivot/icVizPivotTable.min.js"></script>-->
+
+    <!-- icCube documentation -->
+    <script type="text/javascript" src="js/vizConstants.js"></script>
+    <script type="text/javascript" src="js/vizDoc.js"></script>
+    <link type="text/css" rel="Stylesheet" href="js/vizDoc.css"/>
+
+    <!--Just for icons-->
+    <!--<link type="text/css" rel="Stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/themes/redmond/jquery-ui.css"/>-->
+    <link type="text/css" rel="Stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.13/themes/sunny/jquery-ui.css"/>
+
+
+    <!-- HEADER-HEAD-VIZ -->
+
+</head>
+
+<style type="text/css">
+    th.lh {
+        text-align: left;
+        font-weight: normal;
+        font-style: italic;
+    }
+
+    th.th {
+        text-align: right;
+        font-weight: normal;
+        font-style: italic;
+    }
+
+    td {
+        text-align: right;
+    }
+
+    table .ic3-pt-oddRow {
+        background-color: rgb(255, 255, 204);
+    }
+
+    table .ic3-pt-evenCol {
+        background-color: rgba(255, 255, 204, 0.5);
+    }
+
+    .pt-hcont {
+        display: block;
+        white-space: nowrap;
+    }
+
+    .pt-hcont div {
+        display: inline-block;
+        white-space: nowrap;
+        vertical-align: top;
+    }
+
+    .ui-icon-empty {
+        background: none;
+    }
+</style>
+
+<body>
+
+<div class="header">
+    Pivot Table
+</div>
+<div class="next">
+    <a onclick='vizNextTutorial("viz11PivotTableI.html")'>Pivot Table - Drilldown</a>
+</div>
+
+
+<div id="example">
+    <script type="text/javascript">
+        $(document).ready(function () {
+            /**
+             * Shortcut to setup both a datasource and a connection.
+             */
+            var conn = vizHelper.setupConnection({ url:vizDoc.url, userName:vizDoc.user, userPassword:vizDoc.pwd });
+            /**
+             * List of schemas logic : create manager, create and bind widget
+             */
+            var schemasMgr = new viz.QueryManager(conn);
+            var schemas = new vizUi.DropDownList("schemas", {preSelection:vizDoc.schema});
+            schemasMgr.addResultWidget(schemas);
+
+            /**
+             * Logic for the MDX query : create first a manager
+             */
+            var queryMgr = new viz.QueryManager(conn);
+            /**
+             * Use a pivot table
+             */
+            var options = {
+                // uncomment this to check right-to-left direction, note new icons will be needed.
+                //                rtl : 1,
+                iconClass:{
+                    empty:"ui-icon ui-icon-empty",
+                    drilldown:"ui-icon ui-icon-circle-arrow-e",
+                    collapsed:"ui-icon ui-icon-circle-triangle-e",
+                    expand:"ui-icon ui-icon-circle-triangle-s",
+                    loading:"ui-icon ui-icon-refresh"  // optional
+                    //                    noChildren : "ui-icon ui-icon-refresh"  // optional, used for nodes without children, if not defined use empty
+                },
+                // on collapse a node, collapse also hidden members (you need at least two hierarchies to get this behaviour)
+                fireCollapseOnClosed:true
+            };
+            var pivotTable = new vizPivot.PivotTable("result", options);
+            queryMgr.addResultWidget(pivotTable);
+            /**
+             * Let's start by setting the schema into the connection on a combo change event
+             */
+            schemas.bind(vizEventType.onSelection, function (event) {
+                conn.setSchemaName(event.selection.name);
+            });
+            /**
+             * On click button execute the query as defined in the text area
+             */
+            $("#run").click(function () {
+                var mdx = $("#mdx").val();
+                queryMgr.executeRequest(new viz.MdxGviRequest(mdx));
+            });
+            /**
+             * On click button switch rows/columns of the pivottable
+             */
+            $("#switch").click(function () {
+                pivotTable.toggleRowsColumns();
+            });
+            /**
+             * Once everything is finished execute the request to get the list of schemas
+             */
+            schemasMgr.executeRequest(new viz.GetSchemasGviRequest());
+        });
+    </script>
+
+    <div id="example-content">
+        <table>
+            <tr>
+                <td>Schemas</td>
+                <td>
+                    <div id="schemas">loading schemas</div>
+                </td>
+            </tr>
+            <tr>
+                <td>MDX Request</td>
+                <td>
+                    <textarea id="mdx" rows="5">
+SELECT
+    [Calendar].[Year].members on 0,
+    non empty {[Customers].[Geography].[All Regions]} * {[Product].[All Products]}  on 1
+FROM [Sales]
+WHERE [Measures].[Amount]
+                    </textarea>
+                </td>
+            </tr>
+        </table>
+        <button id="run" title="Execute the MDX Query">Execute</button>
+        <button id="switch" title="Switch Rows/Columns of the Pivot Table">Switch Rows/Columns</button>
+        <div id="result"><span style="color:grey">click on execute to see a table here</span></div>
+    </div>
+</div>
+
+<div id="example-synopsis">
+    First example of a JS Pivot Table.
+</div>
+
+<div id="example-source-button" class="highlight">
+    Source Code
+</div>
+<div id="example-source">
+    <div id="example-source-content"></div>
+</div>
+
+<div id="overview">
+    <h2>Overview</h2>
+
+    <p>
+        A simple example of the pivot table on a standard MDX query.
+    </p>
+
+    <p>
+        Different options are shown in this example :
+    </p>
+
+    <ul>
+        <li>The icons can be configured, for this example we've taking JQuery UI icons.</li>
+        <li>fireCollapseOnClosed, collapse also hidden members when collapsing node in 2,3 columns</li>
+    </ul>
+
+    <p>
+        Note you can trigger different behaviours by using ctr,shift and alt when clicking a node :
+    </p>
+
+    <ul>
+        <li><b>Click</b> : expands direct children of a given node. Performs a drilldown if needed</li>
+        <li><b>Shift + click</b> : sets the node as 'new' root for axis, click again shift+click to reset the root.</li>
+        <li><b>Ctrl + click</b> : expands all descendants of a given node (drilldown is not forced).</li>
+        <li><b>Alt + click</b> : restore the previous tree state of the descendants.</li>
+    </ul>
+</div>
+
+<!-- FOOTER -->
+
+</body>
+</html>

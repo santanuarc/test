@@ -1,0 +1,107 @@
+/*
+ * Copyright 1999 - 2012 Crazy Development Ltd.
+ *
+ * The code and all underlying concepts and data models are owned fully
+ * and exclusively by Crazy Development Ltd. and are protected by
+ * copyright law and international treaties.
+ *
+ * Warning: Unauthorized reproduction, use or distribution of this
+ * program, concepts, documentation and data models, or any portion of
+ * it, may result in severe civil and criminal penalties, and will be
+ * prosecuted to the maximum extent possible under the law.
+ */
+
+.help {
+    overflow: auto;
+}
+
+.help-toc h1 {
+    color: #5FA825;
+    margin-left: 0;
+}
+
+.help-toc h2 {
+    color: #5FA825;
+    margin-left: 0;
+}
+
+.help-toc h3 {
+    color: #5FA825;
+    margin-left: 20px;
+}
+
+.help-toc h4 {
+    color: #5FA825;
+    margin-left: 40px;
+}
+
+.help h1 {
+    color: #5FA825;
+}
+
+.help h2 {
+    color: #5FA825;
+}
+
+.help h3 {
+    color: #5FA825;
+}
+
+.help p {
+}
+
+.help li {
+}
+
+.help em {
+    font-style: oblique;
+}
+
+.help pre {
+    background-color: #fcfec5;
+    font: 12px monospace;
+    margin: 4px 0;
+    *margin: 4px 0 0;
+    padding: 0 4px;
+    overflow-x: auto;
+}
+
+.help-embedded-code {
+    font: 12px Verdana;
+}
+
+.help-results {
+    background-color: #f8f8f8;
+    padding: 9px;
+    color: #464646;
+    font: 12px Verdana;
+}
+
+.help-results td {
+    border: 1px solid #dddddd;
+    font-size: 12px;
+    padding: 5px;
+}
+
+.help-results-caption-cell {
+    background-color: #c3daf9;
+    color: #083772;
+    font-weight: bold;
+    padding: 5px 12px;
+    vertical-align: top;
+    border: 1px solid #c3daf9;
+}
+
+.help-results-empty-cell {
+    border: 1px solid #F8F8F8 !important;
+}
+
+.help-cell-error {
+    background-color: red;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+
+

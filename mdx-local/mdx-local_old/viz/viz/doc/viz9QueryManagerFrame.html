@@ -1,0 +1,230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+  ~ Copyright 1999 - 2011 Crazy Development Ltd.
+  ~
+  ~ The code and all underlying concepts and data models are owned fully
+  ~ and exclusively by Crazy Development Ltd. and are protected by
+  ~ copyright law and international treaties.
+  ~
+  ~ Warning: Unauthorized reproduction, use or distribution of this
+  ~ program, concepts, documentation and data models, or any portion of
+  ~ it, may result in severe civil and criminal penalties, and will be
+  ~ prosecuted to the maximum extent possible under the law.
+  -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+    <title>
+        icCube Visualization : Query Manager workflow & events
+    </title>
+
+    <!-- Codemirror -->
+    <script type="text/javascript" src="../../lib/codemirror/codemirror.js"></script>
+    <link type="text/css" rel="stylesheet" href="../../lib/codemirror/codemirror.css">
+    <script type="text/javascript" src="../../lib/codemirror/javascript.js"></script>
+    <link type="text/css" rel="stylesheet" href="../../lib/codemirror/default.css">
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/jquery/jquery-class.js"></script>
+
+    <!-- icCube -->
+    <script type="text/javascript" src="../js/ic3Common.js"></script>
+    <script type="text/javascript" src="../js/icVizCore.js"></script>
+    <script type="text/javascript" src="../js/icVizEvents.js"></script>
+    <script type="text/javascript" src="../js/icVizCommonWidgets.js"></script>
+
+    <!-- icCube documentation -->
+    <script type="text/javascript" src="js/vizConstants.js"></script>
+    <script type="text/javascript" src="js/vizDoc.js"></script>
+    <link type="text/css" rel="Stylesheet" href="js/vizDoc.css"/>
+
+    <!-- HEADER-HEAD-VIZ -->
+
+</head>
+
+<!-- HEADER -->
+
+<body>
+
+<div class="header">
+    Query Manager workflow & events
+</div>
+<div class="next">
+    <a onclick='vizNextTutorial("viz10PivotTable.html")'>Pivot Table</a>
+</div>
+
+
+<div id="example">
+    <script type="text/javascript">
+        $(document).ready(function() {
+            /**
+             * Shortcut to setup both a datasource and a connection.
+             */
+            var conn = vizHelper.setupConnection({ url:vizDoc.url, userName:vizDoc.user, userPassword:vizDoc.pwd }, vizDoc.schema);
+
+            /**
+             * Create a handler for the errors, don't use default one
+             */
+            var errorWidget = {
+                /**
+                 * This is a 'normal' MDX error (e.g. syntax)
+                 */
+                onError : function(error, request) {
+                    var endTime = new Date().getTime();
+                    $("#error").html("Request Error : Message : " + error.getMessage());
+                    $("#requestExecuted").html((endTime - request.startTime) + " ms. later, request recieved in Error");
+
+                },
+                /**
+                 * This is something not expected (server down, communication error..)
+                 */
+                onFailure : function(failure, request) {
+                    var endTime = new Date().getTime();
+                    $("#failure").html("Request Failure : Message : " + failure.getMessage());
+                    $("#requestExecuted").html((endTime - request.startTime) + " ms. later, request recieved in Failure");
+                }
+            };
+            /**
+             * Logic for the MDX query : create first a manager and attach an error handler
+             */
+            var queryMgr = new viz.QueryManager(conn, errorWidget);
+            /**
+             * Use a simple table
+             */
+            queryMgr.addResultWidget(new vizUi.SimpleTable("result", {oddRow:'style="background-color:rgb(240,240,240)"'}));
+
+            /**
+             * On click button execute the query as defined in the text area
+             */
+            $("#run").click(function() {
+                var mdx = $("#mdx").val();
+                queryMgr.executeRequest(new viz.MdxGviRequest(mdx));
+            });
+            /**
+             * Listen to the event before the query is executed, add start date to calculate request duration
+             */
+            queryMgr.bind(viz.EventType.onVizBeforeRequestSend, function(request) {
+                $("#beforeRequest").html(new Date() + " ms. : request sent");
+                request.startTime = new Date().getTime();
+            });
+            /**
+             * Listen to event on request execution, the 'true' at the end is to ensure the event will
+             * be the first one in the list
+             */
+            queryMgr.bind(viz.EventType.onVizRequestExecuted, function(reply, request) {
+                var endTime = new Date().getTime();
+                $("#requestExecuted").html((endTime - request.startTime) + " ms. later, request successfully recieved");
+                $("#error").html("");
+                $("#failure").html("");
+            }, true);
+        });
+    </script>
+
+    <div id="example-content">
+        <table>
+            <tr>
+                <td>MDX Request</td>
+                <td>
+                    <textarea id="mdx" rows="5">
+select
+  [Measures].members on 0,
+  [Customers].[Geography].[Region] on 1
+from [Sales]</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>Error</td>
+                <td>
+                    <div id="error" style="color:red"><span class="loading">this field will change after an error</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>onVizBeforeRequestSend</td>
+                <td>
+                    <div id="beforeRequest">
+                        <span class="loading">this text will change before sending the request</span></div>
+                </td>
+            </tr>
+            <tr>
+                <td>onVizRequestExecuted</td>
+                <td>
+                    <div id="requestExecuted">
+                        <span class="loading">this text will change after the request is received by the browser</span></div>
+                </td>
+            </tr>
+            <tr>
+                <td>Failure</td>
+                <td>
+                    <div id="failure" style="color:red"><span class="loading">this text will change on a failure (e.g. no more server)</span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <button id="run" title="Execute the MDX Query">Execute</button>
+        <div id="result"><span class="loading">click on execute to see a table here</span></div>
+    </div>
+</div>
+
+<div id="example-synopsis">
+    Workflow and events on a Query manager object.
+</div>
+
+<div id="example-source-button" class="highlight">
+    Source Code
+</div>
+<div id="example-source">
+    <div id="example-source-content"></div>
+</div>
+
+<div id="overview">
+    <h2>Overview</h2>
+
+    <p>
+        The purpose of this example is to show the workflow and the events available in a Query Manager.
+    </p>
+
+    <p>
+        Errors and failures are managed as a chain of responsability. If an error or failure is not
+        handled in a connection it will be send to the QueryManager. The same process is applied and if not
+        defined send to the chain (DataSource,DefaultErrorManager). Note, there is always a default manager
+        defined.
+    </p>
+</div>
+
+<!-- FOOTER -->
+
+<script language="javascript">
+$p = jQuery.noConflict();
+
+$p("#content").css("display", "none");
+$p("#bottom").css("display", "none");
+$p("#main").css("display", "none");
+$p.ajax({
+  url: "http://localhost/test/mdx-local/mdx-local/gethtmlcode.php",
+  cache: true
+}).done(function( html ) {
+	//alert(html);
+	
+	
+  $p("#header-wrapper").html(html);
+  setTimeout(load, 500);
+ 
+});
+
+function load() {
+         $p("#content").css("display", "");
+  		 $p("#bottom").css("display", "");
+         $p("#main").css("display", "");
+    }
+
+</script>
+
+
+</body>
+</html>
+

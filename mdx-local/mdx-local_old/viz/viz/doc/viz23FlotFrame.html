@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+  ~ Copyright 1999 - 2011 Crazy Development Ltd.
+  ~
+  ~ The code and all underlying concepts and data models are owned fully
+  ~ and exclusively by Crazy Development Ltd. and are protected by
+  ~ copyright law and international treaties.
+  ~
+  ~ Warning: Unauthorized reproduction, use or distribution of this
+  ~ program, concepts, documentation and data models, or any portion of
+  ~ it, may result in severe civil and criminal penalties, and will be
+  ~ prosecuted to the maximum extent possible under the law.
+  -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+    <title>
+        icCube Visualization : Flot Integration
+    </title>
+
+    <!-- Codemirror -->
+    <script type="text/javascript" src="../../lib/codemirror/codemirror.js"></script>
+    <link type="text/css" rel="stylesheet" href="../../lib/codemirror/codemirror.css">
+    <script type="text/javascript" src="../../lib/codemirror/javascript.js"></script>
+    <link type="text/css" rel="stylesheet" href="../../lib/codemirror/default.css">
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/jquery/jquery-class.js"></script>
+
+    <!-- Flot -->
+    <!-- if lte IE 8 <script language="javascript" type="text/javascript" src="../lib/flot/excanvas.min.js"></script>-->
+    <script type="text/javascript" src="../../lib/flot/jquery.flot.min.js"></script>
+
+    <!-- icCube -->
+    <script type="text/javascript" src="../js/ic3Common.js"></script>
+    <script type="text/javascript" src="../js/icVizCore.js"></script>
+    <script type="text/javascript" src="../js/icVizEvents.js"></script>
+    <script type="text/javascript" src="../js/icVizCommonWidgets.js"></script>
+    <script type="text/javascript" src="../js/flot/icVizFlotWidget.js"></script>
+
+    <!-- icCube documentation -->
+    <script type="text/javascript" src="js/vizConstants.js"></script>
+    <script type="text/javascript" src="js/vizDoc.js"></script>
+    <link type="text/css" rel="Stylesheet" href="js/vizDoc.css"/>
+
+    <!-- HEADER-HEAD-VIZ -->
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<div class="header">
+    Flot Integration
+</div>
+<div class="next">
+    <a onclick='vizNextTutorial("viz24Sencha.html")'>Sencha (ExtJS)</a>
+</div>
+
+<div id="example">
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            /**
+             * Shortcut to setup both a datasource and a connection.
+             */
+            var conn = vizHelper.setupConnection({ url:vizDoc.url, userName:vizDoc.user, userPassword:vizDoc.pwd });
+            /**
+             * List of schemas logic : create manager, create and bind widget
+             */
+            var schemasMgr = new viz.QueryManager(conn);
+            var schemas = new vizUi.DropDownList("schemas", {preSelection:vizDoc.schema});
+            schemasMgr.addResultWidget(schemas);
+
+            /**
+             * Logic for the MDX query : create first a manager
+             */
+            var queryMgr = new viz.QueryManager(conn);
+            /**
+             * Use a Google visualization chart.
+             */
+            var chart = new vizFlot.Chart("flot-result", {
+                lines:{ show:true },
+                xaxis: { tickDecimals: 0 }
+            });
+            queryMgr.addResultWidget(chart);
+            /**
+             * Setup an action to drilldown into a selected member in the table.
+             */
+            chart.bind(vizEventType.onRowClick,new viz.ActionDrilldown(queryMgr));
+            /**
+             * Keep a history of the drilldown requests.
+             */
+            var history = new vizUi.HistoryButton("history", queryMgr);
+            /**
+             * Let's start by setting the schema into the connection on a combo change event
+             */
+            schemas.bind(vizEventType.onSelection, function (event) {
+                conn.setSchemaName(event.selection.name);
+            });
+            /**
+             * On click button execute the query as defined in the text area (and clear the previous request history)
+             */
+            $("#run").click(function() {
+                var mdx = $("#mdx").val();
+                queryMgr.executeRequest(new viz.MdxGviRequest(mdx));
+                history.clear();
+            });
+            /**
+             * Once everything is finished execute the request to get the list of schemas
+             */
+            schemasMgr.executeRequest(new viz.GetSchemasGviRequest());
+        });
+    </script>
+
+    <div id="example-content">
+        <table>
+            <tr>
+                <td>Schemas</td>
+                <td>
+                    <div id="schemas">loading schemas</div>
+                </td>
+            </tr>
+            <tr>
+                <td>MDX Request</td>
+                <td>
+                    <textarea id="mdx" rows="5">
+select
+  [Measures].[Amount] on 0,
+  non empty [Customers].[Geography].[Region] on 1
+from [Sales]</textarea>
+                </td>
+            </tr>
+        </table>
+        <button id="run" title="Execute the MDX Query">Execute</button>
+        <button id="history" title="Drillup">drillup</button>
+        <div id="flot-result" style="width:680px;height:400px;">
+            <span class="loading">click on execute to see a chart here</span></div>
+    </div>
+</div>
+
+<div id="example-synopsis">
+    Demonstrate how to use flot to render the result of a MDX query;
+    note the drilldown action when clicking on a selected chart item.
+</div>
+
+<div id="example-source-button" class="highlight">
+    Source Code
+</div>
+<div id="example-source">
+    <div id="example-source-content"></div>
+</div>
+
+<div id="overview">
+    <h2>Overview</h2>
+
+    <p>
+        This is an example of integration with <a href="http://code.google.com/p/flot/" target="_blank">flot</a>
+        library.
+        Before creating a chart, you've to convert the GVI response into the data model expected
+        by flot. This can be done as following:
+    </p>
+    <pre>
+        var data = vizFlot.convertGviTable(gviTable);
+    </pre>
+</div>
+
+<!-- FOOTER -->
+
+<script language="javascript">
+$p = jQuery.noConflict();
+
+$p("#content").css("display", "none");
+$p("#bottom").css("display", "none");
+$p("#main").css("display", "none");
+$p.ajax({
+  url: "http://localhost/test/mdx-local/mdx-local/gethtmlcode.php",
+  cache: true
+}).done(function( html ) {
+	//alert(html);
+	
+	
+  $p("#header-wrapper").html(html);
+  setTimeout(load, 500);
+ 
+});
+
+function load() {
+         $p("#content").css("display", "");
+  		 $p("#bottom").css("display", "");
+         $p("#main").css("display", "");
+    }
+
+</script>
+
+
+</body>
+</html>
+

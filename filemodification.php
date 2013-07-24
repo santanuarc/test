@@ -1,0 +1,5 @@
+<?php
+    copy ("demo/*.*","newloc/");
+    
+    
+?>

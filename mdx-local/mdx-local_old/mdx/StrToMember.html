@@ -1,0 +1,1277 @@
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+
+    <title>StrToMember</title>
+
+    <link rel="stylesheet" href="./../css/help.css" type="text/css"/>
+
+    <link rel="stylesheet" href="css/mdxdoc.css" type="text/css"/>
+    <link rel="stylesheet" href="css/mdxdoc-self-contained.css" type="text/css"/>
+    <link rel="stylesheet" href="css/jquery.fancybox.css" type="text/css"/>
+
+    <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="js/jquery.fancybox.js"></script>
+    <script type="text/javascript" src="js/mdxdoc-main.js"></script>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            var fancyObj = jQuery("a.fancybox-image");
+            if (fancyObj.length > 0) {
+                fancyObj.fancybox({'titleShow':false,'padding':10,'overlayOpacity':'0.6','overlayColor':'#000'});
+            }
+        });
+    </script>
+
+</head>
+
+<body>
+
+<div id="body-wrapper">
+    <div id="main">
+
+        <div id="header-wrapper">
+            <div id="header">
+
+                <div id="logo"><a id="home" title="Home" href="http://www.icCube.com"></a></div>
+            </div>
+        </div>
+
+        <div id="content">
+
+            <div class="cd-mdxdoc-wrapper">
+
+                <div class="cd-mdxdoc-tree-container">
+    <div class="cd-mdxdoc-tree-branch-container">
+                            <div class="cd-mdxdoc-tree-branch"><a
+                class="cd-mdxdoc-tree-branch-btn cd-mdxdoc-tree-branch-btn-expanded"
+                href="#"></a> <a class="cd-mdxdoc-tree-link" href="./../user_guide/user_guide.html"
+   >OLAP Server User Guide</a>
+             <div class="cd-mdxdoc-tree-branch-container">                    <div class="cd-mdxdoc-tree-branch"><a class="cd-mdxdoc-tree-branch-btn"
+                                                                       href="#"></a> <a class="cd-mdxdoc-tree-link" href="./../user_guide/configuring_iccube/configuring_iccube.html"
+   >Configuring icCube</a>
+             <div class="cd-mdxdoc-tree-branch-container"
+                 style="display:none;">                    <div class="cd-mdxdoc-tree-leaf" title="Overview"><a class="cd-mdxdoc-tree-link" href="./../user_guide/configuring_iccube/overview.html"
+   >Overview</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Accessing the Configuration"><a class="cd-mdxdoc-tree-link" href="./../user_guide/configuring_iccube/accessing_configuration.html"
+   >Accessing the Configuration</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="icCube.xml"><a class="cd-mdxdoc-tree-link" href="./../user_guide/configuring_iccube/iccube_xml.html"
+   >icCube.xml</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Notifications"><a class="cd-mdxdoc-tree-link" href="./../user_guide/configuring_iccube/iccube_notification_xml.html"
+   >Notifications</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Environment Variables"><a class="cd-mdxdoc-tree-link" href="./../user_guide/configuring_iccube/env_variables.html"
+   >Environment Variables</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Java JRE Options"><a class="cd-mdxdoc-tree-link" href="./../user_guide/configuring_iccube/jre_options.html"
+   >Java JRE Options</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Authentication"><a class="cd-mdxdoc-tree-link" href="./../user_guide/configuring_iccube/authentication.html"
+   >Authentication</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Authorization"><a class="cd-mdxdoc-tree-link" href="./../user_guide/configuring_iccube/authorization.html"
+   >Authorization</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="SSL (HTTPS)"><a class="cd-mdxdoc-tree-link" href="./../user_guide/configuring_iccube/https.html"
+   >SSL (HTTPS)</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Apache (Web Server)"><a class="cd-mdxdoc-tree-link" href="./../user_guide/configuring_iccube/apache_web_server.html"
+   >Apache (Web Server)</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Memory (RAM)"><a class="cd-mdxdoc-tree-link" href="./../user_guide/configuring_iccube/ram.html"
+   >Memory (RAM)</a>
+</div>
+            </div> </div>
+                            <div class="cd-mdxdoc-tree-branch"><a class="cd-mdxdoc-tree-branch-btn"
+                                                                       href="#"></a> <a class="cd-mdxdoc-tree-link" href="./../user_guide/running_iccube/running_iccube.html"
+   >Running icCube</a>
+             <div class="cd-mdxdoc-tree-branch-container"
+                 style="display:none;">                    <div class="cd-mdxdoc-tree-leaf" title="icCube Server"><a class="cd-mdxdoc-tree-link" href="./../user_guide/running_iccube/server.html"
+   >icCube Server</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="icCube Windows Service"><a class="cd-mdxdoc-tree-link" href="./../user_guide/running_iccube/service.html"
+   >icCube Windows Service</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="WEB-based User Interface"><a class="cd-mdxdoc-tree-link" href="./../user_guide/running_iccube/web_ui.html"
+   >WEB-based User Interface</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="XMLA Service"><a class="cd-mdxdoc-tree-link" href="./../user_guide/running_iccube/xmla.html"
+   >XMLA Service</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Startup Sequence / Application Directories"><a class="cd-mdxdoc-tree-link" href="./../user_guide/running_iccube/startup.html"
+   >Startup Sequence / Application Directories</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Multiple instances on the same machine"><a class="cd-mdxdoc-tree-link" href="./../user_guide/running_iccube/multiple_instances.html"
+   >Multiple instances on the same machine</a>
+</div>
+            </div> </div>
+                            <div class="cd-mdxdoc-tree-branch"><a class="cd-mdxdoc-tree-branch-btn"
+                                                                       href="#"></a> <a class="cd-mdxdoc-tree-link" href="./../user_guide/migrating_iccube/migrating_iccube.html"
+   >Migrating icCube</a>
+             <div class="cd-mdxdoc-tree-branch-container"
+                 style="display:none;">                    <div class="cd-mdxdoc-tree-leaf" title="1.3   to 2.0"><a class="cd-mdxdoc-tree-link" href="./../user_guide/migrating_iccube/1_3_to_2_0.html"
+   >1.3   to 2.0</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="2.0   to 2.0.1"><a class="cd-mdxdoc-tree-link" href="./../user_guide/migrating_iccube/2_0_0_to_2_0_1.html"
+   >2.0   to 2.0.1</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="2.0.1 to 2.0.2"><a class="cd-mdxdoc-tree-link" href="./../user_guide/migrating_iccube/2_0_1_to_2_0_2.html"
+   >2.0.1 to 2.0.2</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="2.0.2 to 2.0.3"><a class="cd-mdxdoc-tree-link" href="./../user_guide/migrating_iccube/2_0_2_to_2_0_3.html"
+   >2.0.2 to 2.0.3</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="2.0.3 to 2.0.4"><a class="cd-mdxdoc-tree-link" href="./../user_guide/migrating_iccube/2_0_3_to_2_0_4.html"
+   >2.0.3 to 2.0.4</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="2.0.4 to 2.0.5"><a class="cd-mdxdoc-tree-link" href="./../user_guide/migrating_iccube/2_0_4_to_2_0_5.html"
+   >2.0.4 to 2.0.5</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="2.0.5 to 2.0.6"><a class="cd-mdxdoc-tree-link" href="./../user_guide/migrating_iccube/2_0_5_to_2_0_6.html"
+   >2.0.5 to 2.0.6</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="2.0.6 to 2.5"><a class="cd-mdxdoc-tree-link" href="./../user_guide/migrating_iccube/2_0_6_to_2_5.html"
+   >2.0.6 to 2.5</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="2.5   to 2.5.1"><a class="cd-mdxdoc-tree-link" href="./../user_guide/migrating_iccube/2_5_to_2_5_1.html"
+   >2.5   to 2.5.1</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="2.5.1 to 2.5.2"><a class="cd-mdxdoc-tree-link" href="./../user_guide/migrating_iccube/2_5_1_to_2_5_2.html"
+   >2.5.1 to 2.5.2</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="2.5.2 to 2.5.3"><a class="cd-mdxdoc-tree-link" href="./../user_guide/migrating_iccube/2_5_2_to_2_5_3.html"
+   >2.5.2 to 2.5.3</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="2.5.3 to 2.5.4"><a class="cd-mdxdoc-tree-link" href="./../user_guide/migrating_iccube/2_5_3_to_2_5_4.html"
+   >2.5.3 to 2.5.4</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="2.5.4 to 2.5.5"><a class="cd-mdxdoc-tree-link" href="./../user_guide/migrating_iccube/2_5_4_to_2_5_5.html"
+   >2.5.4 to 2.5.5</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="2.5.5 to 2.5.6"><a class="cd-mdxdoc-tree-link" href="./../user_guide/migrating_iccube/2_5_5_to_2_5_6.html"
+   >2.5.5 to 2.5.6</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="2.5.6 to 2.6"><a class="cd-mdxdoc-tree-link" href="./../user_guide/migrating_iccube/2_5_6_to_2_6_0.html"
+   >2.5.6 to 2.6</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="2.6 to 3.0"><a class="cd-mdxdoc-tree-link" href="./../user_guide/migrating_iccube/2_6_to_3_0.html"
+   >2.6 to 3.0</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="3.0 to 3.0.1"><a class="cd-mdxdoc-tree-link" href="./../user_guide/migrating_iccube/3_0_to_3_0_1.html"
+   >3.0 to 3.0.1</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="3.0.1 to 3.0.3"><a class="cd-mdxdoc-tree-link" href="./../user_guide/migrating_iccube/3_0_1_to_3_0_3.html"
+   >3.0.1 to 3.0.3</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="3.0.3 to 3.5"><a class="cd-mdxdoc-tree-link" href="./../user_guide/migrating_iccube/3_0_3_to_3_5.html"
+   >3.0.3 to 3.5</a>
+</div>
+            </div> </div>
+                            <div class="cd-mdxdoc-tree-branch"><a class="cd-mdxdoc-tree-branch-btn"
+                                                                       href="#"></a> <a class="cd-mdxdoc-tree-link" href="./../user_guide/security/security.html"
+   >Security</a>
+             <div class="cd-mdxdoc-tree-branch-container"
+                 style="display:none;">                    <div class="cd-mdxdoc-tree-leaf" title="Users Definition"><a class="cd-mdxdoc-tree-link" href="./../user_guide/security/user_definitions.html"
+   >Users Definition</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Access Rights"><a class="cd-mdxdoc-tree-link" href="./../user_guide/security/access_rights.html"
+   >Access Rights</a>
+</div>
+            </div> </div>
+                            <div class="cd-mdxdoc-tree-branch"><a class="cd-mdxdoc-tree-branch-btn"
+                                                                       href="#"></a> <a class="cd-mdxdoc-tree-link" href="./../user_guide/schemas_cubes/schemas_cubes.html"
+   >Creating Schemas/Cubes</a>
+             <div class="cd-mdxdoc-tree-branch-container"
+                 style="display:none;">                    <div class="cd-mdxdoc-tree-leaf" title="Cube Builder"><a class="cd-mdxdoc-tree-link" href="./../user_guide/schemas_cubes/builder_ui.html"
+   >Cube Builder</a>
+</div>
+                            <div class="cd-mdxdoc-tree-branch"><a class="cd-mdxdoc-tree-branch-btn"
+                                                                       href="#"></a> <a class="cd-mdxdoc-tree-link" href="./../user_guide/schemas_cubes/datasources.html"
+   >Data Sources</a>
+             <div class="cd-mdxdoc-tree-branch-container"
+                 style="display:none;">                    <div class="cd-mdxdoc-tree-leaf" title="DataBase"><a class="cd-mdxdoc-tree-link" href="./../user_guide/schemas_cubes/ds_database.html"
+   >DataBase</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Files"><a class="cd-mdxdoc-tree-link" href="./../user_guide/schemas_cubes/ds_files.html"
+   >Files</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Excel Sheets"><a class="cd-mdxdoc-tree-link" href="./../user_guide/schemas_cubes/ds_excel.html"
+   >Excel Sheets</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="In Memory"><a class="cd-mdxdoc-tree-link" href="./../user_guide/schemas_cubes/ds_inmemory.html"
+   >In Memory</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="User Defined"><a class="cd-mdxdoc-tree-link" href="./../user_guide/schemas_cubes/ds_user_defined.html"
+   >User Defined</a>
+</div>
+            </div> </div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Real-Time Data Sources"><a class="cd-mdxdoc-tree-link" href="./../user_guide/schemas_cubes/datasources_rt.html"
+   >Real-Time Data Sources</a>
+</div>
+                            <div class="cd-mdxdoc-tree-branch"><a class="cd-mdxdoc-tree-branch-btn"
+                                                                       href="#"></a> <a class="cd-mdxdoc-tree-link" href="./../user_guide/schemas_cubes/dimensions.html"
+   >Dimensions</a>
+             <div class="cd-mdxdoc-tree-branch-container"
+                 style="display:none;">                    <div class="cd-mdxdoc-tree-leaf" title="MultiLevel Dimension"><a class="cd-mdxdoc-tree-link" href="./../user_guide/schemas_cubes/dim_multilevel.html"
+   >MultiLevel Dimension</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="MultiLevel Dimension Advanced"><a class="cd-mdxdoc-tree-link" href="./../user_guide/schemas_cubes/dim_multilevelAdvanced.html"
+   >MultiLevel Dimension Advanced</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Parent/Child Dimension"><a class="cd-mdxdoc-tree-link" href="./../user_guide/schemas_cubes/dim_parentchild.html"
+   >Parent/Child Dimension</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Path Dimension"><a class="cd-mdxdoc-tree-link" href="./../user_guide/schemas_cubes/dim_path.html"
+   >Path Dimension</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Ranged Dimension (Banded)"><a class="cd-mdxdoc-tree-link" href="./../user_guide/schemas_cubes/dim_ranged.html"
+   >Ranged Dimension (Banded)</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Many-to-Many Dimension"><a class="cd-mdxdoc-tree-link" href="./../user_guide/schemas_cubes/dim_many2many.html"
+   >Many-to-Many Dimension</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Statistical Dimension"><a class="cd-mdxdoc-tree-link" href="./../user_guide/schemas_cubes/dim_stats.html"
+   >Statistical Dimension</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Time Wizard Dimension"><a class="cd-mdxdoc-tree-link" href="./../user_guide/schemas_cubes/dim_timewizard.html"
+   >Time Wizard Dimension</a>
+</div>
+            </div> </div>
+                            <div class="cd-mdxdoc-tree-branch"><a class="cd-mdxdoc-tree-branch-btn"
+                                                                       href="#"></a> <a class="cd-mdxdoc-tree-link" href="./../user_guide/schemas_cubes/facts_intro.html"
+   >Facts</a>
+             <div class="cd-mdxdoc-tree-branch-container"
+                 style="display:none;">                    <div class="cd-mdxdoc-tree-leaf" title="Facts Standard  "><a class="cd-mdxdoc-tree-link" href="./../user_guide/schemas_cubes/facts_standard.html"
+   >Facts Standard  </a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Facts Aggregation Types"><a class="cd-mdxdoc-tree-link" href="./../user_guide/schemas_cubes/facts_aggregation.html"
+   >Facts Aggregation Types</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Facts Many-to-many"><a class="cd-mdxdoc-tree-link" href="./../user_guide/schemas_cubes/facts_many2many.html"
+   >Facts Many-to-many</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Facts Multiple Levels"><a class="cd-mdxdoc-tree-link" href="./../user_guide/schemas_cubes/facts_multilevels.html"
+   >Facts Multiple Levels</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Facts No Aggregation"><a class="cd-mdxdoc-tree-link" href="./../user_guide/schemas_cubes/facts_noaggreg.html"
+   >Facts No Aggregation</a>
+</div>
+            </div> </div>
+                            <div class="cd-mdxdoc-tree-branch"><a class="cd-mdxdoc-tree-branch-btn"
+                                                                       href="#"></a> <a class="cd-mdxdoc-tree-link" href="./../user_guide/schemas_cubes/advanced.html"
+   >Advanced</a>
+             <div class="cd-mdxdoc-tree-branch-container"
+                 style="display:none;">                    <div class="cd-mdxdoc-tree-leaf" title="Perspective"><a class="cd-mdxdoc-tree-link" href="./../user_guide/schemas_cubes/adv_perspectives.html"
+   >Perspective</a>
+</div>
+            </div> </div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Localization"><a class="cd-mdxdoc-tree-link" href="./../user_guide/schemas_cubes/localization.html"
+   >Localization</a>
+</div>
+                            <div class="cd-mdxdoc-tree-branch"><a class="cd-mdxdoc-tree-branch-btn"
+                                                                       href="#"></a> <a class="cd-mdxdoc-tree-link" href="./../user_guide/schemas_cubes/factories.html"
+   >Schema Factories</a>
+             <div class="cd-mdxdoc-tree-branch-container"
+                 style="display:none;">                    <div class="cd-mdxdoc-tree-leaf" title="Single File"><a class="cd-mdxdoc-tree-link" href="./../user_guide/schemas_cubes/factory_single_file.html"
+   >Single File</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Multi Files"><a class="cd-mdxdoc-tree-link" href="./../user_guide/schemas_cubes/factory_multi_files.html"
+   >Multi Files</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Excel"><a class="cd-mdxdoc-tree-link" href="./../user_guide/schemas_cubes/factory_excel.html"
+   >Excel</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Recap"><a class="cd-mdxdoc-tree-link" href="./../user_guide/schemas_cubes/howto_create_cube.html"
+   >Recap</a>
+</div>
+            </div> </div>
+                            <div class="cd-mdxdoc-tree-branch"><a class="cd-mdxdoc-tree-branch-btn"
+                                                                       href="#"></a> <a class="cd-mdxdoc-tree-link" href="./../user_guide/schemas_cubes/schema_definition.html"
+   >Schema/Cube XML Definition</a>
+             <div class="cd-mdxdoc-tree-branch-container"
+                 style="display:none;">                    <div class="cd-mdxdoc-tree-leaf" title="Mixed (File + Excel)"><a class="cd-mdxdoc-tree-link" href="./../user_guide/schemas_cubes/factory_mixed.html"
+   >Mixed (File + Excel)</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Database"><a class="cd-mdxdoc-tree-link" href="./../user_guide/schemas_cubes/factory_db.html"
+   >Database</a>
+</div>
+            </div> </div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Walkthrough"><a class="cd-mdxdoc-tree-link" href="./../user_guide/walkthrough/walkthrough.html"
+   >Walkthrough</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Walkthrough (Real-Time)"><a class="cd-mdxdoc-tree-link" href="./../user_guide/walkthrough/walkthrough_rt.html"
+   >Walkthrough (Real-Time)</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Walkthrough (Localization)"><a class="cd-mdxdoc-tree-link" href="./../user_guide/walkthrough/walkthrough_localization.html"
+   >Walkthrough (Localization)</a>
+</div>
+            </div> </div>
+                            <div class="cd-mdxdoc-tree-branch"><a class="cd-mdxdoc-tree-branch-btn"
+                                                                       href="#"></a> <a class="cd-mdxdoc-tree-link" href="./../user_guide/using/using.html"
+   >Working with icCube</a>
+             <div class="cd-mdxdoc-tree-branch-container"
+                 style="display:none;">                    <div class="cd-mdxdoc-tree-leaf" title="MDX Debugging"><a class="cd-mdxdoc-tree-link" href="./../user_guide/using/debugging.html"
+   >MDX Debugging</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="MDX Profiling"><a class="cd-mdxdoc-tree-link" href="./../user_guide/using/profiling.html"
+   >MDX Profiling</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Schema Management"><a class="cd-mdxdoc-tree-link" href="./../user_guide/using/cube_management.html"
+   >Schema Management</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Schema Scheduler"><a class="cd-mdxdoc-tree-link" href="./../user_guide/using/schema_scheduler.html"
+   >Schema Scheduler</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Offline Schemas/Cubes"><a class="cd-mdxdoc-tree-link" href="./../user_guide/using/offline_cubes.html"
+   >Offline Schemas/Cubes</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Commands"><a class="cd-mdxdoc-tree-link" href="./../user_guide/using/exec_commands.html"
+   >Commands</a>
+</div>
+            </div> </div>
+                            <div class="cd-mdxdoc-tree-branch"><a class="cd-mdxdoc-tree-branch-btn"
+                                                                       href="#"></a> <a class="cd-mdxdoc-tree-link" href="./../user_guide/integration/integration.html"
+   >Reporting Tools Integration</a>
+             <div class="cd-mdxdoc-tree-branch-container"
+                 style="display:none;">                    <div class="cd-mdxdoc-tree-leaf" title="Excel 2007/2010"><a class="cd-mdxdoc-tree-link" href="./../user_guide/integration/excel.html"
+   >Excel 2007/2010</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Reporting Services"><a class="cd-mdxdoc-tree-link" href="./../user_guide/integration/reporting_services.html"
+   >Reporting Services</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Report Portal"><a class="cd-mdxdoc-tree-link" href="./../user_guide/integration/report_portal.html"
+   >Report Portal</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Wabbit"><a class="cd-mdxdoc-tree-link" href="./../user_guide/integration/wabbit.html"
+   >Wabbit</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="La Azada"><a class="cd-mdxdoc-tree-link" href="./../user_guide/integration/la_azada.html"
+   >La Azada</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="JPivot"><a class="cd-mdxdoc-tree-link" href="./../user_guide/integration/jpivot.html"
+   >JPivot</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="olap4j"><a class="cd-mdxdoc-tree-link" href="./../user_guide/integration/olap4j.html"
+   >olap4j</a>
+</div>
+            </div> </div>
+                            <div class="cd-mdxdoc-tree-branch"><a class="cd-mdxdoc-tree-branch-btn"
+                                                                       href="#"></a> <a class="cd-mdxdoc-tree-link" href="./../user_guide/embedding_iccube/embedding_iccube.html"
+   >Embedding icCube</a>
+             <div class="cd-mdxdoc-tree-branch-container"
+                 style="display:none;">                    <div class="cd-mdxdoc-tree-leaf" title="Overview"><a class="cd-mdxdoc-tree-link" href="./../user_guide/embedding_iccube/overview.html"
+   >Overview</a>
+</div>
+            </div> </div>
+                            <div class="cd-mdxdoc-tree-branch"><a class="cd-mdxdoc-tree-branch-btn"
+                                                                       href="#"></a> <a class="cd-mdxdoc-tree-link" href="./../user_guide/plugins_extensions/plugins_extensions.html"
+   >Plugins/Extensions</a>
+             <div class="cd-mdxdoc-tree-branch-container"
+                 style="display:none;">                    <div class="cd-mdxdoc-tree-leaf" title="Functions"><a class="cd-mdxdoc-tree-link" href="./../user_guide/plugins_extensions/functions.html"
+   >Functions</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Types & Operators"><a class="cd-mdxdoc-tree-link" href="./../user_guide/plugins_extensions/types.html"
+   >Types & Operators</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Cube Data Sources"><a class="cd-mdxdoc-tree-link" href="./../user_guide/plugins_extensions/cube_datasources.html"
+   >Cube Data Sources</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Cube Factories"><a class="cd-mdxdoc-tree-link" href="./../user_guide/plugins_extensions/cube_factories.html"
+   >Cube Factories</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Configuration"><a class="cd-mdxdoc-tree-link" href="./../user_guide/plugins_extensions/configuration.html"
+   >Configuration</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Examples"><a class="cd-mdxdoc-tree-link" href="./../user_guide/plugins_extensions/examples.html"
+   >Examples</a>
+</div>
+            </div> </div>
+                            <div class="cd-mdxdoc-tree-branch"><a class="cd-mdxdoc-tree-branch-btn"
+                                                                       href="#"></a> <a class="cd-mdxdoc-tree-link" href="./../user_guide/howto/howto.html"
+   >HOWTO</a>
+             <div class="cd-mdxdoc-tree-branch-container"
+                 style="display:none;">                    <div class="cd-mdxdoc-tree-leaf" title="MDX Histograms"><a class="cd-mdxdoc-tree-link" href="./../user_guide/howto/histograms.html"
+   >MDX Histograms</a>
+</div>
+            </div> </div>
+            </div> </div>
+                            <div class="cd-mdxdoc-tree-branch"><a
+                class="cd-mdxdoc-tree-branch-btn cd-mdxdoc-tree-branch-btn-expanded"
+                href="#"></a> <a class="cd-mdxdoc-tree-link" href="./../reporting/doc/ic3Overview.html"
+   >Web Reporting</a>
+             <div class="cd-mdxdoc-tree-branch-container">                    <div class="cd-mdxdoc-tree-leaf" title="Web App Integration"><a class="cd-mdxdoc-tree-link" href="./../reporting/doc/ic3WebAppIntegration.html"
+   >Web App Integration</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Installation"><a class="cd-mdxdoc-tree-link" href="./../reporting/doc/ic3Install.html"
+   >Installation</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Local Settings"><a class="cd-mdxdoc-tree-link" href="./../reporting/doc/ic3LocalSettings.html"
+   >Local Settings</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Displaying a Report"><a class="cd-mdxdoc-tree-link" href="./../reporting/doc/ic3OpenReport.html"
+   >Displaying a Report</a>
+</div>
+            </div> </div>
+                            <div class="cd-mdxdoc-tree-branch"><a
+                class="cd-mdxdoc-tree-branch-btn cd-mdxdoc-tree-branch-btn-expanded"
+                href="#"></a> <a class="cd-mdxdoc-tree-link" href="./../viz/viz/doc/vizOverview.html"
+   >Visualization Library</a>
+             <div class="cd-mdxdoc-tree-branch-container">                    <div class="cd-mdxdoc-tree-branch"><a class="cd-mdxdoc-tree-branch-btn"
+                                                                       href="#"></a> <a class="cd-mdxdoc-tree-link" href="./../viz/viz/doc/vizTutorials.html"
+   >Tutorials</a>
+             <div class="cd-mdxdoc-tree-branch-container"
+                 style="display:none;">                    <div class="cd-mdxdoc-tree-leaf" title="Datasource & connection"><a class="cd-mdxdoc-tree-link" href="./../viz/viz/doc/viz1DataSource.html"
+   >Datasource & connection</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Selecting schema and cube"><a class="cd-mdxdoc-tree-link" href="./../viz/viz/doc/viz2SelectSchemaCube.html"
+   >Selecting schema and cube</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Selecting hierarchies and members"><a class="cd-mdxdoc-tree-link" href="./../viz/viz/doc/viz3SelectHierarchyMember.html"
+   >Selecting hierarchies and members</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Selecting hierarchies and members (JQuery UI)"><a class="cd-mdxdoc-tree-link" href="./../viz/viz/doc/viz4SelectHierarchyMemberJQui.html"
+   >Selecting hierarchies and members (JQuery UI)</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Selecting hierarchies and members (ExtJS)"><a class="cd-mdxdoc-tree-link" href="./../viz/viz/doc/viz4Z1SelectHierarchyMemberExtJs.html"
+   >Selecting hierarchies and members (ExtJS)</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Selecting multiple members with a tree (Beta)"><a class="cd-mdxdoc-tree-link" href="./../viz/viz/doc/viz5SelectTreeMember.html"
+   >Selecting multiple members with a tree (Beta)</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="First MDX request"><a class="cd-mdxdoc-tree-link" href="./../viz/viz/doc/viz6FirstMdxRequest.html"
+   >First MDX request</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Query parameters"><a class="cd-mdxdoc-tree-link" href="./../viz/viz/doc/viz7Parameters.html"
+   >Query parameters</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Action"><a class="cd-mdxdoc-tree-link" href="./../viz/viz/doc/viz8Actions.html"
+   >Action</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Query Manager workflow & events"><a class="cd-mdxdoc-tree-link" href="./../viz/viz/doc/viz9QueryManager.html"
+   >Query Manager workflow & events</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Pivot Table"><a class="cd-mdxdoc-tree-link" href="./../viz/viz/doc/viz10PivotTable.html"
+   >Pivot Table</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Pivot Table - Drilldown"><a class="cd-mdxdoc-tree-link" href="./../viz/viz/doc/viz11PivotTableI.html"
+   >Pivot Table - Drilldown</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Pivot Table - Rendering (client)"><a class="cd-mdxdoc-tree-link" href="./../viz/viz/doc/viz11PivotTableII.html"
+   >Pivot Table - Rendering (client)</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Pivot Table - Rendering (server)"><a class="cd-mdxdoc-tree-link" href="./../viz/viz/doc/viz12PivotTableIII.html"
+   >Pivot Table - Rendering (server)</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Pivot Table - Events"><a class="cd-mdxdoc-tree-link" href="./../viz/viz/doc/viz13PivotTableIV.html"
+   >Pivot Table - Events</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Pivot Table - Export To Excel"><a class="cd-mdxdoc-tree-link" href="./../viz/viz/doc/viz14PivotTableV.html"
+   >Pivot Table - Export To Excel</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Google Visualization Charts Integration"><a class="cd-mdxdoc-tree-link" href="./../viz/viz/doc/viz20GoogleVisualizationCharts.html"
+   >Google Visualization Charts Integration</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="amCharts Integration"><a class="cd-mdxdoc-tree-link" href="./../viz/viz/doc/viz21amCharts.html"
+   >amCharts Integration</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Protovis Integration"><a class="cd-mdxdoc-tree-link" href="./../viz/viz/doc/viz22Protovis.html"
+   >Protovis Integration</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="flot Integration"><a class="cd-mdxdoc-tree-link" href="./../viz/viz/doc/viz23Flot.html"
+   >flot Integration</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Sencha (ExtJS) Integration"><a class="cd-mdxdoc-tree-link" href="./../viz/viz/doc/viz24Sencha.html"
+   >Sencha (ExtJS) Integration</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="D3 Integration (bullet chart)"><a class="cd-mdxdoc-tree-link" href="./../viz/viz/doc/viz25D3bulletChart.html"
+   >D3 Integration (bullet chart)</a>
+</div>
+            </div> </div>
+                            <div class="cd-mdxdoc-tree-branch"><a class="cd-mdxdoc-tree-branch-btn"
+                                                                       href="#"></a> <a class="cd-mdxdoc-tree-link" href="./../viz/viz/demo/vizDemos.html"
+   >Demos</a>
+             <div class="cd-mdxdoc-tree-branch-container"
+                 style="display:none;">                    <div class="cd-mdxdoc-tree-leaf" title="World statistics dashboard"><a class="cd-mdxdoc-tree-link" href="./../viz/viz/demo/vizWorldStatsDataDemo.html"
+   target="_blank">World statistics dashboard</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="amCharts based dashboard"><a class="cd-mdxdoc-tree-link" href="./../viz/viz/demo/vizAmChartsDemo.html"
+   target="_blank">amCharts based dashboard</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Drilldown down & Google Visualization charts"><a class="cd-mdxdoc-tree-link" href="./../viz/viz/demo/vizDrilldownDemo.html"
+   target="_blank">Drilldown down & Google Visualization charts</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Interactive MDX request building"><a class="cd-mdxdoc-tree-link" href="./../viz/viz/demo/vizPivotQueryDemo.html"
+   target="_blank">Interactive MDX request building</a>
+</div>
+            </div> </div>
+            </div> </div>
+                            <div class="cd-mdxdoc-tree-branch"><a
+                class="cd-mdxdoc-tree-branch-btn cd-mdxdoc-tree-branch-btn-expanded"
+                href="#"></a> <a class="cd-mdxdoc-tree-link" href="./../mdx/index.html"
+   >MDX Documentation</a>
+             <div class="cd-mdxdoc-tree-branch-container">                    <div class="cd-mdxdoc-tree-branch"><a class="cd-mdxdoc-tree-branch-btn"
+                                                                       href="#"></a> <a class="cd-mdxdoc-tree-link" href="./../mdx_tutorial/gentle_introduction.html"
+   >MDX Tutorial (Gentle Introduction)</a>
+             <div class="cd-mdxdoc-tree-branch-container"
+                 style="display:none;">                    <div class="cd-mdxdoc-tree-leaf" title="Dimensions, Hierarchies and Levels"><a class="cd-mdxdoc-tree-link" href="./../mdx_tutorial/dimensions.html"
+   >Dimensions, Hierarchies and Levels</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Members, Tuples and Sets"><a class="cd-mdxdoc-tree-link" href="./../mdx_tutorial/members.html"
+   >Members, Tuples and Sets</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Member Name"><a class="cd-mdxdoc-tree-link" href="./../mdx_tutorial/member_name.html"
+   >Member Name</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="SELECT Statement"><a class="cd-mdxdoc-tree-link" href="./../mdx_tutorial/select_statement.html"
+   >SELECT Statement</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="WHERE (aka. slicer) Clause"><a class="cd-mdxdoc-tree-link" href="./../mdx_tutorial/where_clause.html"
+   >WHERE (aka. slicer) Clause</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="FROM as a Slicer"><a class="cd-mdxdoc-tree-link" href="./../mdx_tutorial/from_slicer.html"
+   >FROM as a Slicer</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Navigating the Hierarchy"><a class="cd-mdxdoc-tree-link" href="./../mdx_tutorial/navigating_hierarchy.html"
+   >Navigating the Hierarchy</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Common Calculations"><a class="cd-mdxdoc-tree-link" href="./../mdx_tutorial/common_calculations.html"
+   >Common Calculations</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Calculated Members"><a class="cd-mdxdoc-tree-link" href="./../mdx_tutorial/calculated_members.html"
+   >Calculated Members</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Named Sets"><a class="cd-mdxdoc-tree-link" href="./../mdx_tutorial/named_sets.html"
+   >Named Sets</a>
+</div>
+            </div> </div>
+                            <div class="cd-mdxdoc-tree-branch"><a class="cd-mdxdoc-tree-branch-btn"
+                                                                       href="#"></a> <a class="cd-mdxdoc-tree-link" href="./../mdx/functions.html"
+   >MDX Functions Reference</a>
+             <div class="cd-mdxdoc-tree-branch-container"
+                 style="display:none;">                    <div class="cd-mdxdoc-tree-leaf" title="AddCalculatedMembers"><a class="cd-mdxdoc-tree-link" href="./../mdx/AddCalculatedMembers.html"
+   >AddCalculatedMembers</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Aggregate"><a class="cd-mdxdoc-tree-link" href="./../mdx/Aggregate.html"
+   >Aggregate</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="AllMembers"><a class="cd-mdxdoc-tree-link" href="./../mdx/AllMembers.html"
+   >AllMembers</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Ancestor"><a class="cd-mdxdoc-tree-link" href="./../mdx/Ancestor.html"
+   >Ancestor</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Ancestors"><a class="cd-mdxdoc-tree-link" href="./../mdx/Ancestors.html"
+   >Ancestors</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Ascendants"><a class="cd-mdxdoc-tree-link" href="./../mdx/Ascendants.html"
+   >Ascendants</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Avg"><a class="cd-mdxdoc-tree-link" href="./../mdx/Avg.html"
+   >Avg</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="BottomCount"><a class="cd-mdxdoc-tree-link" href="./../mdx/BottomCount.html"
+   >BottomCount</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="BottomPercent"><a class="cd-mdxdoc-tree-link" href="./../mdx/BottomPercent.html"
+   >BottomPercent</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="BottomSum"><a class="cd-mdxdoc-tree-link" href="./../mdx/BottomSum.html"
+   >BottomSum</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Children"><a class="cd-mdxdoc-tree-link" href="./../mdx/Children.html"
+   >Children</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="ClosingPeriod"><a class="cd-mdxdoc-tree-link" href="./../mdx/ClosingPeriod.html"
+   >ClosingPeriod</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="CoalesceEmpty"><a class="cd-mdxdoc-tree-link" href="./../mdx/CoalesceEmpty.html"
+   >CoalesceEmpty</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="CompactSet"><a class="cd-mdxdoc-tree-link" href="./../mdx/CompactSet.html"
+   >CompactSet</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Count"><a class="cd-mdxdoc-tree-link" href="./../mdx/Count.html"
+   >Count</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Count(Dimensions)"><a class="cd-mdxdoc-tree-link" href="./../mdx/Count(Dimensions).html"
+   >Count(Dimensions)</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Count(Level)"><a class="cd-mdxdoc-tree-link" href="./../mdx/Count(Level).html"
+   >Count(Level)</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Count(Levels)"><a class="cd-mdxdoc-tree-link" href="./../mdx/Count(Levels).html"
+   >Count(Levels)</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Cousin"><a class="cd-mdxdoc-tree-link" href="./../mdx/Cousin.html"
+   >Cousin</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Crossjoin"><a class="cd-mdxdoc-tree-link" href="./../mdx/Crossjoin.html"
+   >Crossjoin</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Current"><a class="cd-mdxdoc-tree-link" href="./../mdx/Current.html"
+   >Current</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="CurrentCellValue"><a class="cd-mdxdoc-tree-link" href="./../mdx/CurrentCellValue.html"
+   >CurrentCellValue</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="CurrentMember"><a class="cd-mdxdoc-tree-link" href="./../mdx/CurrentMember.html"
+   >CurrentMember</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="CurrentOrdinal"><a class="cd-mdxdoc-tree-link" href="./../mdx/CurrentOrdinal.html"
+   >CurrentOrdinal</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="DefaultMember"><a class="cd-mdxdoc-tree-link" href="./../mdx/DefaultMember.html"
+   >DefaultMember</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Descendants"><a class="cd-mdxdoc-tree-link" href="./../mdx/Descendants.html"
+   >Descendants</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Distinct"><a class="cd-mdxdoc-tree-link" href="./../mdx/Distinct.html"
+   >Distinct</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="DistinctCount"><a class="cd-mdxdoc-tree-link" href="./../mdx/DistinctCount.html"
+   >DistinctCount</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Except"><a class="cd-mdxdoc-tree-link" href="./../mdx/Except.html"
+   >Except</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Exists"><a class="cd-mdxdoc-tree-link" href="./../mdx/Exists.html"
+   >Exists</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Extract"><a class="cd-mdxdoc-tree-link" href="./../mdx/Extract.html"
+   >Extract</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Filter"><a class="cd-mdxdoc-tree-link" href="./../mdx/Filter.html"
+   >Filter</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="FirstChild"><a class="cd-mdxdoc-tree-link" href="./../mdx/FirstChild.html"
+   >FirstChild</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="FirstNotAllLevel"><a class="cd-mdxdoc-tree-link" href="./../mdx/FirstNotAllLevel.html"
+   >FirstNotAllLevel</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="FirstSibling"><a class="cd-mdxdoc-tree-link" href="./../mdx/FirstSibling.html"
+   >FirstSibling</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Generate"><a class="cd-mdxdoc-tree-link" href="./../mdx/Generate.html"
+   >Generate</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="GetMonitoringCounter"><a class="cd-mdxdoc-tree-link" href="./../mdx/GetMonitoringCounter.html"
+   >GetMonitoringCounter</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Head"><a class="cd-mdxdoc-tree-link" href="./../mdx/Head.html"
+   >Head</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Hierarchize"><a class="cd-mdxdoc-tree-link" href="./../mdx/Hierarchize.html"
+   >Hierarchize</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="HSV"><a class="cd-mdxdoc-tree-link" href="./../mdx/HSV.html"
+   >HSV</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Iif"><a class="cd-mdxdoc-tree-link" href="./../mdx/Iif.html"
+   >Iif</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="InterpolateHSVColors"><a class="cd-mdxdoc-tree-link" href="./../mdx/InterpolateHSVColors.html"
+   >InterpolateHSVColors</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="InterpolateRGBColors"><a class="cd-mdxdoc-tree-link" href="./../mdx/InterpolateRGBColors.html"
+   >InterpolateRGBColors</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Intersect"><a class="cd-mdxdoc-tree-link" href="./../mdx/Intersect.html"
+   >Intersect</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="IsAncestor"><a class="cd-mdxdoc-tree-link" href="./../mdx/IsAncestor.html"
+   >IsAncestor</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="IsEmpty"><a class="cd-mdxdoc-tree-link" href="./../mdx/IsEmpty.html"
+   >IsEmpty</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="IsGeneration"><a class="cd-mdxdoc-tree-link" href="./../mdx/IsGeneration.html"
+   >IsGeneration</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="IsLeaf"><a class="cd-mdxdoc-tree-link" href="./../mdx/IsLeaf.html"
+   >IsLeaf</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="IsSibling"><a class="cd-mdxdoc-tree-link" href="./../mdx/IsSibling.html"
+   >IsSibling</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Item"><a class="cd-mdxdoc-tree-link" href="./../mdx/Item.html"
+   >Item</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Java Functions"><a class="cd-mdxdoc-tree-link" href="./../mdx/Java Functions.html"
+   >Java Functions</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Lag"><a class="cd-mdxdoc-tree-link" href="./../mdx/Lag.html"
+   >Lag</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="LastChild"><a class="cd-mdxdoc-tree-link" href="./../mdx/LastChild.html"
+   >LastChild</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="LastLevel"><a class="cd-mdxdoc-tree-link" href="./../mdx/LastLevel.html"
+   >LastLevel</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="LastPeriods"><a class="cd-mdxdoc-tree-link" href="./../mdx/LastPeriods.html"
+   >LastPeriods</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="LastSibling"><a class="cd-mdxdoc-tree-link" href="./../mdx/LastSibling.html"
+   >LastSibling</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Lead"><a class="cd-mdxdoc-tree-link" href="./../mdx/Lead.html"
+   >Lead</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="LinkMember"><a class="cd-mdxdoc-tree-link" href="./../mdx/LinkMember.html"
+   >LinkMember</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="LookupByKey"><a class="cd-mdxdoc-tree-link" href="./../mdx/LookupByKey.html"
+   >LookupByKey</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Matrix"><a class="cd-mdxdoc-tree-link" href="./../mdx/Matrix.html"
+   >Matrix</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Max"><a class="cd-mdxdoc-tree-link" href="./../mdx/Max.html"
+   >Max</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="MeasureGroupMeasures"><a class="cd-mdxdoc-tree-link" href="./../mdx/MeasureGroupMeasures.html"
+   >MeasureGroupMeasures</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Median"><a class="cd-mdxdoc-tree-link" href="./../mdx/Median.html"
+   >Median</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Members"><a class="cd-mdxdoc-tree-link" href="./../mdx/Members.html"
+   >Members</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="MemberToStr"><a class="cd-mdxdoc-tree-link" href="./../mdx/MemberToStr.html"
+   >MemberToStr</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Min"><a class="cd-mdxdoc-tree-link" href="./../mdx/Min.html"
+   >Min</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Mtd"><a class="cd-mdxdoc-tree-link" href="./../mdx/Mtd.html"
+   >Mtd</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="NameToSet"><a class="cd-mdxdoc-tree-link" href="./../mdx/NameToSet.html"
+   >NameToSet</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="NextMember"><a class="cd-mdxdoc-tree-link" href="./../mdx/NextMember.html"
+   >NextMember</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="NonEmpty"><a class="cd-mdxdoc-tree-link" href="./../mdx/NonEmpty.html"
+   >NonEmpty</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="OpeningPeriod"><a class="cd-mdxdoc-tree-link" href="./../mdx/OpeningPeriod.html"
+   >OpeningPeriod</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Order"><a class="cd-mdxdoc-tree-link" href="./../mdx/Order.html"
+   >Order</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="ParallelPeriod"><a class="cd-mdxdoc-tree-link" href="./../mdx/ParallelPeriod.html"
+   >ParallelPeriod</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Parent"><a class="cd-mdxdoc-tree-link" href="./../mdx/Parent.html"
+   >Parent</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="PeriodsToDate"><a class="cd-mdxdoc-tree-link" href="./../mdx/PeriodsToDate.html"
+   >PeriodsToDate</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="PrevMember"><a class="cd-mdxdoc-tree-link" href="./../mdx/PrevMember.html"
+   >PrevMember</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Properties"><a class="cd-mdxdoc-tree-link" href="./../mdx/Properties.html"
+   >Properties</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Qtd"><a class="cd-mdxdoc-tree-link" href="./../mdx/Qtd.html"
+   >Qtd</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Rank"><a class="cd-mdxdoc-tree-link" href="./../mdx/Rank.html"
+   >Rank</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="RGB"><a class="cd-mdxdoc-tree-link" href="./../mdx/RGB.html"
+   >RGB</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Root"><a class="cd-mdxdoc-tree-link" href="./../mdx/Root.html"
+   >Root</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="SchemaRefreshTime"><a class="cd-mdxdoc-tree-link" href="./../mdx/SchemaRefreshTime.html"
+   >SchemaRefreshTime</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="SetToStr"><a class="cd-mdxdoc-tree-link" href="./../mdx/SetToStr.html"
+   >SetToStr</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Siblings"><a class="cd-mdxdoc-tree-link" href="./../mdx/Siblings.html"
+   >Siblings</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="StripCalculatedMembers"><a class="cd-mdxdoc-tree-link" href="./../mdx/StripCalculatedMembers.html"
+   >StripCalculatedMembers</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="StrToHierarchy"><a class="cd-mdxdoc-tree-link" href="./../mdx/StrToHierarchy.html"
+   >StrToHierarchy</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="StrToLevel"><a class="cd-mdxdoc-tree-link" href="./../mdx/StrToLevel.html"
+   >StrToLevel</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="StrToMember"><a class="cd-mdxdoc-tree-link" href="./../mdx/StrToMember.html"
+   >StrToMember</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="StrToSet"><a class="cd-mdxdoc-tree-link" href="./../mdx/StrToSet.html"
+   >StrToSet</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="StrToTuple"><a class="cd-mdxdoc-tree-link" href="./../mdx/StrToTuple.html"
+   >StrToTuple</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="StrToValue"><a class="cd-mdxdoc-tree-link" href="./../mdx/StrToValue.html"
+   >StrToValue</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Subset"><a class="cd-mdxdoc-tree-link" href="./../mdx/Subset.html"
+   >Subset</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Sum"><a class="cd-mdxdoc-tree-link" href="./../mdx/Sum.html"
+   >Sum</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Tail"><a class="cd-mdxdoc-tree-link" href="./../mdx/Tail.html"
+   >Tail</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="TopCount"><a class="cd-mdxdoc-tree-link" href="./../mdx/TopCount.html"
+   >TopCount</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="TopPercent"><a class="cd-mdxdoc-tree-link" href="./../mdx/TopPercent.html"
+   >TopPercent</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="TopSum"><a class="cd-mdxdoc-tree-link" href="./../mdx/TopSum.html"
+   >TopSum</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="TupleToStr"><a class="cd-mdxdoc-tree-link" href="./../mdx/TupleToStr.html"
+   >TupleToStr</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Union"><a class="cd-mdxdoc-tree-link" href="./../mdx/Union.html"
+   >Union</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Value"><a class="cd-mdxdoc-tree-link" href="./../mdx/Value.html"
+   >Value</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Vector"><a class="cd-mdxdoc-tree-link" href="./../mdx/Vector.html"
+   >Vector</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="VisualTotals"><a class="cd-mdxdoc-tree-link" href="./../mdx/VisualTotals.html"
+   >VisualTotals</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Wavg"><a class="cd-mdxdoc-tree-link" href="./../mdx/Wavg.html"
+   >Wavg</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Ytd"><a class="cd-mdxdoc-tree-link" href="./../mdx/Ytd.html"
+   >Ytd</a>
+</div>
+            </div> </div>
+                            <div class="cd-mdxdoc-tree-branch"><a class="cd-mdxdoc-tree-branch-btn"
+                                                                       href="#"></a> <a class="cd-mdxdoc-tree-link" href="./../mdx/language.html"
+   >MDX Language Reference</a>
+             <div class="cd-mdxdoc-tree-branch-container"
+                 style="display:none;">                    <div class="cd-mdxdoc-tree-leaf" title="Annotations"><a class="cd-mdxdoc-tree-link" href="./../mdx/Annotations.html"
+   >Annotations</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Axis"><a class="cd-mdxdoc-tree-link" href="./../mdx/Axis.html"
+   >Axis</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Calculated Members"><a class="cd-mdxdoc-tree-link" href="./../mdx/Calculated Members.html"
+   >Calculated Members</a>
+</div>
+                            <div class="cd-mdxdoc-tree-branch"><a class="cd-mdxdoc-tree-branch-btn"
+                                                                       href="#"></a> <a class="cd-mdxdoc-tree-link" href="./../mdx/Cell Properties.html"
+   >Cell Properties</a>
+             <div class="cd-mdxdoc-tree-branch-container"
+                 style="display:none;">                    <div class="cd-mdxdoc-tree-leaf" title="CLASSNAME"><a class="cd-mdxdoc-tree-link" href="./../mdx/cellProperties/CLASSNAME.html"
+   >CLASSNAME</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="FORMAT_STRING"><a class="cd-mdxdoc-tree-link" href="./../mdx/cellProperties/FORMAT_STRING.html"
+   >FORMAT_STRING</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="LANGUAGE"><a class="cd-mdxdoc-tree-link" href="./../mdx/cellProperties/LANGUAGE.html"
+   >LANGUAGE</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="REQUEST_CACHED"><a class="cd-mdxdoc-tree-link" href="./../mdx/cellProperties/REQUEST_CACHED.html"
+   >REQUEST_CACHED</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="STYLE"><a class="cd-mdxdoc-tree-link" href="./../mdx/cellProperties/STYLE.html"
+   >STYLE</a>
+</div>
+            </div> </div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Comments"><a class="cd-mdxdoc-tree-link" href="./../mdx/Comments.html"
+   >Comments</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Create (Function)"><a class="cd-mdxdoc-tree-link" href="./../mdx/Create (Function).html"
+   >Create (Function)</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Create (Member)"><a class="cd-mdxdoc-tree-link" href="./../mdx/Create (Member).html"
+   >Create (Member)</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Create (Set)"><a class="cd-mdxdoc-tree-link" href="./../mdx/Create (Set).html"
+   >Create (Set)</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Declared Functions"><a class="cd-mdxdoc-tree-link" href="./../mdx/Declared Functions.html"
+   >Declared Functions</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Drillthrough"><a class="cd-mdxdoc-tree-link" href="./../mdx/Drillthrough.html"
+   >Drillthrough</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Drop (All)"><a class="cd-mdxdoc-tree-link" href="./../mdx/Drop (All).html"
+   >Drop (All)</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Drop (Function)"><a class="cd-mdxdoc-tree-link" href="./../mdx/Drop (Function).html"
+   >Drop (Function)</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Drop (Member)"><a class="cd-mdxdoc-tree-link" href="./../mdx/Drop (Member).html"
+   >Drop (Member)</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Drop (Set)"><a class="cd-mdxdoc-tree-link" href="./../mdx/Drop (Set).html"
+   >Drop (Set)</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Existing"><a class="cd-mdxdoc-tree-link" href="./../mdx/Existing.html"
+   >Existing</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Implicit Conversions"><a class="cd-mdxdoc-tree-link" href="./../mdx/Implicit Conversions.html"
+   >Implicit Conversions</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Measure Group"><a class="cd-mdxdoc-tree-link" href="./../mdx/Measure Group.html"
+   >Measure Group</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Member Custom Property"><a class="cd-mdxdoc-tree-link" href="./../mdx/Member Custom Property.html"
+   >Member Custom Property</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Range"><a class="cd-mdxdoc-tree-link" href="./../mdx/Range.html"
+   >Range</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="SubQueries"><a class="cd-mdxdoc-tree-link" href="./../mdx/SubQueries.html"
+   >SubQueries</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Update Cube"><a class="cd-mdxdoc-tree-link" href="./../mdx/Update Cube.html"
+   >Update Cube</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Where Clause"><a class="cd-mdxdoc-tree-link" href="./../mdx/Where Clause.html"
+   >Where Clause</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Where Clause Exists"><a class="cd-mdxdoc-tree-link" href="./../mdx/Where Clause Exists.html"
+   >Where Clause Exists</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Where Set Clause Exists"><a class="cd-mdxdoc-tree-link" href="./../mdx/Where Set Clause Exists.html"
+   >Where Set Clause Exists</a>
+</div>
+            </div> </div>
+                            <div class="cd-mdxdoc-tree-branch"><a class="cd-mdxdoc-tree-branch-btn"
+                                                                       href="#"></a> <a class="cd-mdxdoc-tree-link" href="./../mdx_oo/oo_extension.html"
+   >MDX OO Extensions</a>
+             <div class="cd-mdxdoc-tree-branch-container"
+                 style="display:none;">                    <div class="cd-mdxdoc-tree-leaf" title="Vector"><a class="cd-mdxdoc-tree-link" href="./../mdx_oo/vector.html"
+   >Vector</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Matrix"><a class="cd-mdxdoc-tree-link" href="./../mdx_oo/matrix.html"
+   >Matrix</a>
+</div>
+            </div> </div>
+                            <div class="cd-mdxdoc-tree-leaf" title="JAVA Integration"><a class="cd-mdxdoc-tree-link" href="./../mdx_integration/java_integration.html"
+   >JAVA Integration</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="R Integration"><a class="cd-mdxdoc-tree-link" href="./../mdx_integration/r_integration.html"
+   >R Integration</a>
+</div>
+                            <div class="cd-mdxdoc-tree-branch"><a class="cd-mdxdoc-tree-branch-btn"
+                                                                       href="#"></a> <a class="cd-mdxdoc-tree-link" href="./../mdx/reference.html"
+   >Reference</a>
+             <div class="cd-mdxdoc-tree-branch-container"
+                 style="display:none;">                    <div class="cd-mdxdoc-tree-leaf" title="Language Identifiers"><a class="cd-mdxdoc-tree-link" href="./../mdx/icCubeLanguages.html"
+   >Language Identifiers</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="XMLA Properties"><a class="cd-mdxdoc-tree-link" href="./../mdx/icCubeXmlaPropertyDescription.html"
+   >XMLA Properties</a>
+</div>
+                            <div class="cd-mdxdoc-tree-leaf" title="Errors"><a class="cd-mdxdoc-tree-link" href="./../mdx/icCubeError.html"
+   >Errors</a>
+</div>
+            </div> </div>
+            </div> </div>
+                </div>
+</div>
+
+
+
+                <div class="cd-mdxdoc-content">
+
+                    <div class="help">
+
+
+
+
+
+
+<table class="cd-mdxdoc-header">
+    <tr>
+        <td class="cd-mdxdoc-header-functionName">StrToMember</td>
+        <td class="cd-mdxdoc-header-functionExtra">(standard MDX)</td>
+    </tr>
+</table>
+
+<p class="cd-mdxdoc-text">        Converts a string to a member representation.<br/>    </p>
+
+    
+    <h2 class="cd-mdxdoc-caption">Parameters</h2>
+
+    <table class="cd-mdxdoc-parameters">
+        <tr class="cd-mdxdoc-parameters-header">
+            <td>Name</td>
+            <td>Type</td>
+            <td>Cardinality</td>
+            <td>Default value</td>
+        </tr>
+
+                    <tr>
+                <td>&nbsp;</td>
+                <td>string-expression&nbsp;</td>
+                <td>one&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+                    <tr>
+                <td>&nbsp;</td>
+                <td>CONSTRAINED&nbsp;</td>
+                <td>zero-one&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+        
+    </table>
+
+    
+<h2 class="cd-mdxdoc-caption">Return</h2>
+<p class="cd-mdxdoc-text">member</p>
+
+<h2 class="cd-mdxdoc-caption">Description</h2>
+<p class="cd-mdxdoc-text">        Converts a string to its member representation.<br/><br/>        - without the CONSTRAINED flag, the string can contain any valid MDX expression that can be converted into a MDX member.<br/><br/>        - with the CONSTRAINED flag, only MDX member's name can be used. This allows to avoid code injection into the server.<br/>    </p>
+
+<h2 class="cd-mdxdoc-caption">See Also</h2>
+<p class="cd-mdxdoc-text">
+    <a href="LookupByKey.html">LookupByKey</a> <a href="MemberToStr.html">MemberToStr</a> <a href="StrToLevel.html">StrToLevel</a> <a href="StrToSet.html">StrToSet</a> <a href="StrToTuple.html">StrToTuple</a> <a href="StrToValue.html">StrToValue</a> </p>
+
+
+    
+    <h1 class="cd-mdxdoc-caption">Examples</h1>
+    <div class="cd-mdxdoc-examples-section">
+
+                    <div class="cd-mdxdoc-example-header cd-mdxdoc-example-header-collapsed">
+                <a href="javascript:{}">
+                    <span>StrToMember(string)</span>
+                </a>
+            </div>
+            <div class="cd-mdxdoc-example-body" style="display:none;">
+                <p class="cd-mdxdoc-text">            Returns a member after evaluating the string expression.<br/><br/>            In our example, we converts "[Geography].[Geo].[Paris]" to a member.<br/>        </p>
+
+                <p class="cd-mdxdoc-bold-text">Query</p>
+
+                <div class="cd-mdxdoc-query-block">
+                    <pre>StrToMember('[Geography].[Geo].[Paris]')</pre>
+                </div>
+
+                
+                
+                    <p class="cd-mdxdoc-bold-text">Result</p>
+
+                    
+                        <div class="cd-mdxdoc-results-container">
+                            <pre>{ 
+  [Geography].[Geo].[City].[Paris]
+}</pre>
+                        </div>
+
+                    
+                                                                        <p class="cd-mdxdoc-bold-text">Assertion : Cell Equals</p>
+
+                            <div class="cd-mdxdoc-query-block">
+                                <pre>[Geography].[Geo].[Paris]</pre>
+                            </div>
+                                            
+                
+            </div>
+                    <div class="cd-mdxdoc-example-header cd-mdxdoc-example-header-collapsed">
+                <a href="javascript:{}">
+                    <span>StrToMember(string) - MDX expression</span>
+                </a>
+            </div>
+            <div class="cd-mdxdoc-example-body" style="display:none;">
+                <p class="cd-mdxdoc-text">            The parameter string can be any valid expression containing MDX functions.<br/><br/>            In our example, we converts "[Geography].[Geo].[France].children(0)" to a member.<br/>        </p>
+
+                <p class="cd-mdxdoc-bold-text">Query</p>
+
+                <div class="cd-mdxdoc-query-block">
+                    <pre>StrToMember('[Geography].[Geo].[France].children(0)')</pre>
+                </div>
+
+                
+                
+                    <p class="cd-mdxdoc-bold-text">Result</p>
+
+                    
+                        <div class="cd-mdxdoc-results-container">
+                            <pre>{ 
+  [Geography].[Geo].[City].[Paris]
+}</pre>
+                        </div>
+
+                    
+                                                                        <p class="cd-mdxdoc-bold-text">Assertion : Cell Equals</p>
+
+                            <div class="cd-mdxdoc-query-block">
+                                <pre>[Geography].[Geo].[Paris]</pre>
+                            </div>
+                                            
+                
+            </div>
+                    <div class="cd-mdxdoc-example-header cd-mdxdoc-example-header-collapsed">
+                <a href="javascript:{}">
+                    <span>StrToMember(string,CONSTRAINED)</span>
+                </a>
+            </div>
+            <div class="cd-mdxdoc-example-body" style="display:none;">
+                <p class="cd-mdxdoc-text">            If the CONSTRAINED flag is present, the string has to match an existing member's name; no evaluation is performed.<br/>        </p>
+
+                <p class="cd-mdxdoc-bold-text">Query</p>
+
+                <div class="cd-mdxdoc-query-block">
+                    <pre>StrToMember( '[Geography].[Geo].[New York]', CONSTRAINED)</pre>
+                </div>
+
+                
+                
+                    <p class="cd-mdxdoc-bold-text">Result</p>
+
+                    
+                        <div class="cd-mdxdoc-results-container">
+                            <pre>{ 
+  [Geography].[Geo].[City].[New York]
+}</pre>
+                        </div>
+
+                    
+                                                                        <p class="cd-mdxdoc-bold-text">Assertion : Cell Equals</p>
+
+                            <div class="cd-mdxdoc-query-block">
+                                <pre>[Geography].[Geo].[New York]</pre>
+                            </div>
+                                            
+                
+            </div>
+        
+    </div>
+
+    
+
+    
+    <h1 class="cd-mdxdoc-caption">Special Examples (errors, null, ...)</h1>
+    <div class="cd-mdxdoc-examples-section">
+
+                    <div class="cd-mdxdoc-example-header cd-mdxdoc-example-header-collapsed">
+                <a href="javascript:{}">
+                    <span>StrToMember(string,CONSTRAINED) - failing</span>
+                </a>
+            </div>
+            <div class="cd-mdxdoc-example-body" style="display:none;">
+                <p class="cd-mdxdoc-text">            Using functions is not authorized with the CONSTRAINED flag.<br/>        </p>
+
+                <p class="cd-mdxdoc-bold-text">Query</p>
+
+                <div class="cd-mdxdoc-query-block">
+                    <pre>StrToMember( '[Geography].[Geo]', CONSTRAINED)</pre>
+                </div>
+
+                
+                
+                    <p class="cd-mdxdoc-bold-text">Result</p>
+
+                    
+                        <div class="cd-mdxdoc-results-container">
+                            <pre><br>Error Code    : <a href="icCubeError.html#OLAP_CONSTRAINED_VIOLATED">OLAP_CONSTRAINED_VIOLATED</a><br>Error Message : StrToMember() : the restrictions imposed by the CONSTRAINED flag were violated.</pre>
+                        </div>
+
+                    
+                    
+                
+            </div>
+                    <div class="cd-mdxdoc-example-header cd-mdxdoc-example-header-collapsed">
+                <a href="javascript:{}">
+                    <span>StrToMember(NULL)</span>
+                </a>
+            </div>
+            <div class="cd-mdxdoc-example-body" style="display:none;">
+                <p class="cd-mdxdoc-text">            Returns NULL if applied to a NULL entity.<br/>        </p>
+
+                <p class="cd-mdxdoc-bold-text">Query</p>
+
+                <div class="cd-mdxdoc-query-block">
+                    <pre>WITH
+    MEMBER [Measures].[V] AS StrToMember(NULL)
+SELECT
+    [Measures].[V] ON 0
+FROM
+    [Sales]</pre>
+                </div>
+
+                
+                
+                    <p class="cd-mdxdoc-bold-text">Result</p>
+
+                    
+                        <div class="cd-mdxdoc-results-pivot-container">
+                            <table  class="cd-mdxdoc-testresults">
+<tr>
+  <td class="cd-mdxdoc-testresults-caption-cell">V</td>
+</tr>
+<tr>
+ <td>#ERROR : (OLAP_MDX_EXPRESSION_EXPECTED)</td>
+</tr>
+</table>
+<pre><br>Error Code    : <a href="icCubeError.html#OLAP_MDX_EXPRESSION_EXPECTED">OLAP_MDX_EXPRESSION_EXPECTED</a><br>Error Message : StrToMember() : expression expected : received a null/empty string expression.</pre>
+                        </div>
+
+                    
+                    
+                
+            </div>
+        
+    </div>
+
+    
+
+
+<h2 class="cd-mdxdoc-caption">XMLA Properties</h2>
+<p class="cd-mdxdoc-text">Find <a
+        href="icCubeDefaultXmlaProperties.html">here</a> the value of the XMLA properties when not specified otherwise.
+</p>
+
+<div class="cd-mdxdoc-bottom-divider"></div>
+<div class="cd-mdxdoc-bottom-block">icCube OLAP version: 3.1.0 SNAPSHOT 10-mai-2013 10:39:55 GMT</div>
+
+
+</div>
+<div class="clearer"></div>
+</div>
+</div>
+    <div id="bottom">
+        <div id="footer">
+            <div id="footer_left">
+                <div class="moduletable_menu">
+                    <ul class="menu">
+
+                        <li class="level1 first"><a href="http://iccube.com/" class="level1 first"><span
+                                class="bg">Visit our website</span> </a></li>
+                    </ul>
+                </div>
+            </div>
+            <a id="top-link" href="#page">Top</a>
+        </div>
+        <div id="copyright">
+
+            <div class="moduletable"><p>&copy; 2009-2010 Crazy Development. All rights reserved. <a
+                    href="http://iccube.com/contact-us">Contact-us</a></p></div>
+        </div>
+    </div>
+</div>
+    

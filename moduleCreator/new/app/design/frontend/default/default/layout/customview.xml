@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+    </default>
+    <customview_index_index>
+        <reference name="content">
+            <block type="customview/customview" name="customview" template="customview/customview.phtml" />
+        </reference>
+    </customview_index_index>
+</layout> 

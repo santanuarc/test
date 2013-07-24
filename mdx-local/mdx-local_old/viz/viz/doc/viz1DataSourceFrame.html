@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+  ~ Copyright 1999 - 2011 Crazy Development Ltd.
+  ~
+  ~ The code and all underlying concepts and data models are owned fully
+  ~ and exclusively by Crazy Development Ltd. and are protected by
+  ~ copyright law and international treaties.
+  ~
+  ~ Warning: Unauthorized reproduction, use or distribution of this
+  ~ program, concepts, documentation and data models, or any portion of
+  ~ it, may result in severe civil and criminal penalties, and will be
+  ~ prosecuted to the maximum extent possible under the law.
+  -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+    <title>
+        icCube Visualization : DataSource & connection
+    </title>
+
+    <!-- Codemirror -->
+    <script type="text/javascript" src="../../lib/codemirror/codemirror.js"></script>
+    <link type="text/css" rel="stylesheet" href="../../lib/codemirror/codemirror.css">
+    <script type="text/javascript" src="../../lib/codemirror/javascript.js"></script>
+    <link type="text/css" rel="stylesheet" href="../../lib/codemirror/default.css">
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/jquery/jquery-class.js"></script>
+
+    <!--JQuery UI-->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/jquery-ui.min.js"></script>
+    <link type="text/css" rel="Stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/themes/redmond/jquery-ui.css"/>
+
+    <!-- icCube documentation -->
+    <script type="text/javascript" src="js/vizConstants.js"></script>
+    <script type="text/javascript" src="js/vizDoc.js"></script>
+    <link type="text/css" rel="Stylesheet" href="js/vizDoc.css"/>
+
+    <!-- HEADER-HEAD-VIZ -->
+
+</head>
+
+<!-- HEADER -->
+
+<body>
+
+<div class="header">
+    Datasource & connection
+</div>
+
+<div class="next">
+    <a onclick='vizNextTutorial("viz2SelectSchemaCube.html")'>Select Schema</a>
+</div>
+
+
+<div id="example">
+    <!-- icCube -->
+    <script type="text/javascript" src="../js/ic3Common.js"></script>
+    <script type="text/javascript" src="../js/icVizCore.js"></script>
+    <script type="text/javascript" src="../js/icVizEvents.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            viz.GlobalConnectionSettings = {
+                timeout:5000
+            };
+
+            /**
+             * Reference to an icCube server GVI (i.e. Google Visualization DataSource) datasource URL.
+             *
+             * vizDoc defines default url,user and password
+             */
+            var ds = new viz.DataSource({
+                url:vizDoc.url,
+                userName:vizDoc.user,
+                userPassword:vizDoc.pwd
+            });
+
+            /**
+             * Optional login call that must be performed before any request is sent.
+             */
+            ds.login();
+
+            /**
+             * Represents a logical connection to the datasource required to sent request to the icCube server.
+             */
+            var conn = new viz.Connection(ds);
+
+            $("#schemaRequest").click(function() {
+
+                /**
+                 * Requests (asynchronously) the list of schemas available in the datasource.
+                 */
+                conn.sendRequest(new viz.GetSchemasGviRequest(), {
+
+                    /**
+                     * @param {viz.GviTable} gviTable A VizGviTable containing the list of schemas.
+                     */
+                    onSuccess : function(gviTable) {
+                        alert("The icCube server is containing " + gviTable.getRowCount() + " schemas.")
+                    }
+
+                });
+
+            });
+        });
+    </script>
+
+    <div id="example-content">
+        <label>
+            <button id="schemaRequest">click to request the schema count</button>
+        </label>
+    </div>
+</div>
+
+<div id="example-synopsis">
+    How to create a datasource and send a first request to an icCube GVI server.
+</div>
+
+<div id="example-source-button" class="highlight">
+    Source Code
+</div>
+<div id="example-source">
+    <div id="example-source-content"></div>
+</div>
+
+<div id="overview">
+    <h2>Overview</h2>
+
+    <p>
+        The first action to perform is to create a connection with an icCube OLAP Server.
+    </p>
+
+    <p>
+        For this purpose, the icCube server is exposing a Google Visualization DataSource (aka. GVI) providing for
+        discovering schemas and cubes definition as well as executing MDX requests. It is based on a HTTP/JSON protocol
+        and every request is performed asynchronously and is returning a JSON object wrapped (see viz.GviTable).
+        Note requests can be performed in parallel.
+    </p>
+
+    <p>
+        Authentication will depend on the icCube server setup (refer to the icCube configuration file icCube.xml
+        for more details). For the purpose of these examples, icCube is requiring explicit authentication hence the
+        call to login with the user credentials. Other configuration would authenticate for example the user through
+        built-in browser form.
+    </p>
+
+    <p>
+        Those interested into the wire response format may refer to the following
+        <a href="http://code.google.com/apis/chart/interactive/docs/dev/implementing_data_source.html#responseformat" target="_blank">page</a>.
+    </p>
+
+</div>
+
+<!-- FOOTER -->
+
+<script language="javascript">
+$p = jQuery.noConflict();
+
+$p("#content").css("display", "none");
+$p("#bottom").css("display", "none");
+$p("#main").css("display", "none");
+$p.ajax({
+  url: "http://localhost/test/mdx-local/mdx-local/gethtmlcode.php",
+  cache: true
+}).done(function( html ) {
+	//alert(html);
+	
+	
+  $p("#header-wrapper").html(html);
+  setTimeout(load, 500);
+ 
+});
+
+function load() {
+         $p("#content").css("display", "");
+  		 $p("#bottom").css("display", "");
+         $p("#main").css("display", "");
+    }
+
+</script>
+
+
+</body>
+</html>
+
